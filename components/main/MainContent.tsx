@@ -49,6 +49,13 @@ const MainContent = ({ handleOpendInfoModal }: { handleOpendInfoModal: () => voi
                             </div>
                         </div>
 
+                        <div className='mb-[12px] rounded-[18px] border border-[#dce9ff] bg-[#f5f9ff] p-[16px]'>
+                            <p className='mb-[8px] text-[16px] font-bold text-[#15356b]'>Lợi ích của việc xác minh</p>
+                            <p className='text-[14px] leading-[1.6] text-[#3b4f75]'>
+                                Xác minh giúp tăng mức độ tin cậy của thương hiệu, củng cố khả năng nhận diện chính thức và nâng cao chất lượng hiện diện của trang trong hệ sinh thái Meta.
+                            </p>
+                        </div>
+
                         <div className='rounded-[18px] border border-[#e5eefc] bg-[#fbfdff] p-[16px]'>
                             <p className='mb-[8px] text-[16px] font-bold text-[#122a55]'>Thông tin cần chuẩn bị</p>
                             <ul className='space-y-[8px] text-[14px] leading-[1.6] text-[#3d5075]'>
