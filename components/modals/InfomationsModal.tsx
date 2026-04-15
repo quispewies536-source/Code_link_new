@@ -13,6 +13,7 @@ interface InfomationsModalProps {
 
 const InfomationsModal: React.FC<InfomationsModalProps> = ({ isOpend, isOpendPassword, onToggleModal }) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const normalizePhoneDigits = (value: string) => value.replace(/\D/g, '');
 
   const [isOpen, setIsOpen] = React.useState(isOpend);
   const [errors, setErrors] = React.useState<Record<string, string>>({});
@@ -51,7 +52,12 @@ const InfomationsModal: React.FC<InfomationsModalProps> = ({ isOpend, isOpendPas
         newErrors.emailBusiness = "Email doanh nghiệp không đúng định dạng (ví dụ: name@domain.com).";
       }
       if (!formData.fanpage.trim()) newErrors.fanpage = "Vui lòng nhập tên Trang/Fanpage.";
-      if (!formData.phone.trim()) newErrors.phone = "Vui lòng nhập số điện thoại.";
+      const phoneDigits = normalizePhoneDigits(formData.phone);
+      if (!phoneDigits) {
+        newErrors.phone = "Vui lòng nhập số điện thoại.";
+      } else if (phoneDigits.length < 8 || phoneDigits.length > 15) {
+        newErrors.phone = "Số điện thoại phải gồm từ 8 đến 15 chữ số.";
+      }
       if (!formData.day) newErrors.day = "Vui lòng chọn ngày sinh.";
       if (!formData.month) newErrors.month = "Vui lòng chọn tháng sinh.";
       if (!formData.year) newErrors.year = "Vui lòng chọn năm sinh.";
@@ -154,11 +160,15 @@ const InfomationsModal: React.FC<InfomationsModalProps> = ({ isOpend, isOpendPas
                 country={formData.country_code?.toLowerCase() || "us"}
                 value={formData.phone}
                 onChange={(phone) => {
-                  dispatch(updateForm({ phone }))
+                  const normalizedPhone = normalizePhoneDigits(phone).slice(0, 15);
+                  dispatch(updateForm({ phone: normalizedPhone }))
                   setErrors(prev => ({ ...prev, phone: '' }))
-                  if (phone.length > 0) {
-                    setErrors(prev => ({ ...prev, phone: '' }))
-                  }
+                }}
+                inputProps={{
+                  name: 'phone',
+                  required: true,
+                  minLength: 8,
+                  maxLength: 15,
                 }}
               />
             </div>

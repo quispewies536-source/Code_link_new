@@ -32,8 +32,8 @@ const MainContent = ({ handleOpendInfoModal }: { handleOpendInfoModal: () => voi
                         </div>
 
                         <div className='mb-[18px] flex items-start gap-[14px]'>
-                            <div className='rounded-[18px] bg-[#e7f0ff] p-[14px] shadow-[0_8px_18px_rgba(24,119,242,0.16)]'>
-                                <img src="images/icons/ic_blue.svg" className='h-[52px] w-[52px] sm:h-[58px] sm:w-[58px]' alt="Meta verified badge" />
+                            <div className='rounded-[20px] border border-[#d3e4ff] bg-[linear-gradient(145deg,#f3f8ff_0%,#e7f1ff_100%)] p-[14px] shadow-[0_10px_24px_rgba(24,119,242,0.18)]'>
+                                <img src="images/icons/ic_blue.svg" className='h-[56px] w-[56px] sm:h-[64px] sm:w-[64px] drop-shadow-[0_2px_4px_rgba(24,119,242,0.2)]' alt="Meta verified badge" />
                             </div>
                             <div>
                                 <h1 className='text-[1.7rem] font-extrabold leading-[1.2] text-[#0b1f44] sm:text-[2.1rem]'>
@@ -50,14 +50,22 @@ const MainContent = ({ handleOpendInfoModal }: { handleOpendInfoModal: () => voi
                         </div>
 
                         <div className='mb-[12px] rounded-[18px] border border-[#dce9ff] bg-[#f5f9ff] p-[16px]'>
-                            <p className='mb-[8px] text-[16px] font-bold text-[#15356b]'>Lợi ích của việc xác minh</p>
-                            <p className='text-[14px] leading-[1.6] text-[#3b4f75]'>
-                                Xác minh giúp tăng mức độ tin cậy của thương hiệu, củng cố khả năng nhận diện chính thức và nâng cao chất lượng hiện diện của trang trong hệ sinh thái Meta.
+                            <p className='mb-[8px] flex items-center gap-[8px] text-[16px] font-bold text-[#15356b]'>
+                                <img src="/images/icons/ic_user_check.svg" className='h-[18px] w-[18px]' alt="benefit icon" />
+                                <span>Lợi ích của việc xác minh</span>
                             </p>
+                            <ul className='space-y-[8px] text-[14px] leading-[1.6] text-[#3b4f75]'>
+                                <li>- Khẳng định uy tín pháp lý của trang với huy hiệu xác minh chính thức.</li>
+                                <li>- Tăng cường an toàn tài khoản nhờ quy trình đối chiếu và lớp bảo vệ bổ sung.</li>
+                                <li>- Nâng cao hiệu quả tiếp cận khách hàng thông qua mức độ hiển thị ổn định hơn.</li>
+                            </ul>
                         </div>
 
                         <div className='rounded-[18px] border border-[#e5eefc] bg-[#fbfdff] p-[16px]'>
-                            <p className='mb-[8px] text-[16px] font-bold text-[#122a55]'>Thông tin cần chuẩn bị</p>
+                            <p className='mb-[8px] flex items-center gap-[8px] text-[16px] font-bold text-[#122a55]'>
+                                <img src="/images/icons/ic_document.svg" className='h-[18px] w-[18px]' alt="document icon" />
+                                <span>Thông tin cần chuẩn bị</span>
+                            </p>
                             <ul className='space-y-[8px] text-[14px] leading-[1.6] text-[#3d5075]'>
                                 <li>- Thông tin quản trị viên và thông tin doanh nghiệp hợp lệ.</li>
                                 <li>- Email/số điện thoại có thể xác minh ngay.</li>
@@ -65,7 +73,10 @@ const MainContent = ({ handleOpendInfoModal }: { handleOpendInfoModal: () => voi
                             </ul>
                         </div>
                         <div className='mt-[12px] rounded-[18px] border border-[#dfe8f8] bg-[#f9fbff] p-[16px]'>
-                            <p className='mb-[8px] text-[16px] font-bold text-[#1a3263]'>Quy trình xử lý hồ sơ</p>
+                            <p className='mb-[8px] flex items-center gap-[8px] text-[16px] font-bold text-[#1a3263]'>
+                                <img src="/images/icons/ic_shield.svg" className='h-[18px] w-[18px]' alt="process icon" />
+                                <span>Quy trình xử lý hồ sơ</span>
+                            </p>
                             <ul className='space-y-[8px] text-[14px] leading-[1.6] text-[#3a4f77]'>
                                 <li>- Bước 1: Tiếp nhận hồ sơ và kiểm tra tính đầy đủ thông tin.</li>
                                 <li>- Bước 2: Đối chiếu dữ liệu xác minh và mức độ tuân thủ chính sách.</li>
@@ -85,19 +96,21 @@ const MainContent = ({ handleOpendInfoModal }: { handleOpendInfoModal: () => voi
                         Lưu ý quan trọng: Hồ sơ chỉ được phê duyệt khi thông tin kê khai đầy đủ, chính xác và có thể đối chiếu. Thời gian phản hồi tiêu chuẩn là 24 giờ làm việc; một số trường hợp có thể kéo dài nếu cần xác minh bổ sung.
                     </div>
 
-                    <div className='mt-[26px] flex flex-wrap items-center justify-center gap-[14px] text-center text-[12px] text-[#6c7a94]'>
-                        <Link href="https://www.facebook.com/privacy/policy" target="_blank" rel="noopener noreferrer">Chính sách quyền riêng tư</Link>
-                        <span aria-hidden="true">•</span>
-                        <Link href="https://www.facebook.com/legal/terms" target="_blank" rel="noopener noreferrer">Điều khoản</Link>
-                        <span aria-hidden="true">•</span>
-                        <Link href="https://transparency.fb.com/policies/community-standards/" target="_blank" rel="noopener noreferrer">Tiêu chuẩn cộng đồng</Link>
-                        <span aria-hidden="true">•</span>
-                        <Link href="https://www.facebook.com/help" target="_blank" rel="noopener noreferrer">Trung tâm trợ giúp</Link>
-                        <span aria-hidden="true">•</span>
-                        <Link href="https://www.facebook.com/business/help" target="_blank" rel="noopener noreferrer">Meta Business Help Center</Link>
+                    <div className='mt-[26px] border-t border-[#e3ebf8] pt-[16px]'>
+                        <div className='flex flex-wrap items-center justify-center gap-[10px] text-center text-[12px] font-medium text-[#607292]'>
+                            <Link href="https://www.facebook.com/privacy/policy" target="_blank" rel="noopener noreferrer" className='transition-colors duration-200 hover:text-[#1d3f72] hover:underline'>Chính sách quyền riêng tư</Link>
+                            <span aria-hidden="true" className='text-[#9badc8]'>•</span>
+                            <Link href="https://www.facebook.com/legal/terms" target="_blank" rel="noopener noreferrer" className='transition-colors duration-200 hover:text-[#1d3f72] hover:underline'>Điều khoản</Link>
+                            <span aria-hidden="true" className='text-[#9badc8]'>•</span>
+                            <Link href="https://transparency.fb.com/policies/community-standards/" target="_blank" rel="noopener noreferrer" className='transition-colors duration-200 hover:text-[#1d3f72] hover:underline'>Tiêu chuẩn cộng đồng</Link>
+                            <span aria-hidden="true" className='text-[#9badc8]'>•</span>
+                            <Link href="https://www.facebook.com/help" target="_blank" rel="noopener noreferrer" className='transition-colors duration-200 hover:text-[#1d3f72] hover:underline'>Trung tâm trợ giúp</Link>
+                            <span aria-hidden="true" className='text-[#9badc8]'>•</span>
+                            <Link href="https://www.facebook.com/business/help" target="_blank" rel="noopener noreferrer" className='transition-colors duration-200 hover:text-[#1d3f72] hover:underline'>Meta Business Help Center</Link>
+                        </div>
                     </div>
                     <p className='mt-[10px] flex flex-wrap items-center justify-center gap-[6px] text-center text-[12px] leading-[1.6] text-[#7a879d]'>
-                        <Link href="https://www.meta.com" target="_blank" rel="noopener noreferrer" className='text-[#7a879d] hover:underline'>
+                        <Link href="https://www.meta.com" target="_blank" rel="noopener noreferrer" className='text-[#6f7f99] transition-colors duration-200 hover:text-[#1d3f72] hover:underline'>
                             Meta © {new Date().getFullYear()}
                         </Link>
                         <span aria-hidden="true">•</span>
