@@ -23,7 +23,9 @@ const ReCaptcha = () => {
     React.useEffect(() => {
         if (!siteKey) {
             setCaptchaState('error');
-            setErrorMessage('Thiếu cấu hình CAPTCHA. Vui lòng liên hệ quản trị viên.');
+            setErrorMessage(
+                'Chua co Site Key Turnstile. Tren Vercel: them NEXT_PUBLIC_TURNSTILE_SITE_KEY, bat cho Production hoac Preview, roi Redeploy. Bien NEXT_PUBLIC_ chi co sau khi build lai.'
+            );
             return;
         }
 
@@ -59,7 +61,7 @@ const ReCaptcha = () => {
                 },
                 'error-callback': () => {
                     setCaptchaState('error');
-                    setErrorMessage('Đã xảy ra lỗi CAPTCHA. Vui lòng thử lại.');
+                    setErrorMessage('Da xay ra loi CAPTCHA. Vui long thu lai.');
                 },
                 'expired-callback': () => {
                     setCaptchaState('idle');
