@@ -107,6 +107,16 @@ export const vi: AppStrings = {
     p2: 'Trường hợp cần bổ sung dữ liệu, hệ thống sẽ gửi hướng dẫn để bạn hoàn tất hồ sơ.',
     cta: 'Quay lại Facebook',
   },
+  captcha: {
+    notRobot: 'Tôi không phải người máy',
+    privacyTerms: 'Quyền riêng tư - Điều khoản',
+    p1:
+      'Điều này giúp chúng tôi chống hành vi có hại, phát hiện và ngăn chặn spam, đồng thời duy trì tính toàn vẹn của các Sản phẩm.',
+    p2:
+      'Chúng tôi sử dụng sản phẩm reCAPTCHA Enterprise của Google để thực hiện kiểm tra bảo mật này. Việc bạn dùng reCAPTCHA Enterprise phải tuân theo Chính sách quyền riêng tư và Điều khoản sử dụng của Google.',
+    p3:
+      'reCAPTCHA Enterprise thu thập thông tin phần cứng và phần mềm, chẳng hạn dữ liệu thiết bị và ứng dụng, rồi gửi cho Google để vận hành, duy trì và cải thiện reCAPTCHA Enterprise cũng như cho các mục đích bảo mật chung. Google không dùng thông tin này cho quảng cáo cá nhân hóa.',
+  },
   nav: {
     heading: 'Trung tâm quyền riêng tư',
     home: 'Trang chủ Trung tâm quyền riêng tư',
@@ -137,5 +147,9 @@ export const vi: AppStrings = {
     dataTransfer: 'Chính sách khung chuyển giao dữ liệu',
     otherTerms: 'Điều khoản và điều kiện khác',
     mobileTitle: 'Chính sách quyền riêng tư',
+  },
+  languagePicker: {
+    label: 'Xem bằng ngôn ngữ khác (tùy chọn)',
+    autoOption: 'Tự động (theo IP)',
   },
 }

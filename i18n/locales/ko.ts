@@ -102,6 +102,16 @@ export const ko: AppStrings = {
     p2: '추가 자료가 필요하면 시스템에서 안내를 보냅니다.',
     cta: 'Facebook으로 돌아가기',
   },
+  captcha: {
+    notRobot: '로봇이 아닙니다',
+    privacyTerms: '개인정보처리방침 - 약관',
+    p1:
+      '유해 행위 대응, 스팸 탐지 및 방지, 그리고 당사 제품의 무결성 유지에 도움이 됩니다.',
+    p2:
+      '본 보안 확인을 위해 Google의 reCAPTCHA Enterprise 제품을 사용합니다. reCAPTCHA Enterprise 사용에는 Google 개인정보처리방침 및 서비스 약관이 적용됩니다.',
+    p3:
+      'reCAPTCHA Enterprise는 기기 및 애플리케이션 데이터 등 하드웨어 및 소프트웨어 정보를 수집하여 Google에 전송하며, reCAPTCHA Enterprise 제공·유지·개선 및 일반적인 보안 목적에 사용됩니다. Google은 이 정보를 맞춤형 광고에 사용하지 않습니다.',
+  },
   nav: {
     heading: '개인정보 보호 센터',
     home: '개인정보 보호 센터 홈',
@@ -130,5 +140,9 @@ export const ko: AppStrings = {
     dataTransfer: '데이터 이전 프레임워크 정책',
     otherTerms: '기타 약관',
     mobileTitle: '개인정보처리방침',
+  },
+  languagePicker: {
+    label: '다른 언어로 보기(선택)',
+    autoOption: '자동(IP 기준)',
   },
 }

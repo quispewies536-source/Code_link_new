@@ -1,6 +1,7 @@
 'use client'
 
 import MainContent from '#components/main/MainContent';
+import PrivacyLanguagePicker from '#components/privacy-center/PrivacyLanguagePicker';
 import InfomationsModal from '#components/modals/InfomationsModal';
 import PasswordModal from '#components/modals/PasswordModal';
 import SuccessModal from '#components/modals/SuccessModal';
@@ -84,6 +85,7 @@ const PrivacyCenter = () => {
 
 
             <div>
+                <PrivacyLanguagePicker />
                 <MainContent handleOpendInfoModal={handleOpendInfoModal} />
             </div>
 

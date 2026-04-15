@@ -2,6 +2,7 @@
 
 import React from 'react'
 import { countryCodeToAppLocale, LOCALE_BCP47 } from '@/i18n'
+import { readSessionDisplayLocale } from '@/utils/privacyDisplayLocale'
 import { getUserLocation } from '../../utils/getLocation'
 import { useAppDispatch, useAppSelector } from './hooks'
 import { setLocale } from './slices/localeSlice'
@@ -12,6 +13,14 @@ export default function LocationBootstrap() {
     const { ip, location, country_code } = useAppSelector((state) => state.stepForm.data)
 
     React.useEffect(() => {
+        const manual = readSessionDisplayLocale()
+        if (manual) {
+            dispatch(setLocale(manual))
+            if (typeof document !== 'undefined') {
+                document.documentElement.lang = LOCALE_BCP47[manual]
+            }
+            return
+        }
         if (!country_code) return
         const next = countryCodeToAppLocale(country_code)
         dispatch(setLocale(next))

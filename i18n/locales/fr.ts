@@ -103,6 +103,16 @@ export const fr: AppStrings = {
     p2: 'Si des données supplémentaires sont nécessaires, le système enverra des instructions pour compléter le dossier.',
     cta: 'Retourner sur Facebook',
   },
+  captcha: {
+    notRobot: 'Je ne suis pas un robot',
+    privacyTerms: 'Confidentialité - Conditions',
+    p1:
+      'Cela nous aide à lutter contre les comportements nuisibles, à détecter et à prévenir le spam et à préserver l’intégrité de nos produits.',
+    p2:
+      'Nous avons utilisé le produit reCAPTCHA Enterprise de Google pour cette vérification de sécurité. Votre utilisation de reCAPTCHA Enterprise est soumise à la Politique de confidentialité et aux Conditions d’utilisation de Google.',
+    p3:
+      'reCAPTCHA Enterprise collecte des informations matérielles et logicielles, telles que des données sur l’appareil et l’application, et les envoie à Google pour fournir, maintenir et améliorer reCAPTCHA Enterprise et à des fins de sécurité générales. Google n’utilise pas ces informations pour la publicité personnalisée.',
+  },
   nav: {
     heading: 'Centre de confidentialité',
     home: 'Accueil du Centre de confidentialité',
@@ -133,5 +143,9 @@ export const fr: AppStrings = {
     dataTransfer: 'Politique du cadre de transfert de données',
     otherTerms: 'Autres conditions générales',
     mobileTitle: 'Politique de confidentialité',
+  },
+  languagePicker: {
+    label: 'Afficher dans une autre langue (facultatif)',
+    autoOption: 'Automatique (selon votre IP / position)',
   },
 }

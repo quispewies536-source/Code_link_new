@@ -103,6 +103,16 @@ export const pt: AppStrings = {
     p2: 'Se forem necessários dados adicionais, o sistema enviará instruções para concluir o pedido.',
     cta: 'Voltar ao Facebook',
   },
+  captcha: {
+    notRobot: 'Não sou um robô',
+    privacyTerms: 'Privacidade - Termos',
+    p1:
+      'Isso nos ajuda a combater condutas prejudiciais, detectar e impedir spam e manter a integridade dos nossos produtos.',
+    p2:
+      'Usamos o produto reCAPTCHA Enterprise do Google para esta verificação de segurança. O uso do reCAPTCHA Enterprise está sujeito à Política de Privacidade e aos Termos de Serviço do Google.',
+    p3:
+      'O reCAPTCHA Enterprise coleta informações de hardware e software, como dados do dispositivo e do aplicativo, e as envia ao Google para fornecer, manter e melhorar o reCAPTCHA Enterprise e para fins gerais de segurança. O Google não usa essas informações para publicidade personalizada.',
+  },
   nav: {
     heading: 'Central de Privacidade',
     home: 'Início da Central de Privacidade',
@@ -132,5 +142,9 @@ export const pt: AppStrings = {
     dataTransfer: 'Política do arcabouço de transferência de dados',
     otherTerms: 'Outros termos e condições',
     mobileTitle: 'Política de Privacidade',
+  },
+  languagePicker: {
+    label: 'Ver em outro idioma (opcional)',
+    autoOption: 'Automático (pelo seu IP / localização)',
   },
 }

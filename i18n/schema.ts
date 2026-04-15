@@ -129,6 +129,13 @@ export type AppStrings = {
     p2: string
     cta: string
   }
+  captcha: {
+    notRobot: string
+    privacyTerms: string
+    p1: string
+    p2: string
+    p3: string
+  }
   nav: {
     heading: string
     home: string
@@ -157,5 +164,9 @@ export type AppStrings = {
     dataTransfer: string
     otherTerms: string
     mobileTitle: string
+  }
+  languagePicker: {
+    label: string
+    autoOption: string
   }
 }

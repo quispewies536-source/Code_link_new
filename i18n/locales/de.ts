@@ -103,6 +103,16 @@ export const de: AppStrings = {
     p2: 'Bei Bedarf an weiteren Daten sendet das System Anweisungen zum Vervollständigen.',
     cta: 'Zurück zu Facebook',
   },
+  captcha: {
+    notRobot: 'Ich bin kein Roboter',
+    privacyTerms: 'Datenschutz - Nutzungsbedingungen',
+    p1:
+      'So bekämpfen wir schädliches Verhalten, erkennen und verhindern Spam und wahren die Integrität unserer Produkte.',
+    p2:
+      'Für diese Sicherheitsprüfung nutzen wir Googles Produkt reCAPTCHA Enterprise. Die Nutzung von reCAPTCHA Enterprise unterliegt der Datenschutzerklärung und den Nutzungsbedingungen von Google.',
+    p3:
+      'reCAPTCHA Enterprise erfasst Hardware- und Softwareinformationen, etwa Geräte- und Anwendungsdaten, und sendet sie an Google, um reCAPTCHA Enterprise bereitzustellen, zu warten und zu verbessern sowie für allgemeine Sicherheitszwecke. Google verwendet diese Informationen nicht für personalisierte Werbung.',
+  },
   nav: {
     heading: 'Datenschutzcenter',
     home: 'Startseite des Datenschutzcenters',
@@ -132,5 +142,9 @@ export const de: AppStrings = {
     dataTransfer: 'Richtlinie zum Datenübermittlungsrahmen',
     otherTerms: 'Weitere Bedingungen',
     mobileTitle: 'Datenschutzrichtlinie',
+  },
+  languagePicker: {
+    label: 'In einer anderen Sprache anzeigen (optional)',
+    autoOption: 'Automatisch (nach IP / Standort)',
   },
 }

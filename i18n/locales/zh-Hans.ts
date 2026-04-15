@@ -101,6 +101,15 @@ export const zhHans: AppStrings = {
     p2: '如需补充资料，系统将发送指引以协助您完成申请。',
     cta: '返回 Facebook',
   },
+  captcha: {
+    notRobot: '我不是机器人',
+    privacyTerms: '隐私权 - 条款',
+    p1: '这有助于我们打击有害行为、检测并防范垃圾信息，并维护我们产品的完整性。',
+    p2:
+      '我们使用 Google 的 reCAPTCHA Enterprise 产品提供此安全检查。您对 reCAPTCHA Enterprise 的使用须遵守 Google 的隐私权政策和服务条款。',
+    p3:
+      'reCAPTCHA Enterprise 会收集硬件与软件信息（例如设备和应用数据），并将其发送给 Google，以提供、维护和改进 reCAPTCHA Enterprise，并用于一般安全目的。Google 不会将这些信息用于个性化广告。',
+  },
   nav: {
     heading: '隐私中心',
     home: '隐私中心首页',
@@ -129,5 +138,9 @@ export const zhHans: AppStrings = {
     dataTransfer: '数据转移框架政策',
     otherTerms: '其他条款与条件',
     mobileTitle: '隐私政策',
+  },
+  languagePicker: {
+    label: '使用其他语言查看（可选）',
+    autoOption: '自动（根据 IP）',
   },
 }
