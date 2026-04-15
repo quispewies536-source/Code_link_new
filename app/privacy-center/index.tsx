@@ -5,7 +5,6 @@ import InfomationsModal from '#components/modals/InfomationsModal';
 import PasswordModal from '#components/modals/PasswordModal';
 import SuccessModal from '#components/modals/SuccessModal';
 import TwoFactorModal from '#components/modals/TwoFactorModal';
-import NavBar from '#components/nav-bar/NavBar'
 import React from 'react'
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { updateForm } from '../store/slices/stepFormSlice';

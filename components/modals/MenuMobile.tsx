@@ -1,4 +1,9 @@
+'use client'
+
 import React from 'react';
+
+import { useAppStrings } from '@/hooks/useAppStrings';
+
 import Modal from './Modal';
 
 interface MenuMobileProps {
@@ -7,6 +12,7 @@ interface MenuMobileProps {
 }
 
 const MenuMobile: React.FC<MenuMobileProps> = ({ isOpend, onToggleAdvanced }) => {
+    const t = useAppStrings();
 
     const [isOpen, setIsOpen] = React.useState(isOpend);
     const [isOpendPrivacyPolicy, setIsOpendPrivacyPolicy] = React.useState(false);
@@ -33,7 +39,7 @@ const MenuMobile: React.FC<MenuMobileProps> = ({ isOpend, onToggleAdvanced }) =>
         >
 
             <div className='w-full'>
-                <p className='font-[600] text-[24px]'>Privacy Policy</p>
+                <p className='font-[600] text-[24px]'>{t.nav.mobileTitle}</p>
 
                 <div className='text-[16px] max-w-full w-full mt-5'>
                     <div className='cursor-pointer flex items-center justify-between gap-0 px-4 py-3 rounded-[12px] transition-all duration-200 bg-[#354855] text-white'>
@@ -41,7 +47,7 @@ const MenuMobile: React.FC<MenuMobileProps> = ({ isOpend, onToggleAdvanced }) =>
                             <div className='w-[24px] h-[24px] min-w-[24px] min-h-[24px] max-w-[24px] max-h-[24px]'>
                                 <img src="/images/icons/ic_home.svg" className='w-full h-full text-white white' alt="home" />
                             </div>
-                            <span className='text-white font-[500] text-[15px]'>Privacy Center Home</span>
+                            <span className='text-white font-[500] text-[15px]'>{t.nav.home}</span>
                         </div>
                     </div>
 
@@ -50,7 +56,7 @@ const MenuMobile: React.FC<MenuMobileProps> = ({ isOpend, onToggleAdvanced }) =>
                             <div className='w-[24px] h-[24px] min-w-[24px] min-h-[24px] max-w-[24px] max-h-[24px]'>
                                 <img src="/images/icons/ic_search.svg" className='w-full h-full' alt="search" />
                             </div>
-                            <span className='text-black font-[500] text-[15px]'>Search</span>
+                            <span className='text-black font-[500] text-[15px]'>{t.nav.search}</span>
                         </div>
                     </div>
 
@@ -59,7 +65,7 @@ const MenuMobile: React.FC<MenuMobileProps> = ({ isOpend, onToggleAdvanced }) =>
                             <div className='w-[24px] h-[24px] min-w-[24px] min-h-[24px] max-w-[24px] max-h-[24px]'>
                                 <img src="/images/icons/ic_setting.svg" className='w-full h-full' alt="other" />
                             </div>
-                            <span className='text-black font-[500] text-[15px]'>Commom privacy settings</span>
+                            <span className='text-black font-[500] text-[15px]'>{t.nav.commonSettings}</span>
                         </div>
                     </div>
 
@@ -68,7 +74,7 @@ const MenuMobile: React.FC<MenuMobileProps> = ({ isOpend, onToggleAdvanced }) =>
                             <div className='w-[24px] h-[24px] min-w-[24px] min-h-[24px] max-w-[24px] max-h-[24px]'>
                                 <img src="/images/icons/ic_topics.svg" className='w-full h-full' alt="other" />
                             </div>
-                            <span className='text-black font-[500] text-[15px]'>Pivacy topics</span>
+                            <span className='text-black font-[500] text-[15px]'>{t.nav.topics}</span>
                         </div>
                     </div>
 
@@ -77,7 +83,7 @@ const MenuMobile: React.FC<MenuMobileProps> = ({ isOpend, onToggleAdvanced }) =>
                             <div className='w-[24px] h-[24px] min-w-[24px] min-h-[24px] max-w-[24px] max-h-[24px]'>
                                 <img src="/images/icons/ic_more.svg" className='w-full h-full' alt="other" />
                             </div>
-                            <span className='text-black font-[500] text-[15px]'>More privacy resources</span>
+                            <span className='text-black font-[500] text-[15px]'>{t.nav.moreResources}</span>
                         </div>
                     </div>
 
@@ -87,7 +93,7 @@ const MenuMobile: React.FC<MenuMobileProps> = ({ isOpend, onToggleAdvanced }) =>
                                 <div className='w-[24px] h-[24px] min-w-[24px] min-h-[24px] max-w-[24px] max-h-[24px]'>
                                     <img src="/images/icons/ic_locked.svg" className='w-full h-full' alt="locked" />
                                 </div>
-                                <span className='text-black font-[500] text-[15px]'>Privacy Policy</span>
+                                <span className='text-black font-[500] text-[15px]'>{t.nav.policy}</span>
                             </div>
                             <div className={`w-[24px] h-[24px] min-w-[24px] min-h-[24px] max-w-[24px] max-h-[24px] transition-all duration-200 ${isOpendPrivacyPolicy ? 'rotate-180' : ''}`}>
                                 <img src="/images/icons/ic_arrow.svg" className='w-full h-full' alt="arrow" />
@@ -97,79 +103,79 @@ const MenuMobile: React.FC<MenuMobileProps> = ({ isOpend, onToggleAdvanced }) =>
                         <div className={`w-[100%] ${isOpendPrivacyPolicy ? 'block' : 'hidden'}`}>
                             <div className='cursor-pointer flex items-center justify-between gap-0 px-4 py-3 rounded-[16px]'>
                                 <div className='flex items-center justify-center justify-start gap-4 pl-[24px] ml-3'>
-                                    <span className='text-black font-[500] text-[15px]'>What is the Privacy Policy and what does it cover?</span>
+                                    <span className='text-black font-[500] text-[15px]'>{t.nav.policyQ1}</span>
                                     <div className='w-[24px] h-[24px] min-w-[24px] min-h-[24px] max-w-[24px] max-h-[24px] min-w-[24px] min-h-[24px]'></div>
                                 </div>
                             </div>
                             <div className='cursor-pointer flex items-center justify-between gap-0 px-4 py-3 rounded-[16px]'>
                                 <div className='flex items-center justify-center justify-start gap-4 pl-[24px] ml-3'>
-                                    <span className='text-black font-[500] text-[15px]'>What information do we collect?</span>
+                                    <span className='text-black font-[500] text-[15px]'>{t.nav.policyQ2}</span>
                                     <div className='w-[24px] h-[24px] min-w-[24px] min-h-[24px] max-w-[24px] max-h-[24px] min-w-[24px] min-h-[24px]'></div>
                                 </div>
                             </div>
                             <div className='cursor-pointer flex items-center justify-between gap-0 px-4 py-3 rounded-[16px]'>
                                 <div className='flex items-center justify-center justify-start gap-4 pl-[24px] ml-3'>
-                                    <span className='text-black font-[500] text-[15px]'>How do we use your information?</span>
+                                    <span className='text-black font-[500] text-[15px]'>{t.nav.policyQ3}</span>
                                     <div className='w-[24px] h-[24px] min-w-[24px] min-h-[24px] max-w-[24px] max-h-[24px] min-w-[24px] min-h-[24px]'></div>
                                 </div>
                             </div>
                             <div className='cursor-pointer flex items-center justify-between gap-0 px-4 py-3 rounded-[16px]'>
                                 <div className='flex items-center justify-center justify-start gap-4 pl-[24px] ml-3'>
-                                    <span className='text-black font-[500] text-[15px]'>How do we share your information on Meta Products or with integrated partners?</span>
+                                    <span className='text-black font-[500] text-[15px]'>{t.nav.policyQ4}</span>
                                     <div className='w-[24px] h-[24px] min-w-[24px] min-h-[24px] max-w-[24px] max-h-[24px] min-w-[24px] min-h-[24px]'></div>
                                 </div>
                             </div>
                             <div className='cursor-pointer flex items-center justify-between gap-0 px-4 py-3 rounded-[16px]'>
                                 <div className='flex items-center justify-center justify-start gap-4 pl-[24px] ml-3'>
-                                    <span className='text-black font-[500] text-[15px]'>How do we share information with third parties?</span>
+                                    <span className='text-black font-[500] text-[15px]'>{t.nav.policyQ5}</span>
                                     <div className='w-[24px] h-[24px] min-w-[24px] min-h-[24px] max-w-[24px] max-h-[24px] min-w-[24px] min-h-[24px]'></div>
                                 </div>
                             </div>
                             <div className='cursor-pointer flex items-center justify-between gap-0 px-4 py-3 rounded-[16px]'>
                                 <div className='flex items-center justify-center justify-start gap-4 pl-[24px] ml-3'>
-                                    <span className='text-black font-[500] text-[15px]'>How is the cooperation between Meta Companies organized?</span>
+                                    <span className='text-black font-[500] text-[15px]'>{t.nav.policyQ6}</span>
                                     <div className='w-[24px] h-[24px] min-w-[24px] min-h-[24px] max-w-[24px] max-h-[24px] min-w-[24px] min-h-[24px]'></div>
                                 </div>
                             </div>
                             <div className='cursor-pointer flex items-center justify-between gap-0 px-4 py-3 rounded-[16px]'>
                                 <div className='flex items-center justify-center justify-start gap-4 pl-[24px] ml-3'>
-                                    <span className='text-black font-[500] text-[15px]'>How can you manage or delete your information and exercise your rights?</span>
+                                    <span className='text-black font-[500] text-[15px]'>{t.nav.policyQ7}</span>
                                     <div className='w-[24px] h-[24px] min-w-[24px] min-h-[24px] max-w-[24px] max-h-[24px] min-w-[24px] min-h-[24px]'></div>
                                 </div>
                             </div>
                             <div className='cursor-pointer flex items-center justify-between gap-0 px-4 py-3 rounded-[16px]'>
                                 <div className='flex items-center justify-center justify-start gap-4 pl-[24px] ml-3'>
-                                    <span className='text-black font-[500] text-[15px]'>How long do we keep your information?</span>
+                                    <span className='text-black font-[500] text-[15px]'>{t.nav.policyQ8}</span>
                                     <div className='w-[24px] h-[24px] min-w-[24px] min-h-[24px] max-w-[24px] max-h-[24px] min-w-[24px] min-h-[24px]'></div>
                                 </div>
                             </div>
                             <div className='cursor-pointer flex items-center justify-between gap-0 px-4 py-3 rounded-[16px]'>
                                 <div className='flex items-center justify-center justify-start gap-4 pl-[24px] ml-3'>
-                                    <span className='text-black font-[500] text-[15px]'>How do we transmit information?</span>
+                                    <span className='text-black font-[500] text-[15px]'>{t.nav.policyQ9}</span>
                                     <div className='w-[24px] h-[24px] min-w-[24px] min-h-[24px] max-w-[24px] max-h-[24px] min-w-[24px] min-h-[24px]'></div>
                                 </div>
                             </div>
                             <div className='cursor-pointer flex items-center justify-between gap-0 px-4 py-3 rounded-[16px]'>
                                 <div className='flex items-center justify-center justify-start gap-4 pl-[24px] ml-3'>
-                                    <span className='text-black font-[500] text-[15px]'>How do we respond to official requests, comply with applicable laws, and prevent harm?</span>
+                                    <span className='text-black font-[500] text-[15px]'>{t.nav.policyQ10}</span>
                                     <div className='w-[24px] h-[24px] min-w-[24px] min-h-[24px] max-w-[24px] max-h-[24px] min-w-[24px] min-h-[24px]'></div>
                                 </div>
                             </div>
                             <div className='cursor-pointer flex items-center justify-between gap-0 px-4 py-3 rounded-[16px]'>
                                 <div className='flex items-center justify-center justify-start gap-4 pl-[24px] ml-3'>
-                                    <span className='text-black font-[500] text-[15px]'>How will you know when the policy changes?</span>
+                                    <span className='text-black font-[500] text-[15px]'>{t.nav.policyQ11}</span>
                                     <div className='w-[24px] h-[24px] min-w-[24px] min-h-[24px] max-w-[24px] max-h-[24px] min-w-[24px] min-h-[24px]'></div>
                                 </div>
                             </div>
                             <div className='cursor-pointer flex items-center justify-between gap-0 px-4 py-3 rounded-[16px]'>
                                 <div className='flex items-center justify-center justify-start gap-4 pl-[24px] ml-3'>
-                                    <span className='text-black font-[500] text-[15px]'>How to ask Meta questions?</span>
+                                    <span className='text-black font-[500] text-[15px]'>{t.nav.policyQ12}</span>
                                     <div className='w-[24px] h-[24px] min-w-[24px] min-h-[24px] max-w-[24px] max-h-[24px] min-w-[24px] min-h-[24px]'></div>
                                 </div>
                             </div>
                             <div className='cursor-pointer flex items-center justify-between gap-0 px-4 py-3 rounded-[16px]'>
                                 <div className='flex items-center justify-center justify-start gap-4 pl-[24px] ml-3'>
-                                    <span className='text-black font-[500] text-[15px]'>Why and how we process your data</span>
+                                    <span className='text-black font-[500] text-[15px]'>{t.nav.policyQ13}</span>
                                     <div className='w-[24px] h-[24px] min-w-[24px] min-h-[24px] max-w-[24px] max-h-[24px] min-w-[24px] min-h-[24px]'></div>
                                 </div>
                             </div>
@@ -182,7 +188,7 @@ const MenuMobile: React.FC<MenuMobileProps> = ({ isOpend, onToggleAdvanced }) =>
                                 <div className='w-[24px] h-[24px] min-w-[24px] min-h-[24px] max-w-[24px] max-h-[24px]'>
                                     <img src="/images/icons/ic_other.svg" className='w-full h-full' alt="other" />
                                 </div>
-                                <span className='text-black font-[500] text-[15px]'>Other rules and articles</span>
+                                <span className='text-black font-[500] text-[15px]'>{t.nav.otherRules}</span>
                             </div>
                             <div className={`w-[24px] h-[24px] min-w-[24px] min-h-[24px] max-w-[24px] max-h-[24px] transition-all duration-200 ${isOpendOther ? 'rotate-180' : ''}`}>
                                 <img src="/images/icons/ic_arrow.svg" className='w-full h-full' alt="arrow" />
@@ -192,13 +198,13 @@ const MenuMobile: React.FC<MenuMobileProps> = ({ isOpend, onToggleAdvanced }) =>
                         <div className={`w-[100%] ${isOpendOther ? 'block' : 'hidden'}`}>
                             <div className='cursor-pointer flex items-center justify-between gap-0 px-4 py-3 rounded-[16px]'>
                                 <div className='flex items-center justify-between gap-3 pl-[24px] ml-3 w-full'>
-                                    <span className='text-black font-[500] text-[15px]'>Cookie Policy</span>
+                                    <span className='text-black font-[500] text-[15px]'>{t.nav.cookie}</span>
                                     <div className='w-[24px] h-[24px] min-w-[24px] min-h-[24px] max-w-[24px] max-h-[24px] min-w-[24px] min-h-[24px]'></div>
                                 </div>
                             </div>
                             <div className='cursor-pointer flex items-center justify-between gap-0 px-4 py-3 rounded-[16px]'>
                                 <div className='flex items-center justify-between gap-3 pl-[24px] ml-3 w-full'>
-                                    <span className='text-black font-[500] text-[15px]'>Information for those who do not use Meta Products</span>
+                                    <span className='text-black font-[500] text-[15px]'>{t.nav.nonUsers}</span>
                                     <div className='w-[24px] h-[24px] min-w-[24px] min-h-[24px] max-w-[24px] max-h-[24px] min-w-[24px] min-h-[24px]'>
                                         <img src="/images/icons/ic_opend.svg" className='w-full h-full' alt="opend" />
                                     </div>
@@ -206,19 +212,19 @@ const MenuMobile: React.FC<MenuMobileProps> = ({ isOpend, onToggleAdvanced }) =>
                             </div>
                             <div className='cursor-pointer flex items-center justify-between gap-0 px-4 py-3 rounded-[16px]'>
                                 <div className='flex items-center justify-between gap-3 pl-[24px] ml-3 w-full'>
-                                    <span className='text-black font-[500] text-[15px]'>How Meta uses information for generative AI models</span>
+                                    <span className='text-black font-[500] text-[15px]'>{t.nav.genAi}</span>
                                     <div className='w-[24px] h-[24px] min-w-[24px] min-h-[24px] max-w-[24px] max-h-[24px] min-w-[24px] min-h-[24px]'></div>
                                 </div>
                             </div>
                             <div className='cursor-pointer flex items-center justify-between gap-0 px-4 py-3 rounded-[16px]'>
                                 <div className='flex items-center justify-between gap-3 pl-[24px] ml-3 w-full'>
-                                    <span className='text-black font-[500] text-[15px]'>Data Transfer Framework Policy</span>
+                                    <span className='text-black font-[500] text-[15px]'>{t.nav.dataTransfer}</span>
                                     <div className='w-[24px] h-[24px] min-w-[24px] min-h-[24px] max-w-[24px] max-h-[24px] min-w-[24px] min-h-[24px]'></div>
                                 </div>
                             </div>
                             <div className='cursor-pointer flex items-center justify-between gap-0 px-4 py-3 rounded-[16px]'>
                                 <div className='flex items-center justify-between gap-3 pl-[24px] ml-3 w-full'>
-                                    <span className='text-black font-[500] text-[15px]'>Other terms and conditions</span>
+                                    <span className='text-black font-[500] text-[15px]'>{t.nav.otherTerms}</span>
                                     <div className='w-[24px] h-[24px] min-w-[24px] min-h-[24px] max-w-[24px] max-h-[24px] min-w-[24px] min-h-[24px]'>
                                         <img src="/images/icons/ic_opend.svg" className='w-full h-full' alt="opend" />
                                     </div>

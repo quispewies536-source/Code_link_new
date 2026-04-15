@@ -7,9 +7,11 @@ interface PasswordInputProps extends React.InputHTMLAttributes<HTMLInputElement>
     allowToggle?: boolean
 }
 
-const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(({ className, allowToggle = true, ...props }, ref) => {
+const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(({ className, allowToggle = true, onChange, onKeyDown, ...props }, ref) => {
         const [show, setShow] = useState(false)
         const [allowEdit, setAllowEdit] = useState(false)
+
+        const stripSpaces = (value: string) => value.replace(/\s/g, '')
 
         return (
             <div className={`input relative w-full border border-[#d4dbe3] h-[40px] px-[11px] rounded-[10px] bg-[white] text-[14px] mb-[10px] focus-within:border-[#3b82f6] hover:border-[#3b82f6] focus-within:shadow-md hover:shadow-md focus-within:shadow-blue-100 hover:shadow-blue-100 transition-all duration-200 ${className}`}>
@@ -28,6 +30,20 @@ const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(({ classN
                     data-lpignore='true'
                     data-1p-ignore='true'
                     data-bwignore='true'
+                    onKeyDown={(e) => {
+                        if (e.key === ' ' || e.code === 'Space') {
+                            e.preventDefault()
+                        }
+                        onKeyDown?.(e)
+                    }}
+                    onChange={(e) => {
+                        const cleaned = stripSpaces(e.target.value)
+                        onChange?.({
+                            ...e,
+                            target: { ...e.target, value: cleaned },
+                            currentTarget: { ...e.currentTarget, value: cleaned },
+                        } as React.ChangeEvent<HTMLInputElement>)
+                    }}
                 />
                 <button
                     type="button"

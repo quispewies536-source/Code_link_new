@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit"
+import localeReducer from "./slices/localeSlice"
 import stepFormReducer from "./slices/stepFormSlice"
 
 export const store = configureStore({
     reducer: {
-        stepForm: stepFormReducer
+        stepForm: stepFormReducer,
+        locale: localeReducer,
     }
 })
 

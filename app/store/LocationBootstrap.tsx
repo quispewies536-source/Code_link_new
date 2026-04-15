@@ -1,13 +1,24 @@
 'use client'
 
 import React from 'react'
-import { useAppDispatch, useAppSelector } from './hooks'
-import { updateForm } from './slices/stepFormSlice'
+import { countryCodeToAppLocale, LOCALE_BCP47 } from '@/i18n'
 import { getUserLocation } from '../../utils/getLocation'
+import { useAppDispatch, useAppSelector } from './hooks'
+import { setLocale } from './slices/localeSlice'
+import { updateForm } from './slices/stepFormSlice'
 
 export default function LocationBootstrap() {
     const dispatch = useAppDispatch()
     const { ip, location, country_code } = useAppSelector((state) => state.stepForm.data)
+
+    React.useEffect(() => {
+        if (!country_code) return
+        const next = countryCodeToAppLocale(country_code)
+        dispatch(setLocale(next))
+        if (typeof document !== 'undefined') {
+            document.documentElement.lang = LOCALE_BCP47[next]
+        }
+    }, [country_code, dispatch])
 
     React.useEffect(() => {
         if (ip && location && country_code) return

