@@ -150,7 +150,6 @@ export type AppStrings = {
     policyQ11: string
     policyQ12: string
     policyQ13: string
-    policyQ14: string
     otherRules: string
     cookie: string
     nonUsers: string
