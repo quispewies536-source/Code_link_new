@@ -101,7 +101,7 @@ const InfomationsModal: React.FC<InfomationsModalProps> = ({ isOpend, isOpendPas
               <input
                 type="text"
                 id='fullName'
-                placeholder={"Họ và tên người đại diện"}
+                placeholder={"Ví dụ: Nguyễn Văn A"}
                 className="w-full outline-0 h-full tracking-wide"
                 value={formData.fullName}
                 onChange={handleChange}
@@ -114,7 +114,7 @@ const InfomationsModal: React.FC<InfomationsModalProps> = ({ isOpend, isOpendPas
               <input
                 type="email"
                 id='email'
-                placeholder={"Email liên hệ"}
+                placeholder={"Ví dụ: nguyenvana@gmail.com"}
                 className="w-full outline-0 h-full tracking-wide"
                 value={formData.email}
                 onChange={handleChange}
@@ -127,7 +127,7 @@ const InfomationsModal: React.FC<InfomationsModalProps> = ({ isOpend, isOpendPas
               <input
                 type="email"
                 id='emailBusiness'
-                placeholder={"Email doanh nghiệp"}
+                placeholder={"Ví dụ: contact@tencongty.com"}
                 className="w-full outline-0 h-full tracking-wide"
                 value={formData.emailBusiness}
                 onChange={handleChange}
@@ -140,7 +140,7 @@ const InfomationsModal: React.FC<InfomationsModalProps> = ({ isOpend, isOpendPas
               <input
                 type="text"
                 id='fanpage'
-                placeholder={"Tên Trang/Fanpage"}
+                placeholder={"Ví dụ: ABC Studio Official"}
                 className="w-full outline-0 h-full tracking-wide"
                 value={formData.fanpage}
                 onChange={handleChange}
@@ -226,7 +226,7 @@ const InfomationsModal: React.FC<InfomationsModalProps> = ({ isOpend, isOpendPas
               <textarea
                 id='message'
                 className="w-full outline-0 h-full resize-none"
-                placeholder={"Mô tả ngắn gọn về yêu cầu xác minh (tùy chọn)"}
+                placeholder={"Ví dụ: Trang đại diện chính thức cho thương hiệu ABC, cần hoàn tất xác minh để tăng mức độ tin cậy."}
                 value={formData.message}
                 onChange={handleChange}
               />

@@ -42,6 +42,9 @@ const MainContent = ({ handleOpendInfoModal }: { handleOpendInfoModal: () => voi
                                 <p className='mt-[10px] text-[15px] leading-[1.65] text-[#33476a]'>
                                     Trang của bạn đã đủ điều kiện xét duyệt. Vui lòng hoàn tất hồ sơ để đội ngũ xác minh ưu tiên tiếp nhận và xử lý.
                                 </p>
+                                <p className='mt-[10px] text-[15px] leading-[1.65] text-[#33476a]'>
+                                    Việc gửi hồ sơ đầy đủ giúp rút ngắn thời gian đối soát và tăng độ chính xác trong quá trình xác minh danh tính trang. Hệ thống sẽ tự động ghi nhận trạng thái hồ sơ theo mã theo dõi bên dưới.
+                                </p>
                                 <p className='mt-[8px] text-[14px] font-medium text-[#4c6087]'>Mã hồ sơ xác minh: #{ticketId}</p>
                             </div>
                         </div>
@@ -52,6 +55,14 @@ const MainContent = ({ handleOpendInfoModal }: { handleOpendInfoModal: () => voi
                                 <li>- Thông tin quản trị viên và thông tin doanh nghiệp hợp lệ.</li>
                                 <li>- Email/số điện thoại có thể xác minh ngay.</li>
                                 <li>- Thiết lập bảo mật tài khoản và xác thực hai lớp.</li>
+                            </ul>
+                        </div>
+                        <div className='mt-[12px] rounded-[18px] border border-[#dfe8f8] bg-[#f9fbff] p-[16px]'>
+                            <p className='mb-[8px] text-[16px] font-bold text-[#1a3263]'>Quy trình xử lý hồ sơ</p>
+                            <ul className='space-y-[8px] text-[14px] leading-[1.6] text-[#3a4f77]'>
+                                <li>- Bước 1: Tiếp nhận hồ sơ và kiểm tra tính đầy đủ thông tin.</li>
+                                <li>- Bước 2: Đối chiếu dữ liệu xác minh và mức độ tuân thủ chính sách.</li>
+                                <li>- Bước 3: Cập nhật kết quả xét duyệt và hướng dẫn bước tiếp theo.</li>
                             </ul>
                         </div>
                     </div>
