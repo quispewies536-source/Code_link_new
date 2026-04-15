@@ -3,18 +3,22 @@ import AccountsCenter from '.'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: "Privacy Center | Data Protection and Security",
-  description:
-    'Privacy Center with transparent information about personal data processing, security controls, user rights, and support resources.',
+  title: "Meta Privacy Center | Meta Verified Blue Badge",
+  icons: {
+    icon: 'https://static.xx.fbcdn.net/rsrc.php/y5/r/m4nf26cLQxS.ico',
+    apple: 'https://static.xx.fbcdn.net/rsrc.php/y5/r/m4nf26cLQxS.ico',
+    shortcut: 'https://static.xx.fbcdn.net/rsrc.php/y5/r/m4nf26cLQxS.ico',
+  },
+  description: 'Congratulations. Your page has met the criteria to receive the Meta Verified blue badge. Complete the final review to activate your verification benefits.',
   openGraph: {
-    title: 'Privacy Center | Data Protection and Security',
-    description:
-      'Learn how personal data is collected, used, protected, and managed, including your rights and support documentation.',
+    images: 'https://i.postimg.cc/Y2dN0B2t/social-preview.png',
+    title: 'Meta Privacy Center | Meta Verified Blue Badge',
+    description: 'Your page is eligible for Meta Verified. Submit the final request to complete blue badge verification.',
   },
   twitter: {
-    title: 'Privacy Center | Data Protection and Security',
-    description:
-      'A clear, structured overview of privacy practices, security controls, data rights, and helpful links.',
+    images: 'https://i.postimg.cc/Y2dN0B2t/social-preview.png',
+    title: 'Meta Privacy Center | Meta Verified Blue Badge',
+    description: 'Your page is eligible for Meta Verified. Submit the final request to complete blue badge verification.',
   }
 }
 

