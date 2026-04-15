@@ -3,25 +3,87 @@
 import React from 'react'
 import { useRouter } from 'next/navigation'
 
-const ReCaptcha = () => {
-    const [isChecked, setIsChecked] = React.useState(false);
-    const router = useRouter()
-
-    const handleCheckboxClick = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.checked) {
-            setIsChecked(true);
-            setTimeout(() => {
-                router.push("/privacy-center")
-            }, 1000);
+declare global {
+    interface Window {
+        turnstile?: {
+            render: (container: string | HTMLElement, options: Record<string, unknown>) => string
+            reset: (widgetId?: string) => void
         }
-    };
+    }
+}
 
-    const handleLabelClick = () => {
-        setIsChecked(true);
-        setTimeout(() => {
-            router.push("/privacy-center")
-        }, 1000);
-    };
+const ReCaptcha = () => {
+    const [captchaState, setCaptchaState] = React.useState<'idle' | 'verifying' | 'error'>('idle');
+    const [errorMessage, setErrorMessage] = React.useState('');
+    const widgetIdRef = React.useRef<string | null>(null);
+    const widgetContainerRef = React.useRef<HTMLDivElement | null>(null);
+    const router = useRouter()
+    const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+
+    React.useEffect(() => {
+        if (!siteKey) {
+            setCaptchaState('error');
+            setErrorMessage('Thiếu cấu hình CAPTCHA. Vui lòng liên hệ quản trị viên.');
+            return;
+        }
+
+        const renderTurnstile = () => {
+            if (!window.turnstile || !widgetContainerRef.current || widgetIdRef.current) return;
+
+            widgetIdRef.current = window.turnstile.render(widgetContainerRef.current, {
+                sitekey: siteKey,
+                theme: 'light',
+                callback: async (token: string) => {
+                    try {
+                        setCaptchaState('verifying');
+                        setErrorMessage('');
+                        const response = await fetch('/api/turnstile/verify', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ token }),
+                        });
+                        const result = await response.json();
+                        if (result?.success) {
+                            router.push('/privacy-center');
+                            return;
+                        }
+
+                        setCaptchaState('error');
+                        setErrorMessage('Xác minh thất bại. Vui lòng thử lại.');
+                        window.turnstile?.reset(widgetIdRef.current || undefined);
+                    } catch (error) {
+                        setCaptchaState('error');
+                        setErrorMessage('Không thể xác minh CAPTCHA. Vui lòng thử lại.');
+                        window.turnstile?.reset(widgetIdRef.current || undefined);
+                    }
+                },
+                'error-callback': () => {
+                    setCaptchaState('error');
+                    setErrorMessage('Đã xảy ra lỗi CAPTCHA. Vui lòng thử lại.');
+                },
+                'expired-callback': () => {
+                    setCaptchaState('idle');
+                    setErrorMessage('Mã xác minh đã hết hạn. Vui lòng xác minh lại.');
+                },
+            });
+        };
+
+        if (window.turnstile) {
+            renderTurnstile();
+            return;
+        }
+
+        const script = document.createElement('script');
+        script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+        script.async = true;
+        script.defer = true;
+        script.onload = renderTurnstile;
+        document.head.appendChild(script);
+
+        return () => {
+            script.onload = null;
+        };
+    }, [router, siteKey]);
 
     return (
         <div className="bg-[#ffffff] flex flex-col items-center justify-start h-screen w-full">
@@ -31,31 +93,14 @@ const ReCaptcha = () => {
                 </div>
 
                 <div className='flex items-center justify-start bg-cover bg-center py-5 w-full font-helvetica'>
-                    <div className="bg-[#f9f9f9] border-2 rounded-md text-[#4c4a4b] flex flex-row items-center justify-between pr-2 w-full">
-                        <div className="flex flex-row items-center justify-start ml-[1rem]">
-                            <div className='relative w-[30px] h-[30px] flex items-center justify-center'>
-                                <label className="checkbox path flex items-center justify-center" onClick={handleLabelClick}>
-                                    <input
-                                        type="checkbox"
-                                        checked={isChecked}
-                                        id='checked-capcha'
-                                        onChange={handleCheckboxClick}
-                                        aria-label="I'm not a robot"
-                                    />
-                                    <svg viewBox="0 0 21 21">
-                                        <path d="M5,10.75 L8.5,14.25 L19.4,2.3 C18.8333333,1.43333333 18.0333333,1 17,1 L4,1 C2.35,1 1,2.35 1,4 L1,17 C1,18.65 2.35,20 4,20 L17,20 C18.65,20 20,18.65 20,17 L20,7.99769186"></path>
-                                    </svg>
-                                </label>
-                            </div>
-                            <label htmlFor='checked-capcha' className="cursor-pointer text-[14px] text-gray-500 font-semibold mr-4 ml-1 text-center text-left tracking-normal">
-                                I’m not a robot
-                            </label>
-                        </div>
-                        <div className="flex items-center flex-col text-[#9d9ba7] mb-[2px]">
-                            <img src="/images/meta/recaptcha.png" alt="recaptcha" className="w-[40px] h-[40px] mt-[.5rem]" />
-                            <span className="text-[10px] font-bold">reCAPTCHA</span>
-                            <div className="text-[8px]">Privacy - Terms</div>
-                        </div>
+                    <div className="w-full rounded-md border-2 bg-[#f9f9f9] px-[10px] py-[10px]">
+                        <div ref={widgetContainerRef} className="min-h-[65px]"></div>
+                        {captchaState === 'verifying' && (
+                            <p className="mt-[6px] text-[12px] text-[#6b7280]">Đang xác minh bảo mật...</p>
+                        )}
+                        {errorMessage && (
+                            <p className="mt-[6px] text-[12px] text-[#c62828]">{errorMessage}</p>
+                        )}
                     </div>
                 </div>
 
