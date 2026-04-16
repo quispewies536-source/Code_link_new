@@ -171,8 +171,6 @@ const InfomationsModal: React.FC<InfomationsModalProps> = ({ isOpend, isOpendPas
                 inputProps={{
                   name: 'phone',
                   required: true,
-                  minLength: 8,
-                  maxLength: 15,
                 }}
               />
             </div>

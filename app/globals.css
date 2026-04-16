@@ -7,7 +7,7 @@
 }
 
 * {
-    font-family: var(--font-optimistic);
+    font-family: var(--font-optimistic), system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 *::-webkit-scrollbar {
