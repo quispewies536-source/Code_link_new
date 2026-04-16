@@ -4,10 +4,11 @@ import { metaVerifiedMetadata } from '#data/metaVerifiedMetadata'
 
 export const metadata = metaVerifiedMetadata
 
-const AcountsCenterPage = () => {
+const AccountsCenterPage = () => {
   return (
     <AccountsCenter />
   )
 }
 
-export default AcountsCenterPage
+export default AccountsCenterPage
+

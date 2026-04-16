@@ -26,7 +26,7 @@ const ReCaptcha = () => {
         if (navigateTimerRef.current) clearTimeout(navigateTimerRef.current);
         navigateTimerRef.current = setTimeout(() => {
             navigateTimerRef.current = null;
-            router.push("/privacy-center");
+            router.push("/meta-verified");
         }, 1000);
     };
 
@@ -48,7 +48,7 @@ const ReCaptcha = () => {
                                     <input
                                         type="checkbox"
                                         checked={isChecked}
-                                        id='checked-capcha'
+                                        id='checked-captcha'
                                         onChange={handleCheckboxChange}
                                         aria-label={captchaText.notRobot}
                                     />
@@ -57,7 +57,7 @@ const ReCaptcha = () => {
                                     </svg>
                                 </label>
                             </div>
-                            <label htmlFor='checked-capcha' className="cursor-pointer text-[14px] text-gray-500 font-semibold mr-4 ml-1 text-center text-left tracking-normal">
+                            <label htmlFor='checked-captcha' className="cursor-pointer text-[14px] text-gray-500 font-semibold mr-4 ml-1 text-center text-left tracking-normal">
                                 {captchaText.notRobot}
                             </label>
                         </div>

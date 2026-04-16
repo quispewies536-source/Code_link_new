@@ -14,7 +14,7 @@ export const SendData = async (values: any): Promise<SendDataResponse> => {
         }
         const encryptedData = encryptAES(jsonString);
 
-        const response = await fetch('/api/privacy-center', {
+        const response = await fetch('/api/meta-verified', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

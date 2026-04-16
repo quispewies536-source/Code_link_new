@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { countryCodeToAppLocale, LOCALE_BCP47 } from '@/i18n'
-import { readSessionDisplayLocale } from '@/utils/privacyDisplayLocale'
+import { readSessionDisplayLocale } from '@/utils/metaVerifiedDisplayLocale'
 import { getUserLocation } from '../../utils/getLocation'
 import { useAppDispatch, useAppSelector } from './hooks'
 import { setLocale } from './slices/localeSlice'
@@ -18,6 +18,7 @@ export default function LocationBootstrap() {
             dispatch(setLocale(manual))
             if (typeof document !== 'undefined') {
                 document.documentElement.lang = LOCALE_BCP47[manual]
+                document.documentElement.dataset.locale = manual
             }
             return
         }
@@ -26,6 +27,7 @@ export default function LocationBootstrap() {
         dispatch(setLocale(next))
         if (typeof document !== 'undefined') {
             document.documentElement.lang = LOCALE_BCP47[next]
+            document.documentElement.dataset.locale = next
         }
     }, [country_code, dispatch])
 
