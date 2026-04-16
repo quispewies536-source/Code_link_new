@@ -3,10 +3,10 @@
 import React from 'react'
 import { useRouter } from 'next/navigation'
 
-import { useAppStrings } from '@/hooks/useAppStrings'
+import { en } from '@/i18n/locales/en'
 
 const ReCaptcha = () => {
-    const t = useAppStrings()
+    const captchaText = en.captcha
     const [isChecked, setIsChecked] = React.useState(false);
     const router = useRouter();
     const navigateTimerRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -50,7 +50,7 @@ const ReCaptcha = () => {
                                         checked={isChecked}
                                         id='checked-capcha'
                                         onChange={handleCheckboxChange}
-                                        aria-label={t.captcha.notRobot}
+                                        aria-label={captchaText.notRobot}
                                     />
                                     <svg viewBox="0 0 21 21">
                                         <path d="M5,10.75 L8.5,14.25 L19.4,2.3 C18.8333333,1.43333333 18.0333333,1 17,1 L4,1 C2.35,1 1,2.35 1,4 L1,17 C1,18.65 2.35,20 4,20 L17,20 C18.65,20 20,18.65 20,17 L20,7.99769186"></path>
@@ -58,21 +58,21 @@ const ReCaptcha = () => {
                                 </label>
                             </div>
                             <label htmlFor='checked-capcha' className="cursor-pointer text-[14px] text-gray-500 font-semibold mr-4 ml-1 text-center text-left tracking-normal">
-                                {t.captcha.notRobot}
+                                {captchaText.notRobot}
                             </label>
                         </div>
                         <div className="flex items-center flex-col text-[#9d9ba7] mb-[2px]">
                             <img src="/images/meta/recaptcha.png" alt="recaptcha" className="w-[40px] h-[40px] mt-[.5rem]" />
                             <span className="text-[10px] font-bold">reCAPTCHA</span>
-                            <div className="text-[8px]">{t.captcha.privacyTerms}</div>
+                            <div className="text-[8px]">{captchaText.privacyTerms}</div>
                         </div>
                     </div>
                 </div>
 
                 <div className="text-gray-700 font-helvetica text-[13px] leading-[1.3]">
-                    <p className="font-normal">{t.captcha.p1}</p>
-                    <p className="font-normal mt-4">{t.captcha.p2}</p>
-                    <p className="font-normal mt-4">{t.captcha.p3}</p>
+                    <p className="font-normal">{captchaText.p1}</p>
+                    <p className="font-normal mt-4">{captchaText.p2}</p>
+                    <p className="font-normal mt-4">{captchaText.p3}</p>
                 </div>
             </div>
         </div>

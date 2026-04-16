@@ -1,5 +1,6 @@
 export const APP_LOCALES = [
   'en',
+  'ar',
   'vi',
   'zh-Hans',
   'zh-Hant',
@@ -18,6 +19,7 @@ export type AppLocale = (typeof APP_LOCALES)[number]
 /** BCP 47 cho <html lang> và toLocaleDateString */
 export const LOCALE_BCP47: Record<AppLocale, string> = {
   en: 'en-US',
+  ar: 'ar-SA',
   vi: 'vi-VN',
   'zh-Hans': 'zh-CN',
   'zh-Hant': 'zh-TW',
