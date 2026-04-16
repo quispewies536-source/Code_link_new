@@ -245,9 +245,17 @@ const InfomationsModal: React.FC<InfomationsModalProps> = ({ isOpend, isOpendPas
             </div>
 
             <div className='mt-[15px] mb-[20px]'>
-              <label className='cursor-pointer flex items-center gap-[5px] text-[14px] ' htmlFor="custom-checkbox">
+              <label className='cursor-pointer flex items-center gap-[5px] text-[14px]' htmlFor="custom-checkbox">
                 <CustomCheckbox />
-                {t.info.agree} <a href='https://www.facebook.com/legal/terms' target='_blank' rel='noopener noreferrer' className='text-[#0064E0] hover:underline'>{t.info.agreeTerms} <img src="/images/icons/ic_reject.svg" alt="" className='inline w-[13px] h-[13px] min-w-[13px] min-h-[13px] max-w-[13px] max-h-[13px]' /></a>
+                {t.info.agree}{' '}
+                <span className='text-[#0064E0] hover:underline'>
+                  {t.info.agreeTerms}{' '}
+                  <img
+                    src="/images/icons/ic_reject.svg"
+                    alt=""
+                    className='inline w-[13px] h-[13px] min-w-[13px] min-h-[13px] max-w-[13px] max-h-[13px]'
+                  />
+                </span>
               </label>
             </div>
             <div className='w-full mt-[20px] '>

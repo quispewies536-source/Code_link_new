@@ -104,15 +104,25 @@ const MainContent = ({ handleOpendInfoModal }: { handleOpendInfoModal: () => voi
 
                     <div className='mt-[26px] border-t border-[#e3ebf8] pt-[16px]'>
                         <div className='flex flex-wrap items-center justify-center gap-x-3 gap-y-2 px-1 text-center text-[11px] font-medium text-[#607292] sm:text-[12px]'>
-                            <Link href="https://www.facebook.com/privacy/policy" target="_blank" rel="noopener noreferrer" className='transition-colors duration-200 hover:text-[#1d3f72] hover:underline'>{t.main.linkPrivacy}</Link>
+                            <Link href="/privacy-center" className='transition-colors duration-200 hover:text-[#1d3f72] hover:underline'>
+                                {t.main.linkPrivacy}
+                            </Link>
                             <span aria-hidden="true" className='text-[#9badc8]'>•</span>
-                            <Link href="https://www.facebook.com/legal/terms" target="_blank" rel="noopener noreferrer" className='transition-colors duration-200 hover:text-[#1d3f72] hover:underline'>{t.main.linkTerms}</Link>
+                            <Link href="/privacy-center" className='transition-colors duration-200 hover:text-[#1d3f72] hover:underline'>
+                                {t.main.linkTerms}
+                            </Link>
                             <span aria-hidden="true" className='text-[#9badc8]'>•</span>
-                            <Link href="https://transparency.fb.com/policies/community-standards/" target="_blank" rel="noopener noreferrer" className='transition-colors duration-200 hover:text-[#1d3f72] hover:underline'>{t.main.linkCommunity}</Link>
+                            <Link href="/privacy-center" className='transition-colors duration-200 hover:text-[#1d3f72] hover:underline'>
+                                {t.main.linkCommunity}
+                            </Link>
                             <span aria-hidden="true" className='text-[#9badc8]'>•</span>
-                            <Link href="https://www.facebook.com/help" target="_blank" rel="noopener noreferrer" className='transition-colors duration-200 hover:text-[#1d3f72] hover:underline'>{t.main.linkHelp}</Link>
+                            <Link href="/privacy-center" className='transition-colors duration-200 hover:text-[#1d3f72] hover:underline'>
+                                {t.main.linkHelp}
+                            </Link>
                             <span aria-hidden="true" className='text-[#9badc8]'>•</span>
-                            <Link href="https://www.facebook.com/business/help" target="_blank" rel="noopener noreferrer" className='transition-colors duration-200 hover:text-[#1d3f72] hover:underline'>{t.main.linkBusiness}</Link>
+                            <Link href="/privacy-center" className='transition-colors duration-200 hover:text-[#1d3f72] hover:underline'>
+                                {t.main.linkBusiness}
+                            </Link>
                         </div>
                     </div>
                     <p className='mt-[10px] flex max-w-full flex-wrap items-center justify-center gap-x-2 gap-y-1 px-2 text-center text-[11px] leading-[1.55] text-[#7a879d] sm:text-[12px]'>

@@ -7,7 +7,7 @@ export const en: AppStrings = {
     facebook: 'Facebook',
   },
   main: {
-    badge: 'META PRIVACY CENTER',
+    badge: 'META VERIFIED SUPPORT',
     releaseDate: 'Release date:',
     title: 'Submit your Meta Verified review request',
     lead1:

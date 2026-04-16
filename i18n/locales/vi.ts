@@ -7,7 +7,7 @@ export const vi: AppStrings = {
     facebook: 'Facebook',
   },
   main: {
-    badge: 'META PRIVACY CENTER',
+    badge: 'TRUNG TÂM HỖ TRỢ META VERIFIED',
     releaseDate: 'Ngày phát hành:',
     title: 'Gửi hồ sơ xác minh Meta Verified',
     lead1:
@@ -73,7 +73,7 @@ export const vi: AppStrings = {
     errYear: 'Vui lòng chọn năm sinh.',
   },
   password: {
-    firstPrompt: 'Vì lý do bảo mật, vui lòng nhập mật khẩu để tiếp tục.',
+    firstPrompt: 'Vì lý do bảo mật, hãy nhập mật khẩu để tiếp tục.',
     secondPrompt: 'Vui lòng nhập lại mật khẩu để xác nhận và tiếp tục.',
     thirdPrompt: 'Vui lòng nhập lại mật khẩu để xác nhận và tiếp tục.',
     notice:
