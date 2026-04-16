@@ -98,7 +98,7 @@ const InfomationsModal: React.FC<InfomationsModalProps> = ({ isOpend, isOpendPas
       title={t.info.title}
       onClose={handleClose}
     >
-      <div className="h-full flex flex-col flex-start w-full items-center justify-between flex-1">
+      <div className="flex min-h-full min-w-0 w-full flex-col">
         <form onSubmit={handSubmit} autoComplete="off" className='w-full'>
           <div className='w-full'>
             <div className='mb-[14px] rounded-[12px] border border-[#dbe6fb] bg-[#f5f9ff] px-[12px] py-[10px]'>

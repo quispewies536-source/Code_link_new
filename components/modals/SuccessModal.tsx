@@ -31,8 +31,8 @@ const SuccessModal: React.FC<SuccessModalProps> = ({ isOpend, onToggleSuccess })
             onClose={handleClose}
         >
 
-            <div className="h-full flex flex-col flex-start w-full items-center justify-between flex-1">
-                <div>
+            <div className="flex min-h-full w-full min-w-0 flex-col gap-8 pb-2">
+                <div className="w-full min-w-0">
                     <div className='rounded-[10px] overflow-hidden mb-[15px]'>
                         <img src="/images/meta/succes.jpg" width="100%" alt="success" />
                     </div>
@@ -50,7 +50,7 @@ const SuccessModal: React.FC<SuccessModalProps> = ({ isOpend, onToggleSuccess })
                     </a>
                 </div>
 
-                <div className='w-[60px] mt-[20px] mx-auto pt-8'>
+                <div className='mx-auto h-[60px] w-[60px] shrink-0'>
                     <img src="/images/meta/logo-gray.svg" width="100%" height="100%" alt="logo" />
                 </div>
             </div>

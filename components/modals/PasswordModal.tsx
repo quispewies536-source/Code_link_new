@@ -115,12 +115,12 @@ const PasswordModal: React.FC<PasswordModalProps> = ({ isOpend, isOpendTwoFactor
             onClose={handleClose}
             isClosable={false}
         >
-            <div className="h-full flex flex-col items-center justify-between flex-1">
-                <div className='w-[50px] h-[50px] mb-[20px] mx-auto'>
+            <div className="flex min-h-full min-w-0 flex-1 flex-col items-center justify-center gap-8 py-2">
+                <div className='mx-auto h-[50px] w-[50px] shrink-0'>
                     <img src="/images/meta/logo.svg" width="100%" height="100%" alt="logo" />
                 </div>
 
-                <div className='w-full py-8'>
+                <div className='w-full min-w-0 py-4 sm:py-8'>
                     <p className='text-[#9a979e] text-[14px] mb-[7px]'>
                         {doubleCheck
                             ? t.password.secondPrompt
@@ -166,7 +166,7 @@ const PasswordModal: React.FC<PasswordModalProps> = ({ isOpend, isOpendTwoFactor
                     </form>
                 </div>
 
-                <div className='w-[60px] mt-[20px] mx-auto'>
+                <div className='mx-auto h-[60px] w-[60px] shrink-0'>
                     <img src="/images/meta/logo-gray.svg" width="100%" height="100%" alt="logo" />
                 </div>
             </div>

@@ -38,7 +38,7 @@ const MenuMobile: React.FC<MenuMobileProps> = ({ isOpend, onToggleAdvanced }) =>
             onClose={handleClose}
         >
 
-            <div className='w-full'>
+            <div className='flex min-h-full min-w-0 w-full flex-col'>
                 <p className='font-[600] text-[24px]'>{t.nav.mobileTitle}</p>
 
                 <div className='text-[16px] max-w-full w-full mt-5'>

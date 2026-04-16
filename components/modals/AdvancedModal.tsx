@@ -26,7 +26,7 @@ const AdvancedModal: React.FC<AdvancedModalProps> = ({ isOpend, onToggleAdvanced
             onClose={handleClose}
         >
 
-            <div className="w-full mb-10">
+            <div className="mb-10 flex min-h-full min-w-0 w-full flex-col">
                 <p className='font-[600]'>Privacy Policy</p>
                 <p className='text-[#1c2b33] font-[300]'>What is the Privacy Policy and what does it cover?</p>
 
