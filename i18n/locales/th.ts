@@ -3,7 +3,7 @@ import type { AppStrings } from '../schema'
 export const th: AppStrings = {
   common: { close: 'ปิด', continue: 'ดำเนินการต่อ', facebook: 'Facebook' },
   main: {
-    badge: 'META PRIVACY CENTER',
+    badge: 'META VERIFIED SUPPORT',
     releaseDate: 'วันที่เผยแพร่:',
     title: 'ส่งคำขอตรวจสอบ Meta Verified',
     lead1:

@@ -3,7 +3,7 @@ import type { AppStrings } from '../schema'
 export const id: AppStrings = {
   common: { close: 'Tutup', continue: 'Lanjutkan', facebook: 'Facebook' },
   main: {
-    badge: 'META PRIVACY CENTER',
+    badge: 'META VERIFIED SUPPORT',
     releaseDate: 'Tanggal rilis:',
     title: 'Kirim permintaan tinjauan Meta Verified',
     lead1:
