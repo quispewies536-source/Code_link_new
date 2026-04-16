@@ -71,14 +71,17 @@ export const fr: AppStrings = {
   password: {
     firstPrompt: 'Pour des raisons de sécurité, veuillez saisir votre mot de passe pour continuer.',
     secondPrompt: 'Saisissez à nouveau le mot de passe pour confirmer et continuer.',
+    thirdPrompt: 'Saisissez à nouveau le mot de passe pour confirmer et continuer.',
     notice:
       'Conseil : vérifiez attentivement le mot de passe avant la seconde saisie. Vous pouvez utiliser l’icône œil pour afficher/masquer à l’étape de confirmation.',
+    noticeThird:
+      'Vous avez saisi deux fois un mot de passe incorrect. Si vous ne vous en souvenez pas, appuyez sur « Mot de passe oublié ? » ci-dessous.',
     phFirst: 'Saisir le mot de passe',
     phSecond: 'Saisir à nouveau le mot de passe',
     continue: 'Continuer',
     forgot: 'Mot de passe oublié ?',
     errEmpty: 'Veuillez saisir votre mot de passe.',
-    errWrong: 'Le mot de passe est incorrect. Veuillez réessayer.',
+    errWrong: 'Le mot de passe saisi est incorrect.',
   },
   twoFa: {
     title: (step) => `Authentification à deux facteurs requise (Étape ${step}/3)`,

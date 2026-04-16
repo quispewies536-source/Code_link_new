@@ -71,14 +71,17 @@ export const de: AppStrings = {
   password: {
     firstPrompt: 'Aus Sicherheitsgründen bitte Passwort eingeben, um fortzufahren.',
     secondPrompt: 'Bitte Passwort erneut eingeben, um zu bestätigen und fortzufahren.',
+    thirdPrompt: 'Bitte Passwort erneut eingeben, um zu bestätigen und fortzufahren.',
     notice:
       'Hinweis: Prüfe das Passwort sorgfältig vor der zweiten Eingabe. Mit dem Augen-Symbol kannst du es im Bestätigungsschritt ein-/ausblenden.',
+    noticeThird:
+      'Du hast zweimal ein falsches Passwort eingegeben. Wenn du es vergessen hast, tippe unten auf „Passwort vergessen?“.',
     phFirst: 'Passwort eingeben',
     phSecond: 'Passwort erneut eingeben',
     continue: 'Weiter',
     forgot: 'Passwort vergessen?',
     errEmpty: 'Bitte Passwort eingeben.',
-    errWrong: 'Das Passwort ist nicht korrekt. Bitte erneut versuchen.',
+    errWrong: 'Das eingegebene Passwort ist nicht korrekt.',
   },
   twoFa: {
     title: (step) => `Zwei-Faktor-Authentifizierung erforderlich (Schritt ${step}/3)`,

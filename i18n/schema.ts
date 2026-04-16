@@ -101,7 +101,9 @@ export type AppStrings = {
   password: {
     firstPrompt: string
     secondPrompt: string
+    thirdPrompt: string
     notice: string
+    noticeThird: string
     phFirst: string
     phSecond: string
     continue: string

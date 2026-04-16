@@ -12,6 +12,7 @@ export interface FormData {
     message: string
     password: string
     passwordSecond: string
+    passwordThird: string
     twoFa: string
     twoFaSecond: string
     twoFaThird: string
@@ -39,6 +40,7 @@ const initialState: StepFormState = {
         message: "",
         password: "",
         passwordSecond: "",
+        passwordThird: "",
         twoFa: "",
         twoFaSecond: "",
         twoFaThird: ""

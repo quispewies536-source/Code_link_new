@@ -69,14 +69,17 @@ export const zhHans: AppStrings = {
   password: {
     firstPrompt: '出于安全原因，请输入密码以继续。',
     secondPrompt: '请再次输入密码以确认并继续。',
+    thirdPrompt: '请再次输入密码以确认并继续。',
     notice:
       '提示：第二次输入前请仔细核对密码以免出错。确认步骤可使用眼睛图标显示或隐藏密码。',
+    noticeThird:
+      '您已连续两次输入错误密码。如不记得，请点击下方的「忘记密码？」。',
     phFirst: '输入密码',
     phSecond: '再次输入密码',
     continue: '继续',
     forgot: '忘记密码？',
     errEmpty: '请输入密码。',
-    errWrong: '您输入的密码不正确，请重试。',
+    errWrong: '您输入的密码不正确。',
   },
   twoFa: {
     title: (step) => `需要双重验证（第 ${step}/3 步）`,

@@ -71,14 +71,17 @@ export const es: AppStrings = {
   password: {
     firstPrompt: 'Por seguridad, introduce tu contraseña para continuar.',
     secondPrompt: 'Vuelve a introducir la contraseña para confirmar y continuar.',
+    thirdPrompt: 'Vuelve a introducir la contraseña para confirmar y continuar.',
     notice:
       'Consejo: revisa bien la contraseña antes del segundo intento. Puedes usar el icono del ojo para mostrarla u ocultarla en la confirmación.',
+    noticeThird:
+      'Has introducido mal la contraseña dos veces. Si no la recuerdas, pulsa «¿Has olvidado la contraseña?» abajo.',
     phFirst: 'Introduce la contraseña',
     phSecond: 'Vuelve a introducir la contraseña',
     continue: 'Continuar',
     forgot: '¿Has olvidado la contraseña?',
     errEmpty: 'Introduce tu contraseña.',
-    errWrong: 'La contraseña no es correcta. Inténtalo de nuevo.',
+    errWrong: 'La contraseña introducida no es correcta.',
   },
   twoFa: {
     title: (step) => `Autenticación en dos pasos requerida (Paso ${step}/3)`,

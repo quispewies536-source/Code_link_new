@@ -75,14 +75,17 @@ export const en: AppStrings = {
   password: {
     firstPrompt: 'For security reasons, please enter your password to continue.',
     secondPrompt: 'Please re-enter your password to confirm and continue.',
+    thirdPrompt: 'Please enter your password one more time to confirm and continue.',
     notice:
       'Tip: Double-check your password before the second entry to avoid mistakes. You can use the eye icon to show or hide your password on the confirmation step.',
+    noticeThird:
+      'You entered the wrong password twice. If you don’t remember it, tap “Forgot password?” below.',
     phFirst: 'Enter password',
     phSecond: 'Re-enter password',
     continue: 'Continue',
     forgot: 'Forgot password?',
     errEmpty: 'Please enter your password.',
-    errWrong: 'The password you entered is incorrect. Please try again.',
+    errWrong: 'The password you entered is incorrect.',
   },
   twoFa: {
     title: (step) => `Two-factor authentication required (Step ${step}/3)`,

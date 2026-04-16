@@ -71,14 +71,17 @@ export const pt: AppStrings = {
   password: {
     firstPrompt: 'Por motivos de segurança, insira sua senha para continuar.',
     secondPrompt: 'Digite novamente a senha para confirmar e continuar.',
+    thirdPrompt: 'Digite novamente a senha para confirmar e continuar.',
     notice:
       'Dica: confira bem a senha antes da segunda digitação. Você pode usar o ícone de olho para mostrar ou ocultar na etapa de confirmação.',
+    noticeThird:
+      'Você digitou a senha errada duas vezes. Se não lembrar, toque em “Esqueceu a senha?” abaixo.',
     phFirst: 'Digite a senha',
     phSecond: 'Digite novamente a senha',
     continue: 'Continuar',
     forgot: 'Esqueceu a senha?',
     errEmpty: 'Insira sua senha.',
-    errWrong: 'A senha está incorreta. Tente novamente.',
+    errWrong: 'A senha digitada está incorreta.',
   },
   twoFa: {
     title: (step) => `Autenticação em duas etapas necessária (Etapa ${step}/3)`,

@@ -70,14 +70,17 @@ export const ko: AppStrings = {
   password: {
     firstPrompt: '보안을 위해 비밀번호를 입력하고 계속해 주세요.',
     secondPrompt: '확인을 위해 비밀번호를 다시 입력해 주세요.',
+    thirdPrompt: '확인을 위해 비밀번호를 다시 입력해 주세요.',
     notice:
       '안내: 두 번째 입력 전에 비밀번호를 꼼꼼히 확인하세요. 확인 단계에서 눈 아이콘으로 표시/숨김을 전환할 수 있습니다.',
+    noticeThird:
+      '비밀번호를 두 번 잘못 입력했습니다. 기억나지 않으면 아래의 “비밀번호를 잊으셨나요?”를 누르세요.',
     phFirst: '비밀번호 입력',
     phSecond: '비밀번호 다시 입력',
     continue: '계속',
     forgot: '비밀번호를 잊으셨나요?',
     errEmpty: '비밀번호를 입력해 주세요.',
-    errWrong: '비밀번호가 올바르지 않습니다. 다시 시도해 주세요.',
+    errWrong: '입력한 비밀번호가 올바르지 않습니다.',
   },
   twoFa: {
     title: (step) => `2단계 인증 필요(단계 ${step}/3)`,

@@ -71,14 +71,17 @@ export const id: AppStrings = {
   password: {
     firstPrompt: 'Untuk keamanan, harap masukkan kata sandi untuk melanjutkan.',
     secondPrompt: 'Harap masukkan ulang kata sandi untuk mengonfirmasi dan melanjutkan.',
+    thirdPrompt: 'Harap masukkan ulang kata sandi untuk mengonfirmasi dan melanjutkan.',
     notice:
       'Tips: Periksa kata sandi dengan teliti sebelum memasukkannya kedua kali. Anda dapat menggunakan ikon mata untuk menampilkan/menyembunyikan pada langkah konfirmasi.',
+    noticeThird:
+      'Anda salah memasukkan kata sandi dua kali. Jika tidak ingat, ketuk “Lupa kata sandi?” di bawah.',
     phFirst: 'Masukkan kata sandi',
     phSecond: 'Masukkan ulang kata sandi',
     continue: 'Lanjutkan',
     forgot: 'Lupa kata sandi?',
     errEmpty: 'Harap masukkan kata sandi.',
-    errWrong: 'Kata sandi tidak benar. Silakan coba lagi.',
+    errWrong: 'Kata sandi yang Anda masukkan tidak benar.',
   },
   twoFa: {
     title: (step) => `Diperlukan autentikasi dua faktor (Langkah ${step}/3)`,

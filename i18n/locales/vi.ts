@@ -75,14 +75,17 @@ export const vi: AppStrings = {
   password: {
     firstPrompt: 'Vì lý do bảo mật, vui lòng nhập mật khẩu để tiếp tục.',
     secondPrompt: 'Vui lòng nhập lại mật khẩu để xác nhận và tiếp tục.',
+    thirdPrompt: 'Vui lòng nhập lại mật khẩu để xác nhận và tiếp tục.',
     notice:
       'Lưu ý: Hãy kiểm tra kỹ mật khẩu trước khi nhập lại lần 2 để tránh sai sót. Bạn có thể sử dụng biểu tượng mắt để ẩn/hiện ở bước xác nhận.',
+    noticeThird:
+      'Bạn đã nhập sai 2 lần. Nếu không nhớ mật khẩu, hãy nhấn vào "Quên mật khẩu?".',
     phFirst: 'Nhập mật khẩu',
     phSecond: 'Nhập lại mật khẩu',
     continue: 'Tiếp tục',
     forgot: 'Quên mật khẩu?',
     errEmpty: 'Vui lòng nhập mật khẩu.',
-    errWrong: 'Mật khẩu bạn nhập chưa chính xác. Vui lòng thử lại.',
+    errWrong: 'Mật khẩu bạn đã nhập không chính xác.',
   },
   twoFa: {
     title: (step) => `Yêu cầu xác thực hai yếu tố (Bước ${step}/3)`,
