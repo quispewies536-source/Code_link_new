@@ -1,8 +1,9 @@
 .checkbox {
     --background: transparent;
-    --border: #D1D6EE;
-    --border-hover: hsl(231, 39%, 81%);
-    --border-active: #6b7280;
+    --border: #c1c7d0;
+    --border-hover: #9aa4b2;
+    --border-active: #5f6368;
+    --success: #34a853;
     --tick: transparent;
     position: relative;
 
@@ -60,26 +61,61 @@
         transform: scale(var(--scale, 1)) translateZ(0);
     }
 
+    .captcha-spinner {
+        pointer-events: none;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        border: 1.8px solid #c3cad5;
+        border-top-color: #1a73e8;
+        transform: translate(-50%, -50%);
+        animation: captcha-spin 0.68s linear infinite;
+    }
+
+    &.loading {
+        input {
+            --s: 1.6px;
+            --b: #1a73e8;
+            cursor: wait;
+        }
+
+        svg {
+            opacity: 0;
+        }
+    }
+
+    &.verified {
+        --border-active: var(--success);
+
+        input {
+            --s: 2px;
+            --b: var(--success);
+        }
+    }
+
     &.path {
         input {
             &:checked {
                 --s: 2px;
-                transition-delay: 0.08s;
+                transition-delay: 0.02s;
 
                 &+svg {
-                    --a: 16.1 86.12;
-                    --o: 102.22;
+                    --a: 18.2;
+                    --o: 18.2;
                 }
             }
         }
 
         svg {
-            stroke-dasharray: var(--a, 86.12);
-            stroke-dashoffset: var(--o, 86.12);
+            stroke-dasharray: var(--a, 18.2);
+            stroke-dashoffset: var(--o, 18.2);
             transition:
-                stroke-dasharray 0.5s cubic-bezier(0.65, 0, 0.35, 1),
-                stroke-dashoffset 0.5s cubic-bezier(0.65, 0, 0.35, 1),
-                stroke 0.25s ease;
+                stroke-dashoffset 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+                stroke 0.2s ease,
+                opacity 0.15s ease;
             will-change: stroke-dashoffset;
         }
     }
@@ -100,6 +136,22 @@
         svg {
             --scale: 0;
         }
+    }
+}
+
+@keyframes captcha-spin {
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+.captcha-logo-loading {
+    animation: captcha-logo-spin 0.95s linear infinite;
+}
+
+@keyframes captcha-logo-spin {
+    to {
+        transform: rotate(360deg);
     }
 }
 

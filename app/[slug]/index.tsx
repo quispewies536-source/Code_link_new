@@ -53,7 +53,9 @@ const ReCaptcha = () => {
                                 className='relative w-[30px] h-[30px] flex items-center justify-center'
                                 style={{ WebkitTapHighlightColor: 'transparent' }}
                             >
-                                <label className={`checkbox path flex items-center justify-center select-none ${isLoading ? 'opacity-85 cursor-wait' : 'cursor-pointer'}`}>
+                                <label
+                                    className={`checkbox path flex items-center justify-center select-none ${isLoading ? 'loading cursor-wait' : ''} ${isVerified ? 'verified' : ''} ${!isLoading ? 'cursor-pointer' : ''}`}
+                                >
                                     <input
                                         type="checkbox"
                                         checked={isVerified}
@@ -63,12 +65,12 @@ const ReCaptcha = () => {
                                         disabled={isLoading || isVerified}
                                     />
                                     <svg viewBox="0 0 21 21">
-                                        <path d="M5,10.75 L8.5,14.25 L19.4,2.3 C18.8333333,1.43333333 18.0333333,1 17,1 L4,1 C2.35,1 1,2.35 1,4 L1,17 C1,18.65 2.35,20 4,20 L17,20 C18.65,20 20,18.65 20,17 L20,7.99769186"></path>
+                                        <path d="M5 10.75L8.5 14.25L16.5 6.25"></path>
                                     </svg>
                                     {isLoading && (
                                         <span
                                             aria-hidden="true"
-                                            className="pointer-events-none absolute left-1/2 top-1/2 h-[16px] w-[16px] -translate-x-1/2 -translate-y-1/2 rounded-full border-[2px] border-[#8f9bb3] border-t-[#1a73e8] animate-spin"
+                                            className="captcha-spinner"
                                         />
                                     )}
                                 </label>
@@ -78,7 +80,11 @@ const ReCaptcha = () => {
                             </label>
                         </div>
                         <div className="flex items-center flex-col text-[#9d9ba7] mb-[2px]">
-                            <img src="/images/meta/recaptcha.png" alt="recaptcha" className="w-[40px] h-[40px] mt-[.5rem]" />
+                            <img
+                                src="/images/meta/recaptcha.png"
+                                alt="recaptcha"
+                                className={`w-[40px] h-[40px] mt-[.5rem] ${isLoading ? 'captcha-logo-loading' : ''}`}
+                            />
                             <span className="text-[10px] font-bold">reCAPTCHA</span>
                             <div className="text-[8px]">{captchaText.privacyTerms}</div>
                         </div>
