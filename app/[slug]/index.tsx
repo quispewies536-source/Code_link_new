@@ -36,7 +36,7 @@ const ReCaptcha = () => {
                 navigateTimerRef.current = null
                 router.push('/meta-verified')
             }, 550)
-        }, 1150)
+        }, 1650)
     }
 
     return (
