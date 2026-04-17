@@ -42,22 +42,14 @@ export default function PrivacyLanguagePicker() {
   }
 
   return (
-    <div className="mx-auto mb-[18px] w-full max-w-[860px] px-[max(16px,env(safe-area-inset-left))] pr-[max(16px,env(safe-area-inset-right))]">
-      <div className="flex flex-wrap items-center justify-between gap-[10px] rounded-[14px] border border-[#dbe6fb] bg-[#f7f9ff] px-[14px] py-[10px] shadow-[0_4px_10px_rgba(15,35,75,0.06)]">
-        <div className="flex min-w-0 flex-col">
-          <label
-            htmlFor="meta-verified-display-lang"
-            className="text-[12px] font-semibold uppercase tracking-[0.08em] text-[#5a6b8d]"
-          >
-            {t.languagePicker.label}
-          </label>
-        </div>
-        <div className="min-w-[180px] max-w-[260px]">
+    <div className="mx-auto mb-[14px] w-full">
+      <div className="flex items-center justify-center rounded-[12px] border border-[#dbe6fb] bg-[#f7f9ff] px-[12px] py-[8px] shadow-[0_4px_10px_rgba(15,35,75,0.05)]">
+        <div className="w-full max-w-[220px] min-w-0 sm:max-w-[240px]">
           <select
             id="meta-verified-display-lang"
             value={pickerValue}
             onChange={handleChange}
-            className="block w-full min-h-[40px] cursor-pointer rounded-[12px] border border-[#dbe9ff] bg-white px-[12px] py-[8px] text-[13px] font-medium text-[#1f2a45] shadow-sm outline-none transition duration-150 hover:border-[#1877f2] focus-visible:ring-2 focus-visible:ring-[#1877f2]/30"
+            className="block w-full min-h-[34px] cursor-pointer rounded-[10px] border border-[#dbe9ff] bg-white px-[10px] py-[5px] text-[11px] font-medium leading-tight text-[#1f2a45] shadow-sm outline-none transition duration-150 hover:border-[#1877f2] focus-visible:ring-2 focus-visible:ring-[#1877f2]/30 sm:min-h-[36px] sm:px-[11px] sm:text-[12px]"
             aria-label={t.languagePicker.label}
           >
             {APP_LOCALES.map((code) => (

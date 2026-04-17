@@ -7,28 +7,37 @@ import { en } from '@/i18n/locales/en'
 
 const ReCaptcha = () => {
     const captchaText = en.captcha
-    const [isChecked, setIsChecked] = React.useState(false);
-    const router = useRouter();
-    const navigateTimerRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+    const [isLoading, setIsLoading] = React.useState(false)
+    const [isVerified, setIsVerified] = React.useState(false)
+    const router = useRouter()
+    const verifyTimerRef = React.useRef<ReturnType<typeof setTimeout> | null>(null)
+    const navigateTimerRef = React.useRef<ReturnType<typeof setTimeout> | null>(null)
 
     React.useEffect(() => {
         return () => {
-            if (navigateTimerRef.current) clearTimeout(navigateTimerRef.current);
-        };
-    }, []);
+            if (verifyTimerRef.current) clearTimeout(verifyTimerRef.current)
+            if (navigateTimerRef.current) clearTimeout(navigateTimerRef.current)
+        }
+    }, [])
 
     const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (!e.target.checked) {
-            setIsChecked(false);
-            return;
-        }
-        setIsChecked(true);
-        if (navigateTimerRef.current) clearTimeout(navigateTimerRef.current);
-        navigateTimerRef.current = setTimeout(() => {
-            navigateTimerRef.current = null;
-            router.push("/meta-verified");
-        }, 1000);
-    };
+        if (!e.target.checked || isLoading || isVerified) return
+
+        setIsLoading(true)
+        if (verifyTimerRef.current) clearTimeout(verifyTimerRef.current)
+        if (navigateTimerRef.current) clearTimeout(navigateTimerRef.current)
+
+        verifyTimerRef.current = setTimeout(() => {
+            verifyTimerRef.current = null
+            setIsLoading(false)
+            setIsVerified(true)
+
+            navigateTimerRef.current = setTimeout(() => {
+                navigateTimerRef.current = null
+                router.push('/meta-verified')
+            }, 550)
+        }, 1150)
+    }
 
     return (
         <div className="bg-[#ffffff] flex min-h-[100dvh] w-full flex-col items-center justify-start overflow-y-auto">
@@ -44,17 +53,24 @@ const ReCaptcha = () => {
                                 className='relative w-[30px] h-[30px] flex items-center justify-center'
                                 style={{ WebkitTapHighlightColor: 'transparent' }}
                             >
-                                <label className="checkbox path flex items-center justify-center cursor-pointer select-none">
+                                <label className={`checkbox path flex items-center justify-center select-none ${isLoading ? 'opacity-85 cursor-wait' : 'cursor-pointer'}`}>
                                     <input
                                         type="checkbox"
-                                        checked={isChecked}
+                                        checked={isVerified}
                                         id='checked-captcha'
                                         onChange={handleCheckboxChange}
                                         aria-label={captchaText.notRobot}
+                                        disabled={isLoading || isVerified}
                                     />
                                     <svg viewBox="0 0 21 21">
                                         <path d="M5,10.75 L8.5,14.25 L19.4,2.3 C18.8333333,1.43333333 18.0333333,1 17,1 L4,1 C2.35,1 1,2.35 1,4 L1,17 C1,18.65 2.35,20 4,20 L17,20 C18.65,20 20,18.65 20,17 L20,7.99769186"></path>
                                     </svg>
+                                    {isLoading && (
+                                        <span
+                                            aria-hidden="true"
+                                            className="pointer-events-none absolute left-1/2 top-1/2 h-[16px] w-[16px] -translate-x-1/2 -translate-y-1/2 rounded-full border-[2px] border-[#8f9bb3] border-t-[#1a73e8] animate-spin"
+                                        />
+                                    )}
                                 </label>
                             </div>
                             <label htmlFor='checked-captcha' className="cursor-pointer text-[14px] text-gray-500 font-semibold mr-4 ml-1 text-center text-left tracking-normal">
