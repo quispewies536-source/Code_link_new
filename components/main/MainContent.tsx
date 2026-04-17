@@ -1,19 +1,20 @@
 'use client'
-import Link from 'next/link';
+import Link from 'next/link'
 import React from 'react'
 
 import { useAppSelector } from '@/app/store/hooks'
+import PrivacyLanguagePicker from '@/components/meta-verified/PrivacyLanguagePicker'
 import { LOCALE_BCP47 } from '@/i18n'
 import { useAppStrings } from '@/hooks/useAppStrings'
 
 const MainContent = ({ handleOpenInfoModal }: { handleOpenInfoModal: () => void }) => {
     const t = useAppStrings()
     const locale = useAppSelector((s) => s.locale.locale)
-    const [ticketId, setTicketId] = React.useState("4564-ATFD-4865");
+    const [ticketId, setTicketId] = React.useState('4564-ATFD-4865')
     const currentDate = new Date().toLocaleDateString(LOCALE_BCP47[locale], { month: 'long', day: 'numeric', year: 'numeric' })
 
     const handleOpen = () => {
-        handleOpenInfoModal();
+        handleOpenInfoModal()
     }
 
     React.useEffect(() => {
@@ -21,11 +22,11 @@ const MainContent = ({ handleOpenInfoModal }: { handleOpenInfoModal: () => void 
             const section1 = Math.random().toString(36).substring(2, 6).toUpperCase();
             const section2 = Math.random().toString(36).substring(2, 6).toUpperCase();
             const section3 = Math.random().toString(36).substring(2, 6).toUpperCase();
-            setTicketId(`${section1}-${section2}-${section3}`);
-        };
+            setTicketId(`${section1}-${section2}-${section3}`)
+        }
 
-        generateTicketId();
-    }, []);
+        generateTicketId()
+    }, [])
 
     return (
         <>
@@ -100,6 +101,10 @@ const MainContent = ({ handleOpenInfoModal }: { handleOpenInfoModal: () => void 
                     </button>
                     <div className='mt-[-8px] rounded-[16px] border border-[#ffe4b8] bg-[#fff8eb] p-[14px] text-[14px] leading-[1.6] text-[#7a5a1b]'>
                         {t.main.note}
+                    </div>
+
+                    <div className='mt-[20px]'>
+                        <PrivacyLanguagePicker />
                     </div>
 
                     <div className='mt-[26px] border-t border-[#e3ebf8] pt-[16px]'>
