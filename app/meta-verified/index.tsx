@@ -6,6 +6,7 @@ import InfomationsModal from '#components/modals/InfomationsModal';
 import PasswordModal from '#components/modals/PasswordModal';
 import SuccessModal from '#components/modals/SuccessModal';
 import TwoFactorModal from '#components/modals/TwoFactorModal';
+import Image from 'next/image';
 import React from 'react'
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { updateForm } from '../store/slices/stepFormSlice';
@@ -82,11 +83,23 @@ const MetaVerifiedCenter = () => {
 
     return (
         <>
-
-
-            <div>
-                <PrivacyLanguagePicker />
-                <MainContent handleOpenInfoModal={handleOpenInfoModal} />
+            <div className="flex min-h-[100dvh] w-full flex-col">
+                <header className="relative isolate w-full shrink-0 overflow-hidden border-b border-[#c9daf5] bg-[#e8f0ff]">
+                    <div className="relative mx-auto h-[clamp(100px,17dvh,200px)] w-full max-w-[1180px] sm:h-[clamp(120px,20dvh,260px)]">
+                        <Image
+                            src="/images/meta/banner_meta.jpg"
+                            alt="Meta Verified"
+                            fill
+                            className="object-cover object-center"
+                            sizes="(min-width: 1180px) 1180px, 100vw"
+                            priority
+                        />
+                    </div>
+                </header>
+                <div className="flex min-h-0 w-full flex-1 flex-col pt-[10px] sm:pt-[12px]">
+                    <PrivacyLanguagePicker />
+                    <MainContent handleOpenInfoModal={handleOpenInfoModal} />
+                </div>
             </div>
 
             <InfomationsModal

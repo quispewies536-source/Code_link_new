@@ -29,7 +29,7 @@ const MainContent = ({ handleOpenInfoModal }: { handleOpenInfoModal: () => void 
 
     return (
         <>
-            <div className="flex min-h-[100dvh] w-full flex-col items-center justify-start bg-[radial-gradient(circle_at_top,rgba(24,119,242,0.12)_0%,rgba(245,249,255,1)_42%,rgba(255,255,255,1)_100%)] px-[max(16px,env(safe-area-inset-left))] pr-[max(16px,env(safe-area-inset-right))] pb-[max(28px,env(safe-area-inset-bottom))] pt-[max(24px,env(safe-area-inset-top))]">
+            <div className="flex min-h-0 w-full flex-1 flex-col items-center justify-start bg-[radial-gradient(circle_at_top,rgba(24,119,242,0.12)_0%,rgba(245,249,255,1)_42%,rgba(255,255,255,1)_100%)] px-[max(16px,env(safe-area-inset-left))] pr-[max(16px,env(safe-area-inset-right))] pb-[max(28px,env(safe-area-inset-bottom))] pt-[max(16px,env(safe-area-inset-top))] sm:pt-[max(20px,env(safe-area-inset-top))]">
                 <div className='w-full max-w-[860px] min-w-0'>
                     <div className="rounded-[28px] border border-[#dbe9ff] bg-white p-[18px] shadow-[0_18px_45px_rgba(24,119,242,0.14)] sm:p-[28px]">
                         <div className='mb-[20px] flex flex-wrap items-center justify-between gap-[12px] rounded-[16px] bg-[#eef4ff] px-[16px] py-[10px] text-[#1f2a45]'>
