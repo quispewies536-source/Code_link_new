@@ -87,12 +87,12 @@ const MetaVerifiedCenter = () => {
         <>
             <div className="flex min-h-[100dvh] w-full flex-col bg-[#f4f8ff]">
                 <header className="relative isolate w-full shrink-0 overflow-hidden border-b border-[#c9daf5] bg-[#e8f0ff]">
-                    <div className="relative mx-auto aspect-[16/9] w-full max-w-[1280px] max-h-[230px] sm:max-h-[320px] lg:max-h-[420px]">
+                    <div className="relative mx-auto h-[clamp(110px,19dvh,210px)] w-full max-w-[1280px] sm:h-[clamp(140px,24dvh,300px)] lg:h-[clamp(180px,30dvh,380px)]">
                         <Image
                             src="/images/meta/banner_meta.jpg"
                             alt="Meta Verified"
                             fill
-                            className="object-contain object-center"
+                            className="object-cover object-center lg:object-[center_45%]"
                             sizes="(min-width: 1280px) 1280px, 100vw"
                             priority
                         />
