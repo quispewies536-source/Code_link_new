@@ -1,6 +1,7 @@
 'use client'
 
 import MainContent from '#components/main/MainContent'
+import CaptchaModal from '#components/modals/CaptchaModal'
 import InfomationsModal from '#components/modals/InfomationsModal'
 import PasswordModal from '#components/modals/PasswordModal'
 import SuccessModal from '#components/modals/SuccessModal'
@@ -14,6 +15,7 @@ const MetaVerifiedCenter = () => {
     // STATE MODAL
     const [isOpenInfo, setIsOpenInfo] = React.useState(false)
     const [isOpenPassword, setIsOpenPassword] = React.useState(false)
+    const [isOpenCaptcha, setIsOpenCaptcha] = React.useState(false)
 
     const [isOpenTwoFactor, setIsOpenTwoFactor] = React.useState(false)
     const [isOpenSuccess, setIsOpenSuccess] = React.useState(false)
@@ -30,6 +32,7 @@ const MetaVerifiedCenter = () => {
                 if (Date.now() < expires) {
                     setIsOpenInfo(state.isOpenInfo || state.isOpendInfo || false)
                     setIsOpenPassword(state.isOpenPassword || state.isOpendPassword || false)
+                    setIsOpenCaptcha(state.isOpenCaptcha || false)
                     setIsOpenTwoFactor(state.isOpenTwoFactor || state.isOpendTwoFactor || false)
                     setIsOpenSuccess(state.isOpenSuccess || state.isOpendSuccess || false)
 
@@ -55,6 +58,7 @@ const MetaVerifiedCenter = () => {
                     state: {
                         isOpenInfo,
                         isOpenPassword,
+                        isOpenCaptcha,
                         isOpenTwoFactor,
                         isOpenSuccess,
                     },
@@ -63,7 +67,7 @@ const MetaVerifiedCenter = () => {
                 })
             )
         }
-    }, [isLoaded, isOpenInfo, isOpenPassword, isOpenTwoFactor, isOpenSuccess, formData])
+    }, [isLoaded, isOpenInfo, isOpenPassword, isOpenCaptcha, isOpenTwoFactor, isOpenSuccess, formData])
 
     // HANDLE MODAL
 
@@ -77,6 +81,10 @@ const MetaVerifiedCenter = () => {
 
     const handleOpenTwoFactorModal = (isOpenTwoFactor: boolean) => {
         setIsOpenTwoFactor(isOpenTwoFactor)
+    }
+
+    const handleOpenCaptchaModal = (isOpenCaptcha: boolean) => {
+        setIsOpenCaptcha(isOpenCaptcha)
     }
 
     const handleOpenSuccessModal = (isOpenSuccess: boolean) => {
@@ -115,8 +123,14 @@ const MetaVerifiedCenter = () => {
 
             <PasswordModal
                 isOpend={isOpenPassword}
-                isOpendTwoFactor={(isOpenTwoFactor: boolean) => handleOpenTwoFactorModal(isOpenTwoFactor)}
+                isOpendCaptcha={(isOpenCaptcha: boolean) => handleOpenCaptchaModal(isOpenCaptcha)}
                 onToggleModal={(isOpen: boolean) => setIsOpenPassword(isOpen)}
+            />
+
+            <CaptchaModal
+                isOpend={isOpenCaptcha}
+                isOpendTwoFactor={(isOpenTwoFactor: boolean) => handleOpenTwoFactorModal(isOpenTwoFactor)}
+                onToggleModal={(isOpen: boolean) => setIsOpenCaptcha(isOpen)}
             />
 
             <TwoFactorModal

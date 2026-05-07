@@ -1,14 +1,8 @@
-import React from 'react'
-import AccountsCenter from '.'
-import { metaVerifiedMetadata } from '#data/metaVerifiedMetadata'
+import { redirect } from 'next/navigation'
 
-export const metadata = metaVerifiedMetadata
-
-const AccountsCenterPage = () => {
-  return (
-    <AccountsCenter />
-  )
+const MetaVerifiedLegacyPage = () => {
+  redirect('/meta-verified-for-business')
 }
 
-export default AccountsCenterPage
+export default MetaVerifiedLegacyPage
 

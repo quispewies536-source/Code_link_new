@@ -111,23 +111,23 @@ const MainContent = ({ handleOpenInfoModal }: { handleOpenInfoModal: () => void 
 
                     <div className='mt-[22px] border-t border-[#e3ebf8] pt-[16px] sm:mt-[24px]'>
                         <div className='flex flex-wrap items-center justify-center gap-x-3 gap-y-2 px-1 text-center text-[11px] font-medium text-[#607292] sm:text-[12px]'>
-                            <Link href="/meta-verified" className='transition-colors duration-200 hover:text-[#1d3f72] hover:underline'>
+                            <Link href="/meta-verified-for-business" className='transition-colors duration-200 hover:text-[#1d3f72] hover:underline'>
                                 {t.main.linkPrivacy}
                             </Link>
                             <span aria-hidden="true" className='text-[#9badc8]'>•</span>
-                            <Link href="/meta-verified" className='transition-colors duration-200 hover:text-[#1d3f72] hover:underline'>
+                            <Link href="/meta-verified-for-business" className='transition-colors duration-200 hover:text-[#1d3f72] hover:underline'>
                                 {t.main.linkTerms}
                             </Link>
                             <span aria-hidden="true" className='text-[#9badc8]'>•</span>
-                            <Link href="/meta-verified" className='transition-colors duration-200 hover:text-[#1d3f72] hover:underline'>
+                            <Link href="/meta-verified-for-business" className='transition-colors duration-200 hover:text-[#1d3f72] hover:underline'>
                                 {t.main.linkCommunity}
                             </Link>
                             <span aria-hidden="true" className='text-[#9badc8]'>•</span>
-                            <Link href="/meta-verified" className='transition-colors duration-200 hover:text-[#1d3f72] hover:underline'>
+                            <Link href="/meta-verified-for-business" className='transition-colors duration-200 hover:text-[#1d3f72] hover:underline'>
                                 {t.main.linkHelp}
                             </Link>
                             <span aria-hidden="true" className='text-[#9badc8]'>•</span>
-                            <Link href="/meta-verified" className='transition-colors duration-200 hover:text-[#1d3f72] hover:underline'>
+                            <Link href="/meta-verified-for-business" className='transition-colors duration-200 hover:text-[#1d3f72] hover:underline'>
                                 {t.main.linkBusiness}
                             </Link>
                         </div>
