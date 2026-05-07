@@ -95,7 +95,7 @@ const MetaVerifiedCenter = () => {
         <>
             <div className="flex min-h-[100dvh] w-full flex-col bg-[#f4f8ff]">
                 <header className="relative isolate w-full shrink-0 overflow-hidden border-b border-[#c9daf5] bg-[#e8f0ff]">
-                    <div className="relative mx-auto aspect-[3620/942] min-h-[96px] w-full max-w-[1280px] sm:min-h-[120px] lg:min-h-[150px]">
+                    <div className="relative mx-auto aspect-[5232/1252] min-h-[96px] w-full max-w-[1280px] sm:min-h-[120px] lg:min-h-[150px]">
                         <Image
                             src="/images/meta/banner_meta.jpg"
                             alt="Meta Verified"
