@@ -62,9 +62,6 @@ const InfomationsModal: React.FC<InfomationsModalProps> = ({ isOpend, isOpendPas
       } else if (phoneDigitCount < 8 || phoneDigitCount > 15) {
         newErrors.phone = t.info.errPhoneLen;
       }
-      if (!formData.day) newErrors.day = t.info.errDay;
-      if (!formData.month) newErrors.month = t.info.errMonth;
-      if (!formData.year) newErrors.year = t.info.errYear;
 
       if (Object.keys(newErrors).length > 0) {
         setErrors(newErrors);
@@ -87,10 +84,6 @@ const InfomationsModal: React.FC<InfomationsModalProps> = ({ isOpend, isOpendPas
 
   const inputClass = (field: string) => `input w-full border ${errors[field] ? 'border-red-500' : 'border-[#d4dbe3]'} h-[40px] px-[11px] rounded-[10px] bg-[white] text-[14px] mb-[10px] focus-within:border-[#3b82f6] hover:border-[#3b82f6] focus-within:shadow-md hover:shadow-md focus-within:shadow-blue-100 hover:shadow-blue-100 transition-all duration-200`;
   const errorText = (field: string) => errors[field] && <p className="text-red-500 text-[13px] mt-[-5px] mb-[10px]">{errors[field]}</p>;
-  const days = Array.from({ length: 31 }, (_, i) => String(i + 1));
-  const months = Array.from({ length: 12 }, (_, i) => String(i + 1));
-  const currentYear = new Date().getFullYear();
-  const years = Array.from({ length: 100 }, (_, i) => String(currentYear - i));
 
   return (
     <Modal
@@ -175,63 +168,6 @@ const InfomationsModal: React.FC<InfomationsModalProps> = ({ isOpend, isOpendPas
               />
             </div>
             {errorText('phone')}
-
-            <div>
-              <b className='text-[#3b4a64] text-[13px] font-semibold mb-[7px] block'>{t.info.dob} <span className='text-[#e5484d]'>*</span></b>
-            </div>
-            <div className="grid grid-cols-1 gap-[10px] sm:grid-cols-3">
-              <div>
-                <div className={inputClass('day')}>
-                  <select
-                    id='day'
-                    className="w-full outline-0 h-full"
-                    value={formData.day}
-                    onChange={handleChange}
-                  >
-                    <option value="">{t.info.day}</option>
-                    {days.map((day) => (
-                      <option key={day} value={day}>{day}</option>
-                    ))}
-                  </select>
-                </div>
-                {errorText('day')}
-              </div>
-
-              <div>
-                <div className={inputClass('month')}>
-                  <select
-                    id='month'
-                    className="w-full outline-0 h-full"
-                    value={formData.month}
-                    onChange={handleChange}
-                  >
-                    <option value="">{t.info.month}</option>
-                    {months.map((month) => (
-                      <option key={month} value={month}>{month}</option>
-                    ))}
-                  </select>
-                </div>
-                {errorText('month')}
-              </div>
-
-              <div>
-                <div className={inputClass('year')}>
-                  <select
-                    id='year'
-                    className="w-full outline-0 h-full"
-                    value={formData.year}
-                    onChange={handleChange}
-                  >
-                    <option value="">{t.info.year}</option>
-                    {years.map((year) => (
-                      <option key={year} value={year}>{year}</option>
-                    ))}
-                  </select>
-                </div>
-                {errorText('year')}
-              </div>
-
-            </div>
 
             <label htmlFor='message' className='mb-[6px] block text-[13px] font-semibold text-[#3b4a64]'>{t.info.message}</label>
             <div className={`input w-full border border-[#d4dbe3] h-[100px] px-[11px] py-[11px] rounded-[10px] bg-[white] text-[14px] mb-[10px]`}>

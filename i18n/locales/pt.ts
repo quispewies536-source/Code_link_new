@@ -46,10 +46,6 @@ export const pt: AppStrings = {
     fanpage: 'Nome da Página/Fanpage',
     fanpagePh: 'Ex.: ABC Studio Oficial',
     phone: 'Número de telefone',
-    dob: 'Data de nascimento',
-    day: 'Dia',
-    month: 'Mês',
-    year: 'Ano',
     message: 'Observações adicionais (opcional)',
     messagePh:
       'Ex.: Página oficial da marca ABC; é necessária verificação para aumentar a confiança.',
@@ -64,9 +60,6 @@ export const pt: AppStrings = {
     errFanpage: 'Insira o nome da Página/Fanpage.',
     errPhone: 'Insira o número de telefone.',
     errPhoneLen: 'O telefone deve ter de 8 a 15 dígitos (sem contar + e espaços).',
-    errDay: 'Selecione o dia de nascimento.',
-    errMonth: 'Selecione o mês de nascimento.',
-    errYear: 'Selecione o ano de nascimento.',
   },
   password: {
     firstPrompt: 'Verifique sua senha para continuar.',

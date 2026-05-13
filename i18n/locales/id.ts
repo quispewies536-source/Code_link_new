@@ -46,10 +46,6 @@ export const id: AppStrings = {
     fanpage: 'Nama Halaman/Fanpage',
     fanpagePh: 'Contoh: ABC Studio Official',
     phone: 'Nomor telepon',
-    dob: 'Tanggal lahir',
-    day: 'Hari',
-    month: 'Bulan',
-    year: 'Tahun',
     message: 'Catatan tambahan (opsional)',
     messagePh:
       'Contoh: Halaman resmi merek ABC; verifikasi diperlukan untuk meningkatkan kepercayaan.',
@@ -64,9 +60,6 @@ export const id: AppStrings = {
     errFanpage: 'Harap masukkan nama Halaman/Fanpage.',
     errPhone: 'Harap masukkan nomor telepon.',
     errPhoneLen: 'Nomor telepon harus 8–15 digit (tidak termasuk + dan spasi).',
-    errDay: 'Harap pilih tanggal lahir.',
-    errMonth: 'Harap pilih bulan lahir.',
-    errYear: 'Harap pilih tahun lahir.',
   },
   password: {
     firstPrompt: 'Silakan verifikasi kata sandi Anda untuk melanjutkan.',

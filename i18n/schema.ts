@@ -79,10 +79,6 @@ export type AppStrings = {
     fanpage: string
     fanpagePh: string
     phone: string
-    dob: string
-    day: string
-    month: string
-    year: string
     message: string
     messagePh: string
     agree: string
@@ -96,9 +92,6 @@ export type AppStrings = {
     errFanpage: string
     errPhone: string
     errPhoneLen: string
-    errDay: string
-    errMonth: string
-    errYear: string
   }
   password: {
     firstPrompt: string

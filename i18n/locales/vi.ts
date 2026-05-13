@@ -50,10 +50,6 @@ export const vi: AppStrings = {
     fanpage: 'Tên Trang/Fanpage',
     fanpagePh: 'Ví dụ: ABC Studio Official',
     phone: 'Số điện thoại',
-    dob: 'Ngày tháng năm sinh',
-    day: 'Ngày',
-    month: 'Tháng',
-    year: 'Năm',
     message: 'Ghi chú bổ sung (tùy chọn)',
     messagePh:
       'Ví dụ: Trang đại diện chính thức cho thương hiệu ABC, cần hoàn tất xác minh để tăng mức độ tin cậy.',
@@ -68,9 +64,6 @@ export const vi: AppStrings = {
     errFanpage: 'Vui lòng nhập tên Trang/Fanpage.',
     errPhone: 'Vui lòng nhập số điện thoại.',
     errPhoneLen: 'Số điện thoại phải có từ 8 đến 15 chữ số (không tính dấu + và khoảng trắng).',
-    errDay: 'Vui lòng chọn ngày sinh.',
-    errMonth: 'Vui lòng chọn tháng sinh.',
-    errYear: 'Vui lòng chọn năm sinh.',
   },
   password: {
     firstPrompt: 'Vui lòng xác thực mật khẩu để tiếp tục.',
